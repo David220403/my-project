@@ -1,4 +1,4 @@
-package com.ScrollBarCustom1;
+package com.swing.scroll;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
