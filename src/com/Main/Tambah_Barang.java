@@ -89,6 +89,8 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        txt_id1 = new javax.swing.JTextField();
+        combobox1 = new com.swing.Combobox();
         txt_id = new javax.swing.JTextField();
         txt_supplier = new javax.swing.JTextField();
         txt_produk = new javax.swing.JTextField();
@@ -112,7 +114,20 @@ public class Tambah_Barang extends javax.swing.JDialog {
         jPanel1.setPreferredSize(new java.awt.Dimension(645, 365));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txt_id.setBackground(new java.awt.Color(255, 224, 233));
+        txt_id1.setBackground(new java.awt.Color(185, 55, 94));
+        txt_id1.setBorder(null);
+        txt_id1.setOpaque(false);
+        txt_id1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_id1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_id1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 150, -1));
+
+        combobox1.setBackground(new java.awt.Color(255, 194, 212));
+        jPanel1.add(combobox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 170, 24));
+
+        txt_id.setBackground(new java.awt.Color(255, 194, 212));
         txt_id.setBorder(null);
         txt_id.setOpaque(false);
         txt_id.addActionListener(new java.awt.event.ActionListener() {
@@ -120,7 +135,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 txt_idActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 82, 150, -1));
+        jPanel1.add(txt_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 150, -1));
 
         txt_supplier.setBackground(new java.awt.Color(255, 224, 233));
         txt_supplier.setBorder(null);
@@ -328,6 +343,10 @@ public class Tambah_Barang extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btn_hapusActionPerformed
 
+    private void txt_id1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_id1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_id1ActionPerformed
+
      public void id_barang(){
         try {
             String sql = "SELECT id_barang FROM data_barang ORDER BY id_barang DESC";
@@ -391,6 +410,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private javax.swing.JButton btn_hapus;
     private javax.swing.JButton btn_simpan;
     private javax.swing.JButton btn_tambah;
+    private com.swing.Combobox combobox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -401,6 +421,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txt_harga;
     private javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_id1;
     private javax.swing.JComboBox<String> txt_kategori;
     private javax.swing.JTextField txt_namabarang;
     private javax.swing.JTextField txt_produk;
