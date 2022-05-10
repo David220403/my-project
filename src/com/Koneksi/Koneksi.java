@@ -17,9 +17,9 @@ public class Koneksi {
         public static Connection configDB()throws SQLException{
             try {
                 String url, user, pass;
-                url = "jdbc:mysql://localhost/skincare";
+                url = "jdbc:mysql://localhost/db_skincare";
                 user = "root";
-                pass = "";
+                pass = "";       
                 DriverManager.registerDriver(new com.mysql.jdbc.Driver());
                 mysqlconfig = DriverManager.getConnection(url, user, pass);
             } catch (Exception e) {

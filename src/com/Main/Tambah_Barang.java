@@ -18,10 +18,25 @@ import javax.swing.table.DefaultTableModel;
  * @author david
  */
 public class Tambah_Barang extends javax.swing.JDialog {
+    public int getProduk(){
+        int produk = 0;
+        try {
+            String sql = "SELECT produk FROM tb_produk where nama = '"+txt_produk.getSelectedItem()+"'";
+            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement ps=conn.prepareStatement(sql);
+            java.sql.ResultSet rs = ps.executeQuery(sql);
+            if (rs.next()){
+                produk = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Koneksi gagal");
+        }
+        return produk;
+    }
     public int getKategori(){
         int idKategori = 0;
         try {
-            String sql = "SELECT id_kategori FROM kategori WHERE kategori = '"+txt_kategori.getSelectedItem()+"'";
+            String sql = "SELECT id FROM tb_kategori WHERE kategori = '"+txt_kategori.getSelectedItem()+"'";
             java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
             java.sql.PreparedStatement ps=conn.prepareStatement(sql);
             java.sql.ResultSet rs = ps.executeQuery(sql);
@@ -35,7 +50,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
     }
     private void tampilCombo(){
          try {
-            String sql1 = "SELECT * FROM kategori";
+            String sql1 = "SELECT * FROM tb_kategori";
             java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
             java.sql.PreparedStatement pst=conn.prepareStatement(sql1);
             java.sql.ResultSet rs=pst.executeQuery(sql1);
@@ -90,7 +105,6 @@ public class Tambah_Barang extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         txt_id = new javax.swing.JTextField();
-        txt_supplier = new javax.swing.JTextField();
         txt_produk = new javax.swing.JTextField();
         txt_stock = new javax.swing.JTextField();
         txt_harga = new javax.swing.JTextField();
@@ -99,7 +113,6 @@ public class Tambah_Barang extends javax.swing.JDialog {
         btn_simpan = new javax.swing.JButton();
         btn_hapus = new javax.swing.JButton();
         txt_kategori = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -122,16 +135,6 @@ public class Tambah_Barang extends javax.swing.JDialog {
         });
         jPanel1.add(txt_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 82, 150, -1));
 
-        txt_supplier.setBackground(new java.awt.Color(255, 224, 233));
-        txt_supplier.setBorder(null);
-        txt_supplier.setOpaque(false);
-        txt_supplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_supplierActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txt_supplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 81, 150, -1));
-
         txt_produk.setBackground(new java.awt.Color(255, 224, 233));
         txt_produk.setBorder(null);
         txt_produk.setOpaque(false);
@@ -140,7 +143,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 txt_produkActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 129, 150, -1));
+        jPanel1.add(txt_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 127, 150, -1));
 
         txt_stock.setBackground(new java.awt.Color(255, 224, 233));
         txt_stock.setBorder(null);
@@ -150,7 +153,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 txt_stockActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 264, 150, -1));
+        jPanel1.add(txt_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 262, 150, -1));
 
         txt_harga.setBackground(new java.awt.Color(255, 224, 233));
         txt_harga.setBorder(null);
@@ -160,7 +163,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 txt_hargaActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 220, 150, -1));
+        jPanel1.add(txt_harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 218, 150, -1));
 
         txt_namabarang.setBackground(new java.awt.Color(255, 224, 233));
         txt_namabarang.setBorder(null);
@@ -170,7 +173,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 txt_namabarangActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_namabarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 175, 150, -1));
+        jPanel1.add(txt_namabarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 173, 150, -1));
 
         btn_tambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button tambah.png"))); // NOI18N
         btn_tambah.setBorder(null);
@@ -212,27 +215,24 @@ public class Tambah_Barang extends javax.swing.JDialog {
             public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
             }
         });
-        jPanel1.add(txt_kategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 170, 24));
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 78, -1, -1));
+        jPanel1.add(txt_kategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 169, 170, 24));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 260, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 257, -1, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 217, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 214, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 172, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 169, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 125, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 123, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 78, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Group 106.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Group 111.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -256,7 +256,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
         // TODO add your handling code here:
         try {
-            String sql1 = "INSERT INTO `data_barang`(`id_barang`, `produk`, `nama_barang`, `harga_barang`, `stock`, `kode_supplier`, `id_kategori`) VALUES ('"+txt_id.getText()+"','"+txt_produk.getText()+"','"+txt_namabarang.getText()+"','"
+            String sql1 = "INSERT INTO `tb_data_barang`(`id`, `nama`, `harga_beli`, 'harga_jual', `stock`, `id_detail_supplier`, `id_kategori`) VALUES ('"+txt_id.getText()+"','"+getProduk()+"','"+txt_namabarang.getText()+"','"
                     +txt_harga.getText()+"','"+txt_stock.getText()+"','"+txt_supplier.getText()+"','"+getKategori()+"')";
             System.out.println(sql1);
             java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
@@ -282,10 +282,6 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private void txt_produkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_produkActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_produkActionPerformed
-
-    private void txt_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_supplierActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_supplierActionPerformed
 
     private void txt_kategoriPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_txt_kategoriPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
@@ -397,7 +393,6 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txt_harga;
     private javax.swing.JTextField txt_id;
@@ -405,6 +400,5 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private javax.swing.JTextField txt_namabarang;
     private javax.swing.JTextField txt_produk;
     private javax.swing.JTextField txt_stock;
-    private javax.swing.JTextField txt_supplier;
     // End of variables declaration//GEN-END:variables
 }

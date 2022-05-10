@@ -6,6 +6,8 @@
 package com.Main;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -14,6 +16,38 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         
     }
+//    public void dataAkun(){
+//        try {
+//            Connection conn = com.Koneksi.Koneksi.configDB();
+//            String sql = "SELECT akun.username, akun.password,"
+//                    + " akun.email, akun.nohp,"
+//                    + " akun.role '"+txt_username.getText()+"'";
+//            PreparedStatement pst = conn.prepareStatement(sql);
+//            ResultSet rs = pst.executeQuery(sql);
+//            if(rs.next()){
+//    
+//                txt_username.setText(rs.getString("username"));
+//                txt_password.setText(rs.getString("password"));
+//            
+//                // check roles
+//                if(rs.getString("role").equals("admin")){
+//                    Riwayat.panel_hapus.setVisible(true);
+//        
+//                    Riwayat.nilai_opsi = 0;
+//                    Dashboard.checkRoles = 0;
+//                    
+//                } else {
+//                    Riwayat.panel_hapus.setVisible(false);
+//       
+//                    Dashboard.checkRoles = 1;
+//                    Riwayat.nilai_opsi = 1;
+//                }
+//                
+//            }
+//        } catch (Exception e) {
+//            e.getMessage();
+//        }
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,24 +129,24 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try {
-            String sql = "SELECT * FROM akun WHERE username='"+txt_username.getText()
-                    +"'AND password ='"+txt_password.getText()+"'";
-            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
-            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
-            java.sql.ResultSet rs = pst.executeQuery(sql);
-            if(rs.next()){
-                if(txt_username.getText().equals(rs.getString("nama"))
-                        && txt_password.getText().equals(rs.getString("password"))){
-                    this.setVisible(false);
-                    new Dashboard().setVisible(true);
-                }  
-            }else{
-                    JOptionPane.showMessageDialog(null,"login gagal");
-                }
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
+//        try {
+//            String sql = "SELECT * FROM akun WHERE username='"+txt_username.getText()
+//                    +"'AND password ='"+txt_password.getText()+"'";
+//            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+//            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+//            java.sql.ResultSet rs = pst.executeQuery(sql);
+//            if(rs.next()){
+//                if(txt_username.getText().equals(rs.getString("nama"))
+//                        && txt_password.getText().equals(rs.getString("password"))){
+//                    this.setVisible(false);
+//                    new Dashboard().setVisible(true);
+//                }  
+//            }else{
+//                    JOptionPane.showMessageDialog(null,"login gagal");
+//                }
+//        }catch (Exception e){
+//            JOptionPane.showMessageDialog(this, e.getMessage());
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
