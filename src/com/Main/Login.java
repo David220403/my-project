@@ -5,6 +5,7 @@
  */
 package com.Main;
 
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 
@@ -13,6 +14,32 @@ public class Login extends javax.swing.JFrame {
 	public Login() {
 		initComponents();
 
+	}
+
+	private void loginDek() {
+		try {
+			String sql = "SELECT username, password, role FROM tb_akun WHERE username='" + txt_user.getText()
+				+ "'AND password ='" + txt_pass.getText() + "'";
+			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+			java.sql.ResultSet rs = pst.executeQuery(sql);
+			if (rs.next()) {
+
+				if (txt_user.getText().equals("") || txt_pass.getText().equals("")) {
+					txt_user.setText(null);
+					txt_pass.setText(null);
+				} else if (txt_user.getText().equals(rs.getString("username")) && txt_pass.getText().equals(rs.getString("password")) && rs.getString("role").equals("admin")) {
+					this.setVisible(false);
+					new MenuLayout().setVisible(true);
+				} else if (txt_user.getText().equals(rs.getString("username")) && txt_pass.getText().equals(rs.getString("password")) && rs.getString("role").equals("user")) {
+					System.out.println("harus admin aja dek");
+					txt_user.setText("");
+					txt_pass.setText("");
+				}
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 	}
 
 	/**
@@ -57,9 +84,9 @@ public class Login extends javax.swing.JFrame {
 
                 txt_pass.setBackground(new java.awt.Color(255, 224, 233));
                 txt_pass.setBorder(null);
-                txt_pass.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                txt_passActionPerformed(evt);
+                txt_pass.addKeyListener(new java.awt.event.KeyAdapter() {
+                        public void keyReleased(java.awt.event.KeyEvent evt) {
+                                txt_passKeyReleased(evt);
                         }
                 });
                 jPanel1.add(txt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(853, 376, 150, -1));
@@ -94,34 +121,15 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 		// TODO add your handling code here:
-		try {
-			String sql = "SELECT username, password, role FROM tb_akun WHERE username='" + txt_user.getText()
-				+ "'AND password ='" + txt_pass.getText() + "'";
-			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
-			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-			java.sql.ResultSet rs = pst.executeQuery(sql);
-			if (rs.next()) {
-
-				if (txt_user.getText().equals("") || txt_pass.getText().equals("")) {
-					txt_user.setText(null);
-					txt_pass.setText(null);
-				} else if (txt_user.getText().equals(rs.getString("username")) && txt_pass.getText().equals(rs.getString("password")) && rs.getString("role").equals("admin")) {
-					this.setVisible(false);
-                                        new MenuLayout().setVisible(true);
-				} else if (txt_user.getText().equals(rs.getString("username")) && txt_pass.getText().equals(rs.getString("password")) && rs.getString("role").equals("user")) {
-					System.out.println("harus admin aja dek");
-					txt_user.setText("");
-					txt_pass.setText("");
-				}
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage());
-		}
+		loginDek();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txt_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passActionPerformed
+        private void txt_passKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passKeyReleased
 		// TODO add your handling code here:
-    }//GEN-LAST:event_txt_passActionPerformed
+		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+			loginDek();
+		}
+        }//GEN-LAST:event_txt_passKeyReleased
 
 	/**
 	 * @param args the command line arguments
