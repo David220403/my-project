@@ -8,6 +8,7 @@ package com.Main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class Transaksi1 extends javax.swing.JPanel {
 
-	public void tabel() {
+	private void tabelBarang() {
 		DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("ID Barang");
 		model.addColumn("Nama Barang");
@@ -46,13 +47,41 @@ public final class Transaksi1 extends javax.swing.JPanel {
 			System.out.println(e);
 		}
 	}
+
+	private void tabelTransaksi() {
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("ID");
+		model.addColumn("Nama Barang");
+		model.addColumn("Harga Jual");
+		model.addColumn("Jumlah");
+
+		try {
+
+			String sql = "select dt.id, dt.id_transaksi, db.nama, db.harga_jual, count(dt.jumlah) as \"Jumlah\" from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.id join tb_data_barang as db on dt.id_barang = db.id where t.id = (select id from tb_transaksi order by id desc limit 1) group by db.id";
+			Connection conn = com.Koneksi.Koneksi.configDB();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery(sql);
+			while (rs.next()) {
+				model.addRow(new Object[]{
+					rs.getString(1), rs.getString(3), rs.getString(4),
+					rs.getString(5)
+				});
+
+			}
+			table2.setModel(model);
+
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
 	Tambah_Barang edit = new Tambah_Barang(null, true);
 
 	public Transaksi1() {
 		initComponents();
 		table1.fixTable(jScrollPane1);
-		tabel();
+		tabelBarang();
 		table2.fixTable(jScrollPane2);
+		tabelTransaksi();
 	}
 
 	/**
