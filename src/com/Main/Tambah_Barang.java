@@ -18,10 +18,50 @@ import javax.swing.table.DefaultTableModel;
  * @author david
  */
 public class Tambah_Barang extends javax.swing.JDialog {
+//    public int getnamasupplier(){
+//        int namasupplier = 0;
+//        try{
+//            String sql = "SELECT id FROM tb_supplier = '"+txt_produk.getSelectedItem()+"'";
+//            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+//            java.sql.PreparedStatement ps=conn.prepareStatement(sql);
+//            java.sql.ResultSet rs = ps.executeQuery(sql);
+//            if (rs.next()){
+//                produk = rs.getInt(1);
+//            }
+//        }
+//    }
+    public int getproduk(){
+        int produk = 0;
+        try{
+            String sql = "SELECT id FROM tb_produk WHERE nama = '"+txt_produk.getSelectedItem()+"'";
+            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement ps=conn.prepareStatement(sql);
+            java.sql.ResultSet rs = ps.executeQuery(sql);
+            if (rs.next()){
+                produk = rs.getInt(1);
+            }
+        } catch (Exception e){
+            System.out.println("Koneksi gagal");
+        }
+        return produk;
+    }
+    private void tampilcombo1(){
+        try{
+            String sql1 = "SELECT * FROM tb_produk";
+            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql1);
+            java.sql.ResultSet rs=pst.executeQuery(sql1);
+            while (rs.next()){
+                txt_produk.addItem(rs.getString("nama"));
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this , e.getMessage());
+        }
+    }
     public int getKategori(){
         int idKategori = 0;
         try {
-            String sql = "SELECT id_kategori FROM kategori WHERE kategori = '"+txt_kategori.getSelectedItem()+"'";
+            String sql = "SELECT id FROM tb_kategori WHERE kategori = '"+txt_kategori.getSelectedItem()+"'";
             java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
             java.sql.PreparedStatement ps=conn.prepareStatement(sql);
             java.sql.ResultSet rs = ps.executeQuery(sql);
@@ -35,7 +75,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
     }
     private void tampilCombo(){
          try {
-            String sql1 = "SELECT * FROM kategori";
+            String sql1 = "SELECT * FROM tb_kategori";
             java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
             java.sql.PreparedStatement pst=conn.prepareStatement(sql1);
             java.sql.ResultSet rs=pst.executeQuery(sql1);
@@ -69,13 +109,15 @@ public class Tambah_Barang extends javax.swing.JDialog {
             
         }
     }
-     public void show(String ID, String Produk, String Nama_Barang, String Harga_Barang, String Stock, String Nama_Supplier, String Kategori){
+     public void show(String Kode_Barcode, String ID, String Produk, String Nama_Barang, String Harga_Beli, String Harga_Jual, String Stock, String Nama_Supplier, String Kategori){
+        this.txt_barcode.setText(Kode_Barcode);
         this.txt_id.setText(ID);
-        this.txt_produk.setText(Produk);
+        this.txt_produk.getSelectedItem();
         this.txt_namabarang.setText(Nama_Barang);
-        this.txt_harga.setText(Harga_Barang);
+        this.txt_hargabeli.setText(Harga_Beli);
+        this.txt_hargajual.setText(Harga_Jual);
         this.txt_stock.setText(Stock);
-        this.txt_supplier.setText(Nama_Supplier);
+        this.txt_supplier.getSelectedItem(Nama_Supplier);
         this.txt_kategori.getSelectedItem();
     }
 
@@ -89,20 +131,20 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txt_id1 = new javax.swing.JTextField();
-        combobox1 = new com.swing.Combobox();
         txt_id = new javax.swing.JTextField();
-        txt_supplier = new javax.swing.JTextField();
-        txt_produk = new javax.swing.JTextField();
         txt_stock = new javax.swing.JTextField();
-        txt_harga = new javax.swing.JTextField();
+        txt_hargajual = new javax.swing.JTextField();
+        txt_hargabeli = new javax.swing.JTextField();
         txt_namabarang = new javax.swing.JTextField();
+        txt_barcode = new javax.swing.JTextField();
+        txt_supplier = new com.swing.Combobox();
+        txt_kategori = new com.swing.Combobox();
+        txt_produk = new com.swing.Combobox();
         btn_tambah = new javax.swing.JButton();
         btn_simpan = new javax.swing.JButton();
         btn_hapus = new javax.swing.JButton();
-        txt_kategori = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -114,19 +156,6 @@ public class Tambah_Barang extends javax.swing.JDialog {
         jPanel1.setPreferredSize(new java.awt.Dimension(645, 365));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txt_id1.setBackground(new java.awt.Color(185, 55, 94));
-        txt_id1.setBorder(null);
-        txt_id1.setOpaque(false);
-        txt_id1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_id1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txt_id1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 150, -1));
-
-        combobox1.setBackground(new java.awt.Color(255, 194, 212));
-        jPanel1.add(combobox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 170, 24));
-
         txt_id.setBackground(new java.awt.Color(255, 194, 212));
         txt_id.setBorder(null);
         txt_id.setOpaque(false);
@@ -135,29 +164,9 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 txt_idActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 150, -1));
+        jPanel1.add(txt_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 124, 150, -1));
 
-        txt_supplier.setBackground(new java.awt.Color(255, 224, 233));
-        txt_supplier.setBorder(null);
-        txt_supplier.setOpaque(false);
-        txt_supplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_supplierActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txt_supplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 81, 150, -1));
-
-        txt_produk.setBackground(new java.awt.Color(255, 224, 233));
-        txt_produk.setBorder(null);
-        txt_produk.setOpaque(false);
-        txt_produk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_produkActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txt_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 129, 150, -1));
-
-        txt_stock.setBackground(new java.awt.Color(255, 224, 233));
+        txt_stock.setBackground(new java.awt.Color(255, 194, 212));
         txt_stock.setBorder(null);
         txt_stock.setOpaque(false);
         txt_stock.addActionListener(new java.awt.event.ActionListener() {
@@ -165,19 +174,29 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 txt_stockActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 264, 150, -1));
+        jPanel1.add(txt_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 306, 150, -1));
 
-        txt_harga.setBackground(new java.awt.Color(255, 224, 233));
-        txt_harga.setBorder(null);
-        txt_harga.setOpaque(false);
-        txt_harga.addActionListener(new java.awt.event.ActionListener() {
+        txt_hargajual.setBackground(new java.awt.Color(255, 194, 212));
+        txt_hargajual.setBorder(null);
+        txt_hargajual.setOpaque(false);
+        txt_hargajual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_hargaActionPerformed(evt);
+                txt_hargajualActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 220, 150, -1));
+        jPanel1.add(txt_hargajual, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 264, 150, -1));
 
-        txt_namabarang.setBackground(new java.awt.Color(255, 224, 233));
+        txt_hargabeli.setBackground(new java.awt.Color(255, 194, 212));
+        txt_hargabeli.setBorder(null);
+        txt_hargabeli.setOpaque(false);
+        txt_hargabeli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_hargabeliActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_hargabeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 219, 150, -1));
+
+        txt_namabarang.setBackground(new java.awt.Color(255, 194, 212));
         txt_namabarang.setBorder(null);
         txt_namabarang.setOpaque(false);
         txt_namabarang.addActionListener(new java.awt.event.ActionListener() {
@@ -185,69 +204,91 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 txt_namabarangActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_namabarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 175, 150, -1));
+        jPanel1.add(txt_namabarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 172, 150, -1));
+
+        txt_barcode.setBackground(new java.awt.Color(255, 194, 212));
+        txt_barcode.setBorder(null);
+        txt_barcode.setOpaque(false);
+        txt_barcode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_barcodeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_barcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 74, 340, -1));
+
+        txt_supplier.setBackground(new java.awt.Color(255, 194, 212));
+        txt_supplier.setLabeText("");
+        txt_supplier.setOpaque(false);
+        txt_supplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_supplierActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_supplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 118, 170, 30));
+
+        txt_kategori.setBackground(new java.awt.Color(255, 194, 212));
+        txt_kategori.setLabeText("");
+        txt_kategori.setOpaque(false);
+        jPanel1.add(txt_kategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 170, 30));
+
+        txt_produk.setBackground(new java.awt.Color(255, 194, 212));
+        txt_produk.setForeground(new java.awt.Color(255, 224, 233));
+        txt_produk.setToolTipText("");
+        txt_produk.setLabeText("");
+        txt_produk.setOpaque(false);
+        txt_produk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_produkActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 162, 170, 30));
 
         btn_tambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button tambah.png"))); // NOI18N
-        btn_tambah.setBorder(null);
         btn_tambah.setContentAreaFilled(false);
         btn_tambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_tambahActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, 125, 30));
+        jPanel1.add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 320, 125, 30));
 
         btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Simpan.png"))); // NOI18N
-        btn_simpan.setBorder(null);
         btn_simpan.setContentAreaFilled(false);
         btn_simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_simpanActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 125, 30));
+        jPanel1.add(btn_simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 125, 30));
 
         btn_hapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button hapus.png"))); // NOI18N
-        btn_hapus.setBorder(null);
         btn_hapus.setContentAreaFilled(false);
         btn_hapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_hapusActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 125, 30));
-
-        txt_kategori.setPreferredSize(new java.awt.Dimension(170, 24));
-        txt_kategori.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
-                txt_kategoriPopupMenuWillBecomeInvisible(evt);
-            }
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
-            }
-        });
-        jPanel1.add(txt_kategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 170, 24));
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 78, -1, -1));
+        jPanel1.add(btn_hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 125, 30));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 260, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 302, -1, -1));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 95.png"))); // NOI18N
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 217, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 172, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 215, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 125, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 168, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 78, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Group 106.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Tambah barang new.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -271,7 +312,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
         // TODO add your handling code here:
         try {
-            String sql1 = "INSERT INTO `data_barang`(`id_barang`, `produk`, `nama_barang`, `harga_barang`, `stock`, `kode_supplier`, `id_kategori`) VALUES ('"+txt_id.getText()+"','"+txt_produk.getText()+"','"+txt_namabarang.getText()+"','"
+            String sql1 = "INSERT INTO `tb_data_barang`(`id`, `nama`, `harga_beli`, 'harga_jual', `stock`, `id_detail_supplier`, `id_kategori`) VALUES ('"+txt_kode_barcode.getText()+"','"+getproduk()+"','"+txt_namabarang.getText()+"','"
                     +txt_harga.getText()+"','"+txt_stock.getText()+"','"+txt_supplier.getText()+"','"+getKategori()+"')";
             System.out.println(sql1);
             java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
@@ -282,41 +323,12 @@ public class Tambah_Barang extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btn_tambahActionPerformed
 
-    private void txt_namabarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namabarangActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_namabarangActionPerformed
-
-    private void txt_hargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_hargaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_hargaActionPerformed
-
-    private void txt_stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_stockActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_stockActionPerformed
-
-    private void txt_produkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_produkActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_produkActionPerformed
-
-    private void txt_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_supplierActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_supplierActionPerformed
-
-    private void txt_kategoriPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_txt_kategoriPopupMenuWillBecomeInvisible
-        // TODO add your handling code here:
-       getKategori();
-    }//GEN-LAST:event_txt_kategoriPopupMenuWillBecomeInvisible
-
-    private void txt_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_idActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_idActionPerformed
-
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
         // TODO add your handling code here:
     try{
-        String sql = "UPDATE data_barang SET id_barang = '"+txt_id.getText()+"', produk = '"+txt_produk.getText()+"', nama_barang = '"+txt_namabarang.getText()
-                +"', harga_barang = '"+txt_harga.getText()+"', stock = '"+txt_stock.getText()+"', kode_supplier = (select kode_supplier from data_supplier where nama_supplier = '"+txt_supplier.getText()
-                +"'), id_kategori =  (select id_kategori from kategori where kategori = '"+txt_kategori.getSelectedItem()+"') WHERE data_barang.id_barang = '"+txt_id.getText()+"'";
+        String sql = "UPDATE tb_data_barang SET id = '"+txt_kode_barcode.getText()+"', produk = (select id from tb_produk where nama = '"+txt_produk.getSelectedItem()+"'), nama = '"+txt_namabarang.getText()
+                +"', harga_beli = '"+txt_harga.getText()+"', stock = '"+txt_stock.getText()+"', kode_supplier = (select kode_supplier from data_supplier where nama_supplier = '"+txt_supplier.getText()
+                +"'), id_kategori =  (select id_kategori from kategori where kategori = '"+txt_kategori.getSelectedItem()+"') WHERE data_barang.id_barang = '"+txt_kode_barcode.getText()+"'";
         System.out.println(sql);
         java.sql.Connection conn= (Connection)com.Koneksi.Koneksi.configDB();
         java.sql.PreparedStatement ps=conn.prepareStatement(sql);
@@ -343,9 +355,37 @@ public class Tambah_Barang extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btn_hapusActionPerformed
 
-    private void txt_id1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_id1ActionPerformed
+    private void txt_produkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_produkActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_id1ActionPerformed
+    }//GEN-LAST:event_txt_produkActionPerformed
+
+    private void txt_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_supplierActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_supplierActionPerformed
+
+    private void txt_namabarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namabarangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_namabarangActionPerformed
+
+    private void txt_barcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_barcodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_barcodeActionPerformed
+
+    private void txt_hargabeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_hargabeliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_hargabeliActionPerformed
+
+    private void txt_hargajualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_hargajualActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_hargajualActionPerformed
+
+    private void txt_stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_stockActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_stockActionPerformed
+
+    private void txt_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_idActionPerformed
 
      public void id_barang(){
         try {
@@ -410,22 +450,22 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private javax.swing.JButton btn_hapus;
     private javax.swing.JButton btn_simpan;
     private javax.swing.JButton btn_tambah;
-    private com.swing.Combobox combobox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txt_harga;
+    private javax.swing.JTextField txt_barcode;
+    private javax.swing.JTextField txt_hargabeli;
+    private javax.swing.JTextField txt_hargajual;
     private javax.swing.JTextField txt_id;
-    private javax.swing.JTextField txt_id1;
-    private javax.swing.JComboBox<String> txt_kategori;
+    private com.swing.Combobox txt_kategori;
     private javax.swing.JTextField txt_namabarang;
-    private javax.swing.JTextField txt_produk;
+    private com.swing.Combobox txt_produk;
     private javax.swing.JTextField txt_stock;
-    private javax.swing.JTextField txt_supplier;
+    private com.swing.Combobox txt_supplier;
     // End of variables declaration//GEN-END:variables
 }

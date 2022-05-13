@@ -57,8 +57,8 @@ public class Combobox<E> extends JComboBox<E> {
 	private boolean mouseOver;
 
 	public Combobox() {
-		UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new Color(255,224,233)));
-		setBackground(new Color(255,224,233));
+		UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new Color(255, 224,233)));
+		setBackground(new Color(255, 224, 233));
 		setBorder(new EmptyBorder(15, 3, 5, 3));
 		setUI(new ComboUI(this));
 		setRenderer(new DefaultListCellRenderer() {
@@ -174,7 +174,7 @@ public class Combobox<E> extends JComboBox<E> {
 					scroll.setBackground(Color.WHITE);
 					ScrollBarCustom sb = new ScrollBarCustom();
 					sb.setUnitIncrement(30);
-					sb.setForeground(new Color(180, 180, 180));
+					sb.setForeground(new Color(255, 224, 233));
 					scroll.setVerticalScrollBar(sb);
 					return scroll;
 				}

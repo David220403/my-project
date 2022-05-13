@@ -95,21 +95,19 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 		// TODO add your handling code here:
 		try {
-			String sql = "SELECT username, password, role FROM akun WHERE username='" + txt_user.getText()
+			String sql = "SELECT username, password, role FROM tb_akun WHERE username='" + txt_user.getText()
 				+ "'AND password ='" + txt_pass.getText() + "'";
 			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
 			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 			java.sql.ResultSet rs = pst.executeQuery(sql);
 			if (rs.next()) {
 
-				System.out.println(rs.getString(1));
-
 				if (txt_user.getText().equals("") || txt_pass.getText().equals("")) {
 					txt_user.setText(null);
 					txt_pass.setText(null);
 				} else if (txt_user.getText().equals(rs.getString("username")) && txt_pass.getText().equals(rs.getString("password")) && rs.getString("role").equals("admin")) {
 					this.setVisible(false);
-					new Dashboard().setVisible(true);
+                                        new MenuLayout().setVisible(true);
 				} else if (txt_user.getText().equals(rs.getString("username")) && txt_pass.getText().equals(rs.getString("password")) && rs.getString("role").equals("user")) {
 					System.out.println("harus admin aja dek");
 					txt_user.setText("");
