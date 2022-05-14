@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 13, 2022 at 07:22 PM
+-- Generation Time: May 14, 2022 at 10:59 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -105,7 +105,45 @@ CREATE TABLE `tb_detail_transaksi` (
 INSERT INTO `tb_detail_transaksi` (`id`, `id_transaksi`, `id_barang`, `jumlah`) VALUES
 (2, 1, 1, 1),
 (3, 1, 1, 1),
-(4, 1, 2, 1);
+(4, 1, 2, 1),
+(5, 1, 1, 1),
+(6, 1, 2, 1),
+(7, 1, 1, 1),
+(8, 1, 1, 1),
+(9, 1, 2, 1),
+(11, 1, 1, 1),
+(12, 1, 2, 1),
+(13, 1, 1, 1),
+(14, 1, 1, 1),
+(15, 1, 2, 1),
+(16, 1, 1, 1),
+(17, 1, 2, 1),
+(18, 1, 1, 1),
+(19, 1, 1, 1),
+(20, 1, 1, 1),
+(21, 1, 1, 1),
+(22, 1, 2, 1),
+(23, 1, 1, 1),
+(24, 1, 2, 1),
+(25, 1, 2, 1),
+(26, 1, 2, 1),
+(27, 1, 2, 1),
+(28, 1, 2, 1),
+(29, 1, 2, 1),
+(30, 1, 1, 1),
+(31, 1, 1, 1),
+(32, 1, 1, 1),
+(33, 1, 1, 1),
+(34, 1, 1, 1),
+(35, 1, 1, 1),
+(36, 5, 1, 1),
+(37, 5, 2, 1),
+(38, 5, 2, 1),
+(39, 5, 1, 1),
+(40, 6, 1, 1),
+(41, 6, 2, 1),
+(42, 7, 2, 1),
+(43, 7, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -208,7 +246,11 @@ CREATE TABLE `tb_transaksi` (
 --
 
 INSERT INTO `tb_transaksi` (`id`, `total_harga`, `dibayar`, `kembalian`, `tanggal`, `id_pelanggan`, `id_akun`) VALUES
-(1, NULL, NULL, NULL, '2022-05-13 23:43:58', 1, 1);
+(1, 365000, 500000, 135000, '2022-05-13 23:43:58', 1, 1),
+(5, 40000, 50000, 10000, '2022-05-14 14:54:51', NULL, 1),
+(6, 20000, 30000, 10000, '2022-05-14 15:53:18', NULL, 1),
+(7, 10000, 20000, 10000, '2022-05-14 15:56:08', NULL, 1),
+(8, NULL, NULL, NULL, '2022-05-14 15:57:05', NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -302,7 +344,7 @@ ALTER TABLE `tb_detail_supplier`
 -- AUTO_INCREMENT for table `tb_detail_transaksi`
 --
 ALTER TABLE `tb_detail_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `tb_kategori`
@@ -332,7 +374,7 @@ ALTER TABLE `tb_supplier`
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
