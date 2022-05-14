@@ -177,7 +177,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="250" y="118" width="170" height="30"/>
+              <AbsoluteConstraints x="250" y="118" width="170" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -189,9 +189,12 @@
             <Property name="labeText" type="java.lang.String" value=""/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_kategoriActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="250" y="210" width="170" height="30"/>
+              <AbsoluteConstraints x="250" y="240" width="170" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -215,7 +218,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="250" y="162" width="170" height="30"/>
+              <AbsoluteConstraints x="250" y="180" width="170" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -342,7 +345,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Gambar/Tambah barang new.png"/>
+              <Image iconType="3" name="/Gambar/tambah barang terbaru.png"/>
             </Property>
           </Properties>
           <Constraints>

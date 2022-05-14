@@ -224,12 +224,17 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 txt_supplierActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_supplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 118, 170, 30));
+        jPanel1.add(txt_supplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 118, 170, 40));
 
         txt_kategori.setBackground(new java.awt.Color(255, 194, 212));
         txt_kategori.setLabeText("");
         txt_kategori.setOpaque(false);
-        jPanel1.add(txt_kategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 170, 30));
+        txt_kategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_kategoriActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_kategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 170, 40));
 
         txt_produk.setBackground(new java.awt.Color(255, 194, 212));
         txt_produk.setForeground(new java.awt.Color(255, 224, 233));
@@ -241,7 +246,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 txt_produkActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 162, 170, 30));
+        jPanel1.add(txt_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 170, 40));
 
         btn_tambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button tambah.png"))); // NOI18N
         btn_tambah.setContentAreaFilled(false);
@@ -288,7 +293,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Tambah barang new.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/tambah barang terbaru.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -386,6 +391,10 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private void txt_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_idActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_idActionPerformed
+
+    private void txt_kategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kategoriActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_kategoriActionPerformed
 
      public void id_barang(){
         try {

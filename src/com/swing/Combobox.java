@@ -53,7 +53,7 @@ public class Combobox<E> extends JComboBox<E> {
 	}
 
 	private String labeText = "Label";
-	private Color lineColor = new Color(85, 65, 118);
+	private Color lineColor = new Color(0, 0, 0);
 	private boolean mouseOver;
 
 	public Combobox() {
@@ -128,12 +128,12 @@ public class Combobox<E> extends JComboBox<E> {
 
 				@Override
 				public void popupMenuWillBecomeInvisible(PopupMenuEvent pme) {
-					arrowButton.setBackground(new Color(150, 150, 150));
+					arrowButton.setBackground(new Color(0, 0, 0));
 				}
 
 				@Override
 				public void popupMenuCanceled(PopupMenuEvent pme) {
-					arrowButton.setBackground(new Color(150, 150, 150));
+					arrowButton.setBackground(new Color(0, 0, 0));
 				}
 			});
 			TimingTarget target = new TimingTargetAdapter() {
