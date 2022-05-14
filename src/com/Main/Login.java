@@ -5,6 +5,7 @@
  */
 package com.Main;
 
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
@@ -13,7 +14,7 @@ public class Login extends javax.swing.JFrame {
 
 	public Login() {
 		initComponents();
-
+		setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - getSize().width) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - getSize().height) / 2);
 	}
 
 	private void loginDek() {
