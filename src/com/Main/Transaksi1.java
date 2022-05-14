@@ -73,12 +73,40 @@ public final class Transaksi1 extends javax.swing.JPanel {
 	private void clear() {
 		bayar.setText(null);
 		kembalian.setText(null);
-
+		tabelTransaksi();
 	}
 
 	public void insertBarang(String barcode) {
 		try {
 			String sql = "INSERT INTO tb_detail_transaksi VALUES (NULL, (select id from tb_transaksi order by id desc limit 1) , '" + barcode + "', '1');";
+			Connection conn = com.Koneksi.Koneksi.configDB();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.executeUpdate(sql);
+			tabelTransaksi();
+		} catch (SQLException ex) {
+			System.out.println("lol dek: " + ex.getMessage());
+		}
+	}
+
+	private void checkout() {
+		try {
+			String sql = "UPDATE tb_transaksi SET total_harga = " + getTotalHarga() + ", dibayar = " + uangBayar + ", kembalian = " + getKembalian() + " where id = (select id from tb_transaksi order by id desc limit 1);";
+			System.out.println(sql);
+			Connection conn = com.Koneksi.Koneksi.configDB();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.executeUpdate(sql);
+			tabelTransaksi();
+		} catch (SQLException ex) {
+			System.out.println("lol dek: " + ex.getMessage());
+		}
+		insertNewTransaksi();
+		clear();
+	}
+
+	private void insertNewTransaksi() {
+		try {
+			String sql = "INSERT INTO tb_transaksi VALUES (NULL, NULL, NULL, NULL, current_timestamp(), NULL, '1');";
+			System.out.println(sql);
 			Connection conn = com.Koneksi.Koneksi.configDB();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.executeUpdate(sql);
@@ -495,6 +523,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
 
         private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 		// TODO add your handling code here:
+		checkout();
         }//GEN-LAST:event_jButton3ActionPerformed
 
         private void bayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bayarKeyReleased
