@@ -26,14 +26,13 @@ public class Data_Supplier extends javax.swing.JPanel {
 
         try {
             
-            String sql = "SELECT kode_supplier,nama_supplier,nama_toko,alamat,produk FROM data_supplier";
+            String sql = "SELECT id,id_supplier,id_produk FROM tb_detail_supplier";
             Connection conn = com.Koneksi.Koneksi.configDB();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery(sql);
             while(rs.next()){
                 model.addRow(new Object[]{
-                    rs.getString(1), rs.getString(2), rs.getString(3), 
-                    rs.getString(4), rs.getString(5)
+                    rs.getString(1), rs.getString(2), rs.getString(3)
                 });
                 
             }

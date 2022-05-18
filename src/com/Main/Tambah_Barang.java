@@ -30,34 +30,54 @@ public class Tambah_Barang extends javax.swing.JDialog {
 //            }
 //        }
 //    }
-    public int getproduk(){
-        int produk = 0;
-        try{
-            String sql = "SELECT id FROM tb_produk WHERE nama = '"+txt_produk.getSelectedItem()+"'";
-            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
-            java.sql.PreparedStatement ps=conn.prepareStatement(sql);
-            java.sql.ResultSet rs = ps.executeQuery(sql);
-            if (rs.next()){
-                produk = rs.getInt(1);
-            }
-        } catch (Exception e){
-            System.out.println("Koneksi gagal");
-        }
-        return produk;
-    }
-    private void tampilcombo1(){
-        try{
-            String sql1 = "SELECT * FROM tb_produk";
-            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
-            java.sql.PreparedStatement pst=conn.prepareStatement(sql1);
-            java.sql.ResultSet rs=pst.executeQuery(sql1);
-            while (rs.next()){
-                txt_produk.addItem(rs.getString("nama"));
-            }
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(this , e.getMessage());
-        }
-    }
+//    public int getproduk(){
+//        int produk = 0;
+//        try{
+//            String sql = "SELECT id FROM tb_produk WHERE nama = '"+txt_produk.getSelectedItem()+"'";
+//            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+//            java.sql.PreparedStatement ps=conn.prepareStatement(sql);
+//            java.sql.ResultSet rs = ps.executeQuery(sql);
+//            if (rs.next()){
+//                produk = rs.getInt(1);
+//            }
+//        } catch (Exception e){
+//            System.out.println("Koneksi gagal");
+//        }
+//        return produk;
+//    }
+//    private void tampilcombo1(){
+//        try{
+//            String sql1 = "SELECT * FROM tb_produk";
+//            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+//            java.sql.PreparedStatement pst=conn.prepareStatement(sql1);
+//            java.sql.ResultSet rs=pst.executeQuery(sql1);
+//            while (rs.next()){
+//                txt_produk.addItem(rs.getString("nama"));
+//            }
+//        } catch (Exception e){
+//            JOptionPane.showMessageDialog(this , e.getMessage());
+//        }
+//    }
+//    public void id_barang(){
+//        try{
+//            String sql = "SELECT id FROM tb_kategori WHERE kategori = '"+txt_kategori.getSelectedItem()+"'";
+//            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+//            java.sql.PreparedStatement ps=conn.prepareStatement(sql);
+//            java.sql.ResultSet rs = ps.executeQuery(sql);
+//            if (rs.next()){
+//                String kode = rs.getString("id").substring(1);
+//                String AN = "" +(Integer.parseInt(kode) +1);
+//                String Nol = "";
+//                
+//                if(AN.length()==1)
+//                    (Nol = "00";)
+//                    else if(AN.length()==2)
+//                        (Nol = "0";)
+//                        else if (AN.length()==3)
+//                            (Nol )
+//            }
+//        }
+//    }
     public int getKategori(){
         int idKategori = 0;
         try {
@@ -87,12 +107,43 @@ public class Tambah_Barang extends javax.swing.JDialog {
         }
     }
     
+    private void tampilSupplier(){
+         try {
+            String sql1 = "SELECT * FROM tb_supplier";
+            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql1);
+            java.sql.ResultSet rs=pst.executeQuery(sql1);
+            while(rs.next()){
+                txt_supplier.addItem(rs.getString("nama"));
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }    
+    }
+    
+    private void tampilProduk(){
+         try {
+            String sql1 = "select p.nama from tb_detail_supplier as ds join tb_produk as p on ds.id_produk = p.id join tb_supplier as s on ds.id_supplier = s.id where s.nama = '" + txt_supplier.getSelectedItem() + "'";
+            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql1);
+            java.sql.ResultSet rs=pst.executeQuery(sql1);
+            while(rs.next()){
+                txt_produk.addItem(rs.getString("nama"));
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
     public Tambah_Barang(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         tampilCombo();
-        id_barang();
-        txt_id.disable();
+        tampilSupplier();
+//        id_barang();
+//        setBackground(new Color(0, 0, 0));
+//        txt_id.disable();
+        
     }
     public void select(int konfirm){
         if ( konfirm == 0 ){
@@ -117,7 +168,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
         this.txt_hargabeli.setText(Harga_Beli);
         this.txt_hargajual.setText(Harga_Jual);
         this.txt_stock.setText(Stock);
-        this.txt_supplier.getSelectedItem(Nama_Supplier);
+        this.txt_supplier.getSelectedItem();
         this.txt_kategori.getSelectedItem();
     }
 
@@ -219,6 +270,15 @@ public class Tambah_Barang extends javax.swing.JDialog {
         txt_supplier.setBackground(new java.awt.Color(255, 194, 212));
         txt_supplier.setLabeText("");
         txt_supplier.setOpaque(false);
+        txt_supplier.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                txt_supplierPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
         txt_supplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_supplierActionPerformed(evt);
@@ -237,7 +297,6 @@ public class Tambah_Barang extends javax.swing.JDialog {
         jPanel1.add(txt_kategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 170, 40));
 
         txt_produk.setBackground(new java.awt.Color(255, 194, 212));
-        txt_produk.setForeground(new java.awt.Color(255, 224, 233));
         txt_produk.setToolTipText("");
         txt_produk.setLabeText("");
         txt_produk.setOpaque(false);
@@ -317,8 +376,9 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
         // TODO add your handling code here:
         try {
-            String sql1 = "INSERT INTO `tb_data_barang`(`id`, `nama`, `harga_beli`, 'harga_jual', `stock`, `id_detail_supplier`, `id_kategori`) VALUES ('"+txt_kode_barcode.getText()+"','"+getproduk()+"','"+txt_namabarang.getText()+"','"
-                    +txt_harga.getText()+"','"+txt_stock.getText()+"','"+txt_supplier.getText()+"','"+getKategori()+"')";
+//            String sql1 = "INSERT INTO `tb_data_barang`(`id`, `nama`, `harga_beli`, 'harga_jual', `stock`, `id_detail_supplier`, `id_kategori`) VALUES ('"+txt_kode_barcode.getText()+"','"+getproduk()+"','"+txt_namabarang.getText()+"','"
+//                    +txt_harga.getText()+"','"+txt_stock.getText()+"','"+txt_supplier.getText()+"','"+getKategori()+"')";
+            String sql1 = "INSERT INTO `tb_data_barang`(`id`, `nama`, `harga_beli`, `harga_jual`, `stock`, `id_detail_supplier`, `id_kategori`) VALUES ('"+txt_id.getText()+"','"+txt_namabarang.getText()+"','"+txt_hargabeli.getText()+"','"+txt_hargajual.getText()+"','"+txt_stock.getText()+"','"+txt_supplier.getSelectedItem()   +"','"+getKategori()+"')";
             System.out.println(sql1);
             java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
             java.sql.PreparedStatement pst=conn.prepareStatement(sql1);
@@ -330,27 +390,28 @@ public class Tambah_Barang extends javax.swing.JDialog {
 
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
         // TODO add your handling code here:
-    try{
-        String sql = "UPDATE tb_data_barang SET id = '"+txt_kode_barcode.getText()+"', produk = (select id from tb_produk where nama = '"+txt_produk.getSelectedItem()+"'), nama = '"+txt_namabarang.getText()
-                +"', harga_beli = '"+txt_harga.getText()+"', stock = '"+txt_stock.getText()+"', kode_supplier = (select kode_supplier from data_supplier where nama_supplier = '"+txt_supplier.getText()
-                +"'), id_kategori =  (select id_kategori from kategori where kategori = '"+txt_kategori.getSelectedItem()+"') WHERE data_barang.id_barang = '"+txt_kode_barcode.getText()+"'";
-        System.out.println(sql);
-        java.sql.Connection conn= (Connection)com.Koneksi.Koneksi.configDB();
-        java.sql.PreparedStatement ps=conn.prepareStatement(sql);
-  
-        ps.execute();
-        JOptionPane.showMessageDialog(null, "Data berhasil di Update");
-        Transaksi1 t = new Transaksi1();
-        t.tabel();
-    } catch (Exception e){
-        JOptionPane.showMessageDialog(null, "Update Data Gagal"+e.getMessage());
-    }
+//       try{
+////        String sql = "UPDATE tb_data_barang SET id = '"+txt_kode_barcode.getText()+"', produk = (select id from tb_produk where nama = '"+txt_produk.getSelectedItem()+"'), nama = '"+txt_namabarang.getText()
+////                +"', harga_beli = '"+txt_harga.getText()+"', stock = '"+txt_stock.getText()+"', kode_supplier = (select kode_supplier from data_supplier where nama_supplier = '"+txt_supplier.getText()
+////                +"'), id_kategori =  (select id_kategori from kategori where kategori = '"+txt_kategori.getSelectedItem()+"') WHERE data_barang.id_barang = '"+txt_kode_barcode.getText()+"'";
+//          String sql = "UPDATE `tb_data_barang` SET `id`='"+txt_id.getText()+"',`nama`='"+txt_namabarang.getText()+"',`harga_beli`='"+txt_hargabeli.getText()+"',`harga_jual`='"+txt_hargajual.getText()+"',`stock`='"+txt_stock.getText()+"',`id_detail_supplier`='"+txt_supplier.getSelectedItem()+"',`id_kategori`='"+getKategori()+"' where 1";
+//        System.out.println(sql);
+//        java.sql.Connection conn= (Connection)com.Koneksi.Koneksi.configDB();
+//        java.sql.PreparedStatement ps=conn.prepareStatement(sql);
+//  
+//        ps.execute();
+//        JOptionPane.showMessageDialog(null, "Data berhasil di Update");
+//        Transaksi1 t = new Transaksi1();
+//        t.tabel();
+//    } catch (Exception e){
+//        JOptionPane.showMessageDialog(null, "Update Data Gagal"+e.getMessage());
+//   }
     }//GEN-LAST:event_btn_simpanActionPerformed
 
     private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
         // TODO add your handling code here:
         try {
-            String sql = "DELETE FROM data_barang WHERE id_barang = '"+txt_id.getText()+"'";
+            String sql = "DELETE FROM tb_data_barang WHERE id = '"+txt_id.getText()+"'";
             java.sql.Connection conn= (Connection)com.Koneksi.Koneksi.configDB();
             java.sql.PreparedStatement ps=conn.prepareStatement(sql);
             ps.execute();
@@ -390,29 +451,35 @@ public class Tambah_Barang extends javax.swing.JDialog {
 
     private void txt_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_idActionPerformed
         // TODO add your handling code here:
+        txt_id.setBackground(new Color(255,194,212));
     }//GEN-LAST:event_txt_idActionPerformed
 
     private void txt_kategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kategoriActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_kategoriActionPerformed
 
-     public void id_barang(){
-        try {
-            String sql = "SELECT id_barang FROM data_barang ORDER BY id_barang DESC";
-            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
-            java.sql.PreparedStatement ps=conn.prepareStatement(sql);
-            java.sql.ResultSet rs = ps.executeQuery(sql);
-            if ( rs.next()){
-                String idBarang = rs.getString("id_barang").substring(2);
-                String br = "100" +(Integer.parseInt(idBarang)+1);
-                txt_id.setText(br);
-            } else {
-                txt_id.setText("1001");
-            }
-        } catch (Exception e) {
-            System.out.println("Koneksi gagal");
-        }
-    }
+    private void txt_supplierPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_txt_supplierPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        tampilProduk();
+    }//GEN-LAST:event_txt_supplierPopupMenuWillBecomeInvisible
+
+//     public void id_barang(){
+//        try {
+//            String sql = "SELECT id FROM tb_data_barang ORDER BY id DESC";
+//            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+//            java.sql.PreparedStatement ps=conn.prepareStatement(sql);
+//            java.sql.ResultSet rs = ps.executeQuery(sql);
+//            if ( rs.next()){
+//                String idBarang = rs.getString("id").substring(2);
+//                String br = "BR" +(Integer.toString(idBarang)+1);
+//                txt_id.setText(br);
+//            } else {
+//                txt_id.setText("100");
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Koneksi gagal");
+//        }
+//    }
     /**
      * @param args the command line arguments
      */

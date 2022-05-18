@@ -20,6 +20,8 @@ public class Tambah_Supplier extends javax.swing.JDialog {
 	public Tambah_Supplier(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
 		initComponents();
+                 id_barang();
+        txt_kodesupplier.disable();
 	}
         public void select1(int konfirm){
         if ( konfirm == 0 ){
@@ -235,7 +237,23 @@ public class Tambah_Supplier extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_btn_tambahActionPerformed
-
+ public void id_barang(){
+        try {
+            String sql = "SELECT id FROM tb_detail_supplier ORDER BY id DESC";
+            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement ps=conn.prepareStatement(sql);
+            java.sql.ResultSet rs = ps.executeQuery(sql);
+            if ( rs.next()){
+                String idBarang = rs.getString("id").substring(2);
+                String br = "BR" +(Integer.parseInt(idBarang)+1);
+                txt_kodesupplier.setText(br);
+            } else {
+                txt_kodesupplier.setText("BR100");
+            }
+        } catch (Exception e) {
+            System.out.println("Koneksi gagal");
+        }
+    }
 	/**
 	 * @param args the command line arguments
 	 */
