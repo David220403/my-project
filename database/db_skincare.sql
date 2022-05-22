@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 14, 2022 at 10:59 AM
+-- Generation Time: May 22, 2022 at 04:03 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -49,13 +49,13 @@ INSERT INTO `tb_akun` (`id`, `nama`, `username`, `password`, `role`) VALUES
 --
 
 CREATE TABLE `tb_data_barang` (
-  `id` int(11) NOT NULL,
+  `id` varchar(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `harga_beli` int(11) NOT NULL,
   `harga_jual` int(11) NOT NULL,
   `stock` int(11) NOT NULL,
-  `id_detail_supplier` int(11) NOT NULL,
-  `id_kategori` int(11) NOT NULL
+  `id_detail_supplier` varchar(11) NOT NULL,
+  `id_kategori` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -63,8 +63,25 @@ CREATE TABLE `tb_data_barang` (
 --
 
 INSERT INTO `tb_data_barang` (`id`, `nama`, `harga_beli`, `harga_jual`, `stock`, `id_detail_supplier`, `id_kategori`) VALUES
-(1, 'Kontolodon', 3000, 15000, 30, 1, 2),
-(2, 'Memekicuy', 2000, 5000, 3, 1, 1);
+('2200001', 'loldek', 10000, 2000, 6, 'DS00002', 'K00001');
+
+--
+-- Triggers `tb_data_barang`
+--
+DELIMITER $$
+CREATE TRIGGER `format_idBarang` BEFORE INSERT ON `tb_data_barang` FOR EACH ROW BEGIN
+	DECLARE countColumn INT;
+    DECLARE lastColumn INT;
+    SET @countColumn = (select count(*) from tb_data_barang);
+	SET @lastColumn = (select REPLACE(LTRIM(REPLACE(substring((select id from tb_data_barang order by id desc limit 1),3), '0', ' ')),' ', '0'));
+	IF @countColumn = 0 THEN
+		SET NEW.id = CONCAT(right(year(now()),2), RIGHT(CONCAT('0000', (@countColumn + 1)),5));
+	ELSE
+		SET NEW.id = CONCAT(right(year(now()),2), RIGHT(CONCAT('0000', @lastColumn + 1),5));
+	END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -73,8 +90,8 @@ INSERT INTO `tb_data_barang` (`id`, `nama`, `harga_beli`, `harga_jual`, `stock`,
 --
 
 CREATE TABLE `tb_detail_supplier` (
-  `id` int(11) NOT NULL,
-  `id_supplier` int(11) NOT NULL,
+  `id` varchar(11) NOT NULL,
+  `id_supplier` varchar(11) NOT NULL,
   `id_produk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -83,7 +100,26 @@ CREATE TABLE `tb_detail_supplier` (
 --
 
 INSERT INTO `tb_detail_supplier` (`id`, `id_supplier`, `id_produk`) VALUES
-(1, 1, 2);
+('DS00001', 'S00001', 2),
+('DS00002', 'S00001', 1);
+
+--
+-- Triggers `tb_detail_supplier`
+--
+DELIMITER $$
+CREATE TRIGGER `format_idDetailSupplier` BEFORE INSERT ON `tb_detail_supplier` FOR EACH ROW BEGIN
+	DECLARE countColumn INT;
+    DECLARE lastColumn INT;
+    SET @countColumn = (select count(*) from tb_detail_supplier);
+	SET @lastColumn = (select REPLACE(LTRIM(REPLACE(substring((select id from tb_detail_supplier order by id desc limit 1),3), '0', ' ')),' ', '0'));
+	IF @countColumn = 0 THEN
+		SET NEW.id = CONCAT("DS", RIGHT(CONCAT('0000', (@countColumn + 1)),5));
+	ELSE
+		SET NEW.id = CONCAT("DS", RIGHT(CONCAT('0000', @lastColumn + 1),5));
+	END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -94,7 +130,7 @@ INSERT INTO `tb_detail_supplier` (`id`, `id_supplier`, `id_produk`) VALUES
 CREATE TABLE `tb_detail_transaksi` (
   `id` int(11) NOT NULL,
   `id_transaksi` int(11) NOT NULL,
-  `id_barang` int(11) NOT NULL,
+  `id_barang` varchar(11) NOT NULL,
   `jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -103,47 +139,8 @@ CREATE TABLE `tb_detail_transaksi` (
 --
 
 INSERT INTO `tb_detail_transaksi` (`id`, `id_transaksi`, `id_barang`, `jumlah`) VALUES
-(2, 1, 1, 1),
-(3, 1, 1, 1),
-(4, 1, 2, 1),
-(5, 1, 1, 1),
-(6, 1, 2, 1),
-(7, 1, 1, 1),
-(8, 1, 1, 1),
-(9, 1, 2, 1),
-(11, 1, 1, 1),
-(12, 1, 2, 1),
-(13, 1, 1, 1),
-(14, 1, 1, 1),
-(15, 1, 2, 1),
-(16, 1, 1, 1),
-(17, 1, 2, 1),
-(18, 1, 1, 1),
-(19, 1, 1, 1),
-(20, 1, 1, 1),
-(21, 1, 1, 1),
-(22, 1, 2, 1),
-(23, 1, 1, 1),
-(24, 1, 2, 1),
-(25, 1, 2, 1),
-(26, 1, 2, 1),
-(27, 1, 2, 1),
-(28, 1, 2, 1),
-(29, 1, 2, 1),
-(30, 1, 1, 1),
-(31, 1, 1, 1),
-(32, 1, 1, 1),
-(33, 1, 1, 1),
-(34, 1, 1, 1),
-(35, 1, 1, 1),
-(36, 5, 1, 1),
-(37, 5, 2, 1),
-(38, 5, 2, 1),
-(39, 5, 1, 1),
-(40, 6, 1, 1),
-(41, 6, 2, 1),
-(42, 7, 2, 1),
-(43, 7, 2, 1);
+(73, 8, '2200001', 1),
+(74, 8, '2200001', 1);
 
 -- --------------------------------------------------------
 
@@ -152,7 +149,7 @@ INSERT INTO `tb_detail_transaksi` (`id`, `id_transaksi`, `id_barang`, `jumlah`) 
 --
 
 CREATE TABLE `tb_kategori` (
-  `id` int(11) NOT NULL,
+  `id` varchar(11) NOT NULL,
   `kategori` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -161,9 +158,26 @@ CREATE TABLE `tb_kategori` (
 --
 
 INSERT INTO `tb_kategori` (`id`, `kategori`) VALUES
-(1, 'Sabun Muka'),
-(2, 'Sabun Coli'),
-(3, 'Sampo Ngocok');
+('K00001', 'Sabun Ngocok'),
+('K00002', 'Sabun Coli');
+
+--
+-- Triggers `tb_kategori`
+--
+DELIMITER $$
+CREATE TRIGGER `format_idKategori` BEFORE INSERT ON `tb_kategori` FOR EACH ROW BEGIN
+	DECLARE countColumn INT;
+    DECLARE lastColumn INT;
+    SET @countColumn = (select count(*) from tb_kategori);
+	SET @lastColumn = (select REPLACE(LTRIM(REPLACE(substring((select id from tb_kategori order by id desc limit 1),3), '0', ' ')),' ', '0'));
+	IF @countColumn = 0 THEN
+		SET NEW.id = CONCAT("K", RIGHT(CONCAT('0000', (@countColumn + 1)),5));
+	ELSE
+		SET NEW.id = CONCAT("K", RIGHT(CONCAT('0000', @lastColumn + 1),5));
+	END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -211,7 +225,7 @@ INSERT INTO `tb_produk` (`id`, `nama`) VALUES
 --
 
 CREATE TABLE `tb_supplier` (
-  `id` int(11) NOT NULL,
+  `id` varchar(11) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `toko` varchar(50) NOT NULL,
   `alamat` varchar(100) NOT NULL
@@ -222,8 +236,26 @@ CREATE TABLE `tb_supplier` (
 --
 
 INSERT INTO `tb_supplier` (`id`, `nama`, `toko`, `alamat`) VALUES
-(1, 'Bapak Kau', 'Toko Cinta Sejati', 'Kepo dek'),
-(2, 'Andini', 'Cinta Dek', 'Lol dek');
+('S00001', 'raihan geming', 'awikwokStore', 'toko kontolodon'),
+('S00002', 'DEVI CANTIKKK LUCU', 'love you', '<33333');
+
+--
+-- Triggers `tb_supplier`
+--
+DELIMITER $$
+CREATE TRIGGER `format_idSupplier` BEFORE INSERT ON `tb_supplier` FOR EACH ROW BEGIN
+	DECLARE countColumn INT;
+    DECLARE lastColumn INT;
+    SET @countColumn = (select count(*) from tb_supplier);
+	SET @lastColumn = (select REPLACE(LTRIM(REPLACE(substring((select id from tb_supplier order by id desc limit 1),3), '0', ' ')),' ', '0'));
+	IF @countColumn = 0 THEN
+		SET NEW.id = CONCAT("S", RIGHT(CONCAT('0000', (@countColumn + 1)),5));
+	ELSE
+		SET NEW.id = CONCAT("S", RIGHT(CONCAT('0000', @lastColumn + 1),5));
+	END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -250,7 +282,8 @@ INSERT INTO `tb_transaksi` (`id`, `total_harga`, `dibayar`, `kembalian`, `tangga
 (5, 40000, 50000, 10000, '2022-05-14 14:54:51', NULL, 1),
 (6, 20000, 30000, 10000, '2022-05-14 15:53:18', NULL, 1),
 (7, 10000, 20000, 10000, '2022-05-14 15:56:08', NULL, 1),
-(8, NULL, NULL, NULL, '2022-05-14 15:57:05', NULL, 1);
+(8, 4000, 0, -4000, '2022-05-14 15:57:05', NULL, 1),
+(9, NULL, NULL, NULL, '2022-05-22 21:01:57', NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -329,28 +362,10 @@ ALTER TABLE `tb_akun`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `tb_data_barang`
---
-ALTER TABLE `tb_data_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `tb_detail_supplier`
---
-ALTER TABLE `tb_detail_supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `tb_detail_transaksi`
 --
 ALTER TABLE `tb_detail_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
-
---
--- AUTO_INCREMENT for table `tb_kategori`
---
-ALTER TABLE `tb_kategori`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `tb_pelanggan`
@@ -365,16 +380,10 @@ ALTER TABLE `tb_produk`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `tb_supplier`
---
-ALTER TABLE `tb_supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -384,22 +393,22 @@ ALTER TABLE `tb_transaksi`
 -- Constraints for table `tb_data_barang`
 --
 ALTER TABLE `tb_data_barang`
-  ADD CONSTRAINT `tb_data_barang_ibfk_1` FOREIGN KEY (`id_detail_supplier`) REFERENCES `tb_detail_supplier` (`id`),
-  ADD CONSTRAINT `tb_data_barang_ibfk_2` FOREIGN KEY (`id_kategori`) REFERENCES `tb_kategori` (`id`);
+  ADD CONSTRAINT `tb_data_barang_ibfk_3` FOREIGN KEY (`id_detail_supplier`) REFERENCES `tb_detail_supplier` (`id`),
+  ADD CONSTRAINT `tb_data_barang_ibfk_4` FOREIGN KEY (`id_kategori`) REFERENCES `tb_kategori` (`id`);
 
 --
 -- Constraints for table `tb_detail_supplier`
 --
 ALTER TABLE `tb_detail_supplier`
-  ADD CONSTRAINT `tb_detail_supplier_ibfk_1` FOREIGN KEY (`id_supplier`) REFERENCES `tb_supplier` (`id`),
-  ADD CONSTRAINT `tb_detail_supplier_ibfk_2` FOREIGN KEY (`id_produk`) REFERENCES `tb_produk` (`id`);
+  ADD CONSTRAINT `tb_detail_supplier_ibfk_2` FOREIGN KEY (`id_produk`) REFERENCES `tb_produk` (`id`),
+  ADD CONSTRAINT `tb_detail_supplier_ibfk_3` FOREIGN KEY (`id_supplier`) REFERENCES `tb_supplier` (`id`);
 
 --
 -- Constraints for table `tb_detail_transaksi`
 --
 ALTER TABLE `tb_detail_transaksi`
-  ADD CONSTRAINT `tb_detail_transaksi_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `tb_data_barang` (`id`),
-  ADD CONSTRAINT `tb_detail_transaksi_ibfk_2` FOREIGN KEY (`id_transaksi`) REFERENCES `tb_transaksi` (`id`);
+  ADD CONSTRAINT `tb_detail_transaksi_ibfk_2` FOREIGN KEY (`id_transaksi`) REFERENCES `tb_transaksi` (`id`),
+  ADD CONSTRAINT `tb_detail_transaksi_ibfk_3` FOREIGN KEY (`id_barang`) REFERENCES `tb_data_barang` (`id`);
 
 --
 -- Constraints for table `tb_transaksi`
