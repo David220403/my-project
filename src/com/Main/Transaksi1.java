@@ -79,6 +79,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
 	public void insertBarang(String barcode) {
 		try {
 			String sql = "INSERT INTO tb_detail_transaksi VALUES (NULL, (select id from tb_transaksi order by id desc limit 1) , '" + barcode + "', '1');";
+			System.out.println(sql);
 			Connection conn = com.Koneksi.Koneksi.configDB();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.executeUpdate(sql);
@@ -446,6 +447,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
 		Tambah_Barang edit = new Tambah_Barang(null, true);
 		edit.select(0);
 		edit.setVisible(true);
+		tabelBarang();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
@@ -469,11 +471,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
         private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
 		// TODO add your handling code here:
 		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-			Pattern p = Pattern.compile("-?\\d+");
-			Matcher m = p.matcher(getBarcode());
-			while (m.find()) {
-				setBarcode(m.group());
-			}
+			setBarcode(getBarcode());
 			afterEnter();
 		} else {
 			// some character has been read, append it to your "barcode cache"
