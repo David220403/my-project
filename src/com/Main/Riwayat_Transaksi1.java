@@ -5,12 +5,15 @@
  */
 package com.Main;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  *
  * @author david
  */
 public class Riwayat_Transaksi1 extends javax.swing.JPanel {
-
     public Riwayat_Transaksi1() {
         initComponents();
         table1.fixTable(jScrollPane1);
@@ -18,7 +21,6 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
         table1.addRow(new Object[]{"#100" + i , "100.000" , "500.000" , "400.000", "08123376458"+i});
     }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

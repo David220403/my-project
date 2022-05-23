@@ -239,7 +239,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
                 txt_searchKeyReleased(evt);
             }
         });
-        jPanel1.add(txt_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 122, 150, -1));
+        jPanel1.add(txt_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 122, 150, -1));
 
         jTextField7.setBackground(new java.awt.Color(255, 194, 212));
         jTextField7.setBorder(null);
@@ -365,7 +365,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(299, 622, -1, -1));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Search (2).png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 118, -1, -1));
 
         table2.setModel(new javax.swing.table.DefaultTableModel(
@@ -451,21 +451,21 @@ public final class Transaksi1 extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
-//		int index = table1.rowAtPoint(evt.getPoint());
-//		String ID = table1.getValueAt(index, 0).toString();
-//		String Produk = table1.getValueAt(index, 1).toString();
-//		String Nama_Barang = table1.getValueAt(index, 2).toString();
-//		String Harga_Barang = table1.getValueAt(index, 3).toString();
-//		String Stock = table1.getValueAt(index, 4).toString();
-//		String Nama_Supplier = table1.getValueAt(index, 5).toString();
-//		String Kategori = table1.getValueAt(index, 6).toString();
-//
-//		Tambah_Barang edit = new Tambah_Barang(null, true);
-//		edit.show(ID, Produk, Nama_Barang, Harga_Barang, Stock, Nama_Supplier, Kategori);
-//		edit.select(1);
-//		edit.setVisible(true);
+		int index = table1.rowAtPoint(evt.getPoint());
+		String ID = table1.getValueAt(index, 0).toString();
+		String Nama_Barang = table1.getValueAt(index, 1).toString();
+		String Harga_Beli = table1.getValueAt(index, 2).toString();
+                String Harga_Jual = table1.getValueAt(index, 3).toString();
+		String Stock = table1.getValueAt(index, 4).toString();
+		String Nama_Supplier = table1.getValueAt(index, 5).toString();
+		String Kategori = table1.getValueAt(index, 6).toString();
 
-//		tabel();
+		Tambah_Barang edit = new Tambah_Barang(null, true);
+		edit.show(ID, Nama_Barang, Harga_Beli, Harga_Jual, Stock, Nama_Supplier, Kategori);
+		edit.select(1);
+		edit.setVisible(true);
+
+		tabelBarang();
     }//GEN-LAST:event_table1MouseClicked
 
         private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased

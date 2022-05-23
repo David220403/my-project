@@ -82,6 +82,11 @@ public class Data_Supplier extends javax.swing.JPanel {
                 "Kode Supplier", "Nama Supplier", "Nama Toko", "Alamat", "Produk"
             }
         ));
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 1020, 495));
@@ -129,6 +134,23 @@ public class Data_Supplier extends javax.swing.JPanel {
 		edit.select1(0);
 		supplier.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
+        // TODO add your handling code here:
+        int index = table1.rowAtPoint(evt.getPoint());
+		String Kode_Supplier = table1.getValueAt(index, 0).toString();
+		String Nama_Supplier = table1.getValueAt(index, 1).toString();
+		String Nama_Toko = table1.getValueAt(index, 2).toString();
+                String Alamat = table1.getValueAt(index, 3).toString();
+		String Produk = table1.getValueAt(index, 4).toString();
+
+		Tambah_Supplier edit = new Tambah_Supplier(null, true);
+		edit.show1(Kode_Supplier, Nama_Supplier, Nama_Toko, Alamat, Produk);
+		edit.select1(1);
+		edit.setVisible(true);
+
+		tabel();
+    }//GEN-LAST:event_table1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
