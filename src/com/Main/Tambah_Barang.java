@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author david
+ * @author david/
  */
 public class Tambah_Barang extends javax.swing.JDialog {
 
@@ -227,7 +227,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
                 btn_tambahActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 320, 125, 30));
+        jPanel1.add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 125, 30));
 
         btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Simpan.png"))); // NOI18N
         btn_simpan.setContentAreaFilled(false);
@@ -300,7 +300,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
 		// TODO add your handling code here:
                 try {
-			String sql = "UPDATE `tb_data_barang` SET `nama`='"+txt_namabarang.getText()+"',`harga_beli`='"+txt_hargabeli.getText()+"',`harga_jual`='"+txt_hargajual.getText()+"',`stock`='"+txt_stock.getText()+"',`id_detail_supplier`='"+txt_supplier.getSelectedItem()+"',`id_kategori`='"+txt_kategori.getSelectedItem()+"' WHERE 1";
+			String sql = "UPDATE `tb_data_barang` SET `nama`='"+txt_namabarang.getText()+"',`harga_beli`='"+txt_hargabeli.getText()+"',`harga_jual`='"+txt_hargajual.getText()+"',`stock`='"+txt_stock.getText()+"',`id_detail_supplier`='"+txt_supplier.getSelectedItem()+"',`id_kategori`='"+txt_kategori.getSelectedItem()+"' WHERE id = '"+txt_id.getText()+"'";
 			System.out.println(sql);
 			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
 			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
@@ -322,6 +322,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
+                this.setVisible(false);
     }//GEN-LAST:event_btn_hapusActionPerformed
 
     private void txt_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_supplierActionPerformed

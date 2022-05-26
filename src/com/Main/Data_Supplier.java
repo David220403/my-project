@@ -130,9 +130,11 @@ public class Data_Supplier extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 		// TODO add your handling code here:
+                
 		Tambah_Supplier supplier = new Tambah_Supplier(null, true);
 		edit.select1(0);
-		supplier.setVisible(true);
+		edit.setVisible(true);
+                tabel();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked

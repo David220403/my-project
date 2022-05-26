@@ -6,6 +6,7 @@
 package com.Main;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -128,7 +129,7 @@ public class Tambah_Supplier extends javax.swing.JDialog {
                 btn_tambahActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 125, 30));
+        jPanel1.add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 249, 125, 30));
 
         btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Simpan.png"))); // NOI18N
         btn_simpan.setBorder(null);
@@ -187,15 +188,16 @@ public class Tambah_Supplier extends javax.swing.JDialog {
 
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
 		// TODO add your handling code here:
-		try {
-			String sql1 = "INSERT INTO `tb_supplier`(`id`, `nama`, `toko`, `alamat`) VALUES ('" + txt_kodesupplier.getText() + "','" + txt_namasupplier.getText() + "','" + txt_namatoko.getText() + "','" + txt_alamat.getText() + "')";
-			System.out.println(sql1);
-			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
-			java.sql.PreparedStatement pst = conn.prepareStatement(sql1);
-			pst.execute();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage());
-		}
+//                try {
+//			String sql = "UPDATE `tb_detail_supplier ` SET `id`='"+txt_kodesupplier.getText()+"',`nama`='"+txt_hargabeli.getText()+"',`harga_jual`='"+txt_hargajual.getText()+"',`stock`='"+txt_stock.getText()+"',`id_detail_supplier`='"+txt_supplier.getSelectedItem()+"',`id_kategori`='"+txt_kategori.getSelectedItem()+"' WHERE id = '"+txt_id.getText()+"'";
+//			System.out.println(sql);
+//			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+//			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+//			pst.execute();
+//		} catch (SQLException e) {
+//			JOptionPane.showMessageDialog(this, e.getMessage());
+//		}
+//		this.setVisible(false);
     }//GEN-LAST:event_btn_simpanActionPerformed
 
     private void txt_kodesupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kodesupplierActionPerformed
@@ -221,7 +223,8 @@ public class Tambah_Supplier extends javax.swing.JDialog {
     private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
         // TODO add your handling code here:
         try {
-            String sql = "DELETE FROM data_barang WHERE id_barang = '"+txt_kodesupplier.getText()+"'";
+            String sql = "DELETE FROM tb_detail_supplier WHERE id = '"+txt_kodesupplier.getText()+"'";
+            System.out.println(sql);
             java.sql.Connection conn= (Connection)com.Koneksi.Koneksi.configDB();
             java.sql.PreparedStatement ps=conn.prepareStatement(sql);
             ps.execute();
@@ -229,6 +232,7 @@ public class Tambah_Supplier extends javax.swing.JDialog {
         } catch (Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+        this.setVisible(false);
     }//GEN-LAST:event_btn_hapusActionPerformed
 
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
@@ -243,6 +247,7 @@ public class Tambah_Supplier extends javax.swing.JDialog {
         } catch (Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+        this.setVisible(false);
     }//GEN-LAST:event_btn_tambahActionPerformed
 // public void id_barang(){
 //        try {

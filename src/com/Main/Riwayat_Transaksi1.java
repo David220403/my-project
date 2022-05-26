@@ -55,7 +55,7 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
                 jTextField4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 54, 150, -1));
+        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 54, 150, -1));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Cetak.png"))); // NOI18N
         jButton2.setBorder(null);

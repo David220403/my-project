@@ -375,7 +375,15 @@ public final class Transaksi1 extends javax.swing.JPanel {
             new String [] {
                 "ID", "Produk", "Nama Barang", "Harga Barang", "Jumlah"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(table2);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 460, 1015, 128));
