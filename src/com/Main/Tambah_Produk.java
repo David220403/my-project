@@ -6,12 +6,14 @@
 package com.Main;
 
 import com.Koneksi.Koneksi;
+import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -68,6 +70,7 @@ public class Tambah_Produk extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        txt_kodesupplier = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new com.swing.table.Table();
         btn_tambah = new javax.swing.JButton();
@@ -78,6 +81,15 @@ public class Tambah_Produk extends javax.swing.JDialog {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(429, 365));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txt_kodesupplier.setBackground(new java.awt.Color(255, 224, 233));
+        txt_kodesupplier.setBorder(null);
+        txt_kodesupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_kodesupplierActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_kodesupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 84, 150, -1));
 
         jScrollPane1.setAutoscrolls(true);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 340));
@@ -96,6 +108,11 @@ public class Tambah_Produk extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(table1);
@@ -139,6 +156,16 @@ public class Tambah_Produk extends javax.swing.JDialog {
 		// TODO add your handling code here:
 		System.out.println("yess");
     }//GEN-LAST:event_btn_tambahActionPerformed
+
+    private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
+        // TODO add your handling code here:
+        Edit_Produk b = new Edit_Produk((Frame) SwingUtilities.getWindowAncestor(this), true);
+		b.show();
+    }//GEN-LAST:event_table1MouseClicked
+
+    private void txt_kodesupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kodesupplierActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_kodesupplierActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -189,5 +216,6 @@ public class Tambah_Produk extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private com.swing.table.Table table1;
+    private javax.swing.JTextField txt_kodesupplier;
     // End of variables declaration//GEN-END:variables
 }

@@ -29,6 +29,7 @@ public class Edit_Produk extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        txt_kodesupplier = new javax.swing.JTextField();
         btn_simpan = new javax.swing.JButton();
         btn_hapus = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -38,6 +39,15 @@ public class Edit_Produk extends javax.swing.JDialog {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(429, 166));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txt_kodesupplier.setBackground(new java.awt.Color(255, 224, 233));
+        txt_kodesupplier.setBorder(null);
+        txt_kodesupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_kodesupplierActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_kodesupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 84, 340, -1));
 
         btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Simpan.png"))); // NOI18N
         btn_simpan.setContentAreaFilled(false);
@@ -89,6 +99,10 @@ public class Edit_Produk extends javax.swing.JDialog {
 		// TODO add your handling code here:
     }//GEN-LAST:event_btn_simpanActionPerformed
 
+    private void txt_kodesupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kodesupplierActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_kodesupplierActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -135,5 +149,6 @@ public class Edit_Produk extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txt_kodesupplier;
     // End of variables declaration//GEN-END:variables
 }

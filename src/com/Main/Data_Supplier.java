@@ -62,6 +62,7 @@ public class Data_Supplier extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btn_supplier = new javax.swing.JButton();
         btn_produk = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new com.swing.table.Table();
@@ -75,6 +76,15 @@ public class Data_Supplier extends javax.swing.JPanel {
         jPanel1.setOpaque(false);
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_supplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button supplier.png"))); // NOI18N
+        btn_supplier.setContentAreaFilled(false);
+        btn_supplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_supplierActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_supplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 50, 125, 30));
 
         btn_produk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/button produk.png"))); // NOI18N
         btn_produk.setContentAreaFilled(false);
@@ -172,8 +182,15 @@ public class Data_Supplier extends javax.swing.JPanel {
 		b.show();
     }//GEN-LAST:event_btn_produkActionPerformed
 
+    private void btn_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supplierActionPerformed
+        // TODO add your handling code here:
+        Tambah_Supplier1 b = new Tambah_Supplier1((Frame) SwingUtilities.getWindowAncestor(this), true);
+		b.show();
+    }//GEN-LAST:event_btn_supplierActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_produk;
+    private javax.swing.JButton btn_supplier;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
