@@ -21,7 +21,7 @@ public class Koneksi {
 			user = "root";
 			pass = "";
 			mysqlconfig = DriverManager.getConnection(url, user, pass);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Database tidak terhubung");
 		}
 		return mysqlconfig;

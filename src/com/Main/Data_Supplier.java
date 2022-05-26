@@ -5,10 +5,12 @@
  */
 package com.Main;
 
+import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -140,20 +142,20 @@ public class Data_Supplier extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 		// TODO add your handling code here:
-                
+
 		Tambah_Supplier supplier = new Tambah_Supplier(null, true);
 		edit.select1(0);
 		edit.setVisible(true);
-                tabel();
+		tabel();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
-        // TODO add your handling code here:
-        int index = table1.rowAtPoint(evt.getPoint());
+		// TODO add your handling code here:
+		int index = table1.rowAtPoint(evt.getPoint());
 		String Kode_Supplier = table1.getValueAt(index, 0).toString();
 		String Nama_Supplier = table1.getValueAt(index, 1).toString();
 		String Nama_Toko = table1.getValueAt(index, 2).toString();
-                String Alamat = table1.getValueAt(index, 3).toString();
+		String Alamat = table1.getValueAt(index, 3).toString();
 		String Produk = table1.getValueAt(index, 4).toString();
 
 		Tambah_Supplier edit = new Tambah_Supplier(null, true);
@@ -165,17 +167,9 @@ public class Data_Supplier extends javax.swing.JPanel {
     }//GEN-LAST:event_table1MouseClicked
 
     private void btn_produkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_produkActionPerformed
-        // TODO add your handling code here:
-        try {
-            String sql = "insert into tb_data_barang values ('', '" + txt_namabarang.getText() + "', " + txt_hargabeli.getText() + ", " + txt_hargajual.getText() + ", " + txt_stock.getText() + ", '" + txt_supplier.getSelectedItem() + "', '" + txt_kategori.getSelectedItem() + "')";
-            System.out.println(sql);
-            java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
-            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-            pst.execute();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-        this.setVisible(false);
+		// TODO add your handling code here:
+		Tambah_Produk b = new Tambah_Produk((Frame) SwingUtilities.getWindowAncestor(this), true);
+		b.show();
     }//GEN-LAST:event_btn_produkActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
