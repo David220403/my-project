@@ -88,51 +88,19 @@ public class Tambah_Supplier extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txt_alamat = new javax.swing.JTextField();
-        txt_namatoko = new javax.swing.JTextField();
-        txt_namasupplier = new javax.swing.JTextField();
         txt_kodesupplier = new javax.swing.JTextField();
+        produk1 = new com.swing.Combobox();
         produk = new com.swing.Combobox();
         btn_tambah = new javax.swing.JButton();
         btn_simpan = new javax.swing.JButton();
         btn_hapus = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(430, 365));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txt_alamat.setBackground(new java.awt.Color(255, 194, 212));
-        txt_alamat.setBorder(null);
-        txt_alamat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_alamatActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txt_alamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 249, 150, -1));
-
-        txt_namatoko.setBackground(new java.awt.Color(255, 194, 212));
-        txt_namatoko.setBorder(null);
-        txt_namatoko.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_namatokoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txt_namatoko, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 204, 150, -1));
-
-        txt_namasupplier.setBackground(new java.awt.Color(255, 194, 212));
-        txt_namasupplier.setBorder(null);
-        txt_namasupplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_namasupplierActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txt_namasupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 159, 150, -1));
 
         txt_kodesupplier.setBackground(new java.awt.Color(255, 194, 212));
         txt_kodesupplier.setBorder(null);
@@ -143,13 +111,23 @@ public class Tambah_Supplier extends javax.swing.JDialog {
         });
         jPanel1.add(txt_kodesupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 109, 150, -1));
 
+        produk1.setBackground(new java.awt.Color(255, 194, 212));
+        produk1.setLabeText("");
+        produk1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                produk1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(produk1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 158, 170, 40));
+
         produk.setBackground(new java.awt.Color(255, 194, 212));
+        produk.setLabeText("");
         produk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 produkActionPerformed(evt);
             }
         });
-        jPanel1.add(produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 170, -1));
+        jPanel1.add(produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 218, 170, -1));
 
         btn_tambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button tambah.png"))); // NOI18N
         btn_tambah.setContentAreaFilled(false);
@@ -179,19 +157,10 @@ public class Tambah_Supplier extends javax.swing.JDialog {
         });
         jPanel1.add(btn_hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 292, 125, 30));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 245, -1, -1));
-
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 105, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53 (1).png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 155, -1, -1));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Tambah Supplier.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/tambah detail supplier.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -15, 430, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -230,18 +199,6 @@ public class Tambah_Supplier extends javax.swing.JDialog {
 		// TODO add your handling code here:
     }//GEN-LAST:event_txt_kodesupplierActionPerformed
 
-    private void txt_namasupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namasupplierActionPerformed
-		// TODO add your handling code here:
-    }//GEN-LAST:event_txt_namasupplierActionPerformed
-
-    private void txt_namatokoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namatokoActionPerformed
-		// TODO add your handling code here:
-    }//GEN-LAST:event_txt_namatokoActionPerformed
-
-    private void txt_alamatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_alamatActionPerformed
-		// TODO add your handling code here:
-    }//GEN-LAST:event_txt_alamatActionPerformed
-
     private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
 		// TODO add your handling code here:
 		try {
@@ -275,6 +232,10 @@ public class Tambah_Supplier extends javax.swing.JDialog {
     private void produkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_produkActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_produkActionPerformed
+
+    private void produk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_produk1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_produk1ActionPerformed
 // public void id_barang(){
 //        try {
 //            String sql = "SELECT id FROM tb_detail_supplier ORDER BY id DESC";
@@ -340,15 +301,10 @@ public class Tambah_Supplier extends javax.swing.JDialog {
     private javax.swing.JButton btn_simpan;
     private javax.swing.JButton btn_tambah;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private com.swing.Combobox produk;
-    private javax.swing.JTextField txt_alamat;
+    private com.swing.Combobox produk1;
     private javax.swing.JTextField txt_kodesupplier;
-    private javax.swing.JTextField txt_namasupplier;
-    private javax.swing.JTextField txt_namatoko;
     // End of variables declaration//GEN-END:variables
 }
