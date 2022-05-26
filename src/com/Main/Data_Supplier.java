@@ -60,6 +60,7 @@ public class Data_Supplier extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btn_produk = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new com.swing.table.Table();
         jLabel2 = new javax.swing.JLabel();
@@ -72,6 +73,15 @@ public class Data_Supplier extends javax.swing.JPanel {
         jPanel1.setOpaque(false);
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_produk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/button produk.png"))); // NOI18N
+        btn_produk.setContentAreaFilled(false);
+        btn_produk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_produkActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 50, 125, 30));
 
         table1.setBackground(new java.awt.Color(255, 158, 187));
         table1.setModel(new javax.swing.table.DefaultTableModel(
@@ -154,7 +164,22 @@ public class Data_Supplier extends javax.swing.JPanel {
 		tabel();
     }//GEN-LAST:event_table1MouseClicked
 
+    private void btn_produkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_produkActionPerformed
+        // TODO add your handling code here:
+        try {
+            String sql = "insert into tb_data_barang values ('', '" + txt_namabarang.getText() + "', " + txt_hargabeli.getText() + ", " + txt_hargajual.getText() + ", " + txt_stock.getText() + ", '" + txt_supplier.getSelectedItem() + "', '" + txt_kategori.getSelectedItem() + "')";
+            System.out.println(sql);
+            java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_produkActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_produk;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
