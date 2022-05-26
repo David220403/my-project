@@ -73,9 +73,9 @@ public class Tambah_Supplier extends javax.swing.JDialog {
 
 	public void show1(String Kode_Supplier, String Nama_Supplier, String Nama_Toko, String Alamat, String Produk) {
 		this.txt_kodesupplier.setText(Kode_Supplier);
-		this.txt_namasupplier.setText(Nama_Supplier);
-		this.txt_namatoko.setText(Nama_Toko);
-		this.txt_alamat.setText(Alamat);
+//		this.txt_namasupplier.setText(Nama_Supplier);
+//		this.txt_namatoko.setText(Nama_Toko);
+//		this.txt_alamat.setText(Alamat);
 	}
 
 	/**
@@ -216,17 +216,17 @@ public class Tambah_Supplier extends javax.swing.JDialog {
 
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
 		// TODO add your handling code here:
-		try {
-			String sql1 = "INSERT INTO `tb_supplier` VALUES ('" + txt_kodesupplier.getText() + "','" + txt_namasupplier.getText() + "','" + txt_namatoko.getText() + "','"
-				+ txt_alamat.getText() + "')";
-			System.out.println(sql1);
-			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
-			java.sql.PreparedStatement pst = conn.prepareStatement(sql1);
-			pst.execute();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage());
-		}
-		this.setVisible(false);
+//		try {
+//			String sql1 = "INSERT INTO `tb_supplier` VALUES ('" + txt_kodesupplier.getText() + "','" + txt_namasupplier.getText() + "','" + txt_namatoko.getText() + "','"
+//				+ txt_alamat.getText() + "')";
+//			System.out.println(sql1);
+//			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+//			java.sql.PreparedStatement pst = conn.prepareStatement(sql1);
+//			pst.execute();
+//		} catch (Exception e) {
+//			JOptionPane.showMessageDialog(this, e.getMessage());
+//		}
+//		this.setVisible(false);
     }//GEN-LAST:event_btn_tambahActionPerformed
 
     private void produkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_produkActionPerformed
