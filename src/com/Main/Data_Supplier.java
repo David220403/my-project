@@ -29,7 +29,7 @@ public class Data_Supplier extends javax.swing.JPanel {
 
 		try {
 
-			String sql = "select s.id, s.nama, s.toko, s.alamat, p.nama from tb_detail_supplier as dt join tb_supplier as s on dt.id_supplier = s.id join tb_produk as p on p.id = dt.id_produk";
+			String sql = "select dt.id, s.nama, s.toko, s.alamat, p.nama from tb_detail_supplier as dt join tb_supplier as s on dt.id_supplier = s.id join tb_produk as p on p.id = dt.id_produk";
 			Connection conn = com.Koneksi.Koneksi.configDB();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery(sql);
@@ -183,8 +183,8 @@ public class Data_Supplier extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_produkActionPerformed
 
     private void btn_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supplierActionPerformed
-        // TODO add your handling code here:
-        Tambah_Supplier1 b = new Tambah_Supplier1((Frame) SwingUtilities.getWindowAncestor(this), true);
+		// TODO add your handling code here:
+		Tambah_Supplier1 b = new Tambah_Supplier1((Frame) SwingUtilities.getWindowAncestor(this), true);
 		b.show();
     }//GEN-LAST:event_btn_supplierActionPerformed
 
