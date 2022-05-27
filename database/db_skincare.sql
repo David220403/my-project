@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 23, 2022 at 06:43 PM
+-- Generation Time: May 27, 2022 at 07:39 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -59,13 +59,6 @@ CREATE TABLE `tb_data_barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tb_data_barang`
---
-
-INSERT INTO `tb_data_barang` (`id`, `nama`, `harga_beli`, `harga_jual`, `stock`, `id_detail_supplier`, `id_kategori`) VALUES
-('2200001', 'loldek', 10000, 2000, 6, 'DS00002', 'K00001');
-
---
 -- Triggers `tb_data_barang`
 --
 DELIMITER $$
@@ -100,23 +93,20 @@ CREATE TABLE `tb_detail_supplier` (
 --
 
 INSERT INTO `tb_detail_supplier` (`id`, `id_supplier`, `id_produk`) VALUES
-('DS00001', 'S00001', 2),
-('DS00002', 'S00001', 1);
+('DS0032', 'S00003', 2);
 
 --
 -- Triggers `tb_detail_supplier`
 --
 DELIMITER $$
 CREATE TRIGGER `format_idDetailSupplier` BEFORE INSERT ON `tb_detail_supplier` FOR EACH ROW BEGIN
-	DECLARE countColumn INT;
-    DECLARE lastColumn INT;
-    SET @countColumn = (select count(*) from tb_detail_supplier);
-	SET @lastColumn = (select REPLACE(LTRIM(REPLACE(substring((select id from tb_detail_supplier order by id desc limit 1),3), '0', ' ')),' ', '0'));
-	IF @countColumn = 0 THEN
-		SET NEW.id = CONCAT("DS", RIGHT(CONCAT('0000', (@countColumn + 1)),5));
-	ELSE
-		SET NEW.id = CONCAT("DS", RIGHT(CONCAT('0000', @lastColumn + 1),5));
-	END IF;
+	SET NEW.id = CONCAT("DS", RIGHT(CONCAT('00', NEW.id_supplier, NEW.id_produk),4));
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_idDetailSupplier` BEFORE UPDATE ON `tb_detail_supplier` FOR EACH ROW BEGIN
+	SET NEW.id = CONCAT("DS", RIGHT(CONCAT('00', NEW.id_supplier, NEW.id_produk),4));
 END
 $$
 DELIMITER ;
@@ -242,7 +232,9 @@ CREATE TABLE `tb_supplier` (
 
 INSERT INTO `tb_supplier` (`id`, `nama`, `toko`, `alamat`) VALUES
 ('S00001', 'raihan geming', 'awikwokStore', 'toko kontolodon'),
-('S00002', 'DEVI CANTIKKK LUCU', 'love you', '<33333');
+('S00002', 'DEVI CANTIKKK LUCU', 'love you', '<33333'),
+('S00003', 'sdasdasdasdasdasdasd', 'asdas', 'dasdasdasdasda'),
+('S00004', 'loldek', 'asdasd', 'asdasd');
 
 --
 -- Triggers `tb_supplier`
