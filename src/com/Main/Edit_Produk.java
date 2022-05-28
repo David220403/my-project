@@ -5,6 +5,10 @@
  */
 package com.Main;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author david
@@ -19,6 +23,12 @@ public class Edit_Produk extends javax.swing.JDialog {
 		initComponents();
 	}
 
+        
+        private String ID;
+public void show(String ID,  String nama_supplier) {
+    this.ID = ID;
+		this.txt_kodesupplier.setText(nama_supplier);
+	}
 	/**
 	 * This method is called from within the constructor to initialize the
 	 * form. WARNING: Do NOT modify this code. The content of this method is
@@ -93,10 +103,31 @@ public class Edit_Produk extends javax.swing.JDialog {
 
     private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
 		// TODO add your handling code here:
+                try {
+			String sql = "DELETE FROM tb_produk WHERE id = '" +ID+ "'";
+                        System.out.println(sql);
+			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+			java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+			ps.execute();
+			JOptionPane.showMessageDialog(null, "Data berhasil di Hapus");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+                this.setVisible(false);
     }//GEN-LAST:event_btn_hapusActionPerformed
 
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
 		// TODO add your handling code here:
+                 try {
+			String sql = "UPDATE `tb_produk` SET `nama`='"+txt_kodesupplier.getText()+"' where id= '"+this.ID+"'";
+			System.out.println(sql);
+			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+			pst.execute();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+		this.setVisible(false);
     }//GEN-LAST:event_btn_simpanActionPerformed
 
     private void txt_kodesupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kodesupplierActionPerformed

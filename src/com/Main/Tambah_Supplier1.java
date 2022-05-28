@@ -5,8 +5,17 @@
  */
 package com.Main;
 
+import com.Koneksi.Koneksi;
 import java.awt.Frame;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,9 +26,47 @@ public class Tambah_Supplier1 extends javax.swing.JDialog {
     /**
      * Creates new form Tambah_Supplier1
      */
-    public Tambah_Supplier1(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
+    Connection con = null;
+	ResultSet rs = null;
+	PreparedStatement pst = null;
+
+	public Tambah_Supplier1(java.awt.Frame parent, boolean modal) {
+		super(parent, modal);
+		try {
+			this.con = Koneksi.configDB();
+		} catch (SQLException ex) {
+			Logger.getLogger(Tambah_Produk.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		initComponents();
+		tabelProduk();
+	}
+    private void tabelProduk() {
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("ID");
+		model.addColumn("Nama supplier");
+                model.addColumn("Nama Toko");
+                model.addColumn("Alamat");
+		try {
+
+			String sql = "select * from tb_supplier";
+			pst = con.prepareStatement(sql);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)});
+			}
+			table1.setModel(model);
+		} catch (SQLException ex) {
+			model.addRow(new Object[]{});
+			table1.setModel(model);
+		}
+
+	}
+    public void kosongkan(){
+        txt_id.setText("");
+        txt_namasupplier.setText("");
+        txt_namatoko.setText("");
+        txt_alamat.setText("");
+        tabelProduk();
     }
 
     /**
@@ -45,8 +92,14 @@ public class Tambah_Supplier1 extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        txt_id = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setPreferredSize(new java.awt.Dimension(645, 365));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -92,6 +145,11 @@ public class Tambah_Supplier1 extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(table1);
@@ -147,6 +205,15 @@ public class Tambah_Supplier1 extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/tampilan supplier.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        txt_id.setBackground(new java.awt.Color(255, 224, 233));
+        txt_id.setBorder(null);
+        txt_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_idActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 150, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,31 +234,49 @@ public class Tambah_Supplier1 extends javax.swing.JDialog {
 
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
         // TODO add your handling code here:
-      
+       try {
+			String sql = "INSERT INTO `tb_supplier`(`id`, `nama`, `toko`, `alamat`) VALUES ('','"+txt_namasupplier.getText()+"','"+txt_namatoko.getText()+"','"+txt_alamat.getText()+"')";
+			System.out.println(sql);
+			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+			pst.execute();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
     }//GEN-LAST:event_btn_tambahActionPerformed
 
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
         // TODO add your handling code here:
-        //                try {
-            //			String sql = "UPDATE `tb_detail_supplier ` SET `id`='"+txt_kodesupplier.getText()+"',`nama`='"+txt_hargabeli.getText()+"',`harga_jual`='"+txt_hargajual.getText()+"',`stock`='"+txt_stock.getText()+"',`id_detail_supplier`='"+txt_supplier.getSelectedItem()+"',`id_kategori`='"+txt_kategori.getSelectedItem()+"' WHERE id = '"+txt_id.getText()+"'";
-            //			System.out.println(sql);
-            //			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
-            //			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-            //			pst.execute();
-            //		} catch (SQLException e) {
-            //			JOptionPane.showMessageDialog(this, e.getMessage());
-            //		}
-        //		this.setVisible(false);
+         try {
+			String sql = "UPDATE `tb_supplier` SET `id`='',`nama`='"+txt_namasupplier.getText()+"',`toko`='"+txt_namatoko.getText()+"',`alamat`='"+txt_alamat.getText()+"' WHERE id='"+txt_id.getText()+"'";
+			System.out.println(sql);
+			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+			pst.execute();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+         kosongkan();
+         tabelProduk();
+                
     }//GEN-LAST:event_btn_simpanActionPerformed
 
     private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
         // TODO add your handling code here:
-        
+        try {
+			String sql = "DELETE FROM tb_supplier WHERE id = '" + txt_id.getText() + "'";
+			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+			java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+			ps.execute();
+			JOptionPane.showMessageDialog(null, "Data berhasil di Hapus");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
     }//GEN-LAST:event_btn_hapusActionPerformed
 
     private void btn_hapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus1ActionPerformed
         // TODO add your handling code here:
-       
+       this.setVisible(false);
     }//GEN-LAST:event_btn_hapus1ActionPerformed
 
     private void txt_alamatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_alamatActionPerformed
@@ -205,6 +290,25 @@ public class Tambah_Supplier1 extends javax.swing.JDialog {
     private void txt_namatokoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namatokoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_namatokoActionPerformed
+
+    private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
+        // TODO add your handling code here:
+         int baris = table1.rowAtPoint(evt.getPoint());
+         txt_id.setText(table1.getValueAt(baris, 0).toString());
+         txt_id.disable();
+        txt_namasupplier.setText(table1.getValueAt(baris, 1).toString());
+        txt_namatoko.setText(table1.getValueAt(baris, 2).toString());
+        txt_alamat.setText(table1.getValueAt(baris, 3).toString());
+    }//GEN-LAST:event_table1MouseClicked
+
+    private void txt_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_idActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        tabelProduk();
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -261,6 +365,7 @@ public class Tambah_Supplier1 extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private com.swing.table.Table table1;
     private javax.swing.JTextField txt_alamat;
+    private javax.swing.JTextField txt_id;
     private javax.swing.JTextField txt_namasupplier;
     private javax.swing.JTextField txt_namatoko;
     // End of variables declaration//GEN-END:variables
