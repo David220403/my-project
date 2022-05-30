@@ -7,12 +7,8 @@ package com.Main;
 
 import java.awt.Color;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -45,7 +41,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
 			while (rs.next()) {
 				txt_kategori.addItem(rs.getString("id"));
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
 	}
@@ -81,13 +77,13 @@ public class Tambah_Barang extends javax.swing.JDialog {
 				btn_tambah.setVisible(true);
 				btn_simpan.setVisible(false);
 				btn_hapus.setVisible(false);
-                                btn_barcode.setVisible(false);
+				btn_barcode.setVisible(false);
 				break;
 			case 1:
 				btn_tambah.setVisible(false);
 				btn_simpan.setVisible(true);
 				btn_hapus.setVisible(true);
-                                btn_barcode.setVisible(true);
+				btn_barcode.setVisible(true);
 				break;
 			default:
 				break;
@@ -299,8 +295,8 @@ public class Tambah_Barang extends javax.swing.JDialog {
 
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
 		// TODO add your handling code here:
-                try {
-			String sql = "UPDATE `tb_data_barang` SET `nama`='"+txt_namabarang.getText()+"',`harga_beli`='"+txt_hargabeli.getText()+"',`harga_jual`='"+txt_hargajual.getText()+"',`stock`='"+txt_stock.getText()+"',`id_detail_supplier`='"+txt_supplier.getSelectedItem()+"',`id_kategori`='"+txt_kategori.getSelectedItem()+"' WHERE id = '"+txt_id.getText()+"'";
+		try {
+			String sql = "UPDATE `tb_data_barang` SET `nama`='" + txt_namabarang.getText() + "',`harga_beli`='" + txt_hargabeli.getText() + "',`harga_jual`='" + txt_hargajual.getText() + "',`stock`='" + txt_stock.getText() + "',`id_detail_supplier`='" + txt_supplier.getSelectedItem() + "',`id_kategori`='" + txt_kategori.getSelectedItem() + "' WHERE id = '" + txt_id.getText() + "'";
 			System.out.println(sql);
 			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
 			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
@@ -322,7 +318,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
-                this.setVisible(false);
+		this.setVisible(false);
     }//GEN-LAST:event_btn_hapusActionPerformed
 
     private void txt_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_supplierActionPerformed
@@ -359,7 +355,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
     }//GEN-LAST:event_txt_supplierPopupMenuWillBecomeInvisible
 
     private void btn_barcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_barcodeActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_btn_barcodeActionPerformed
 
 //     public void id_barang(){

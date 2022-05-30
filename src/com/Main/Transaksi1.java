@@ -79,7 +79,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
 
 	public void insertBarang(String barcode) {
 		try {
-			String sql = "INSERT INTO tb_detail_transaksi VALUES (NULL, (select id from tb_transaksi order by id desc limit 1) , '" + barcode + "', '1');";
+			String sql = "INSERT INTO tb_detail_transaksi VALUES (NULL, (select id from tb_transaksi order by id desc limit 1) , '" + barcode + "', '1', NULL);";
 			System.out.println(sql);
 			Connection conn = com.Koneksi.Koneksi.configDB();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -542,12 +542,14 @@ public final class Transaksi1 extends javax.swing.JPanel {
 
         private void bayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bayarKeyReleased
 		// TODO add your handling code here:
-		try {
-			Integer.parseInt(bayar.getText());
-			getBayar();
-		} catch (NumberFormatException ex) {
-			bayar.setText("");
-			kembalian.setText("");
+		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+			try {
+				Integer.parseInt(bayar.getText());
+				getBayar();
+			} catch (NumberFormatException ex) {
+				bayar.setText("");
+				kembalian.setText("");
+			}
 		}
         }//GEN-LAST:event_bayarKeyReleased
 
