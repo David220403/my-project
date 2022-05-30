@@ -5,18 +5,99 @@
  */
 package com.Main;
 
+import com.Koneksi.Koneksi;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.Timer;
+
 /**
  *
  * @author david
  */
 public class Dashboard extends javax.swing.JPanel {
-
+    private int waktumulai = 0;
+    private Component jLabel7;
+    
     /**
      * Creates new form Dashboard
      */
     public Dashboard() {
         initComponents();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = getSize();
+        setLocation (
+        (screenSize.width = frameSize.width) / 2,
+        (screenSize.height = frameSize.height) / 2
+        );
+        
+        barangterjual();
+        supplier();
+        transaksi();
+        diskon();
+        user();
+        pemasukan();
+        pengeluaran();
+        Tampil_Jam();
+}
+     public void Tampil_Jam(){
+        ActionListener taskPerformer = new ActionListener() {
+ 
+        @Override
+            public void actionPerformed(ActionEvent evt) {
+            String nol_jam = "", nol_menit = "",nol_detik = "";
+ 
+            java.util.Date dateTime = new java.util.Date();
+            int nilai_jam = dateTime.getHours();
+            int nilai_menit = dateTime.getMinutes();
+            int nilai_detik = dateTime.getSeconds();
+ 
+            if(nilai_jam <= 9) nol_jam= "0";
+            if(nilai_menit <= 9) nol_menit= "0";
+            if(nilai_detik <= 9) nol_detik= "0";
+ 
+            String jam = nol_jam + Integer.toString(nilai_jam);
+            String menit = nol_menit + Integer.toString(nilai_menit);
+            String detik = nol_detik + Integer.toString(nilai_detik);
+ 
+            labeljamrealtime.setText(jam+":"+menit+":"+detik+"");
+            }
+        };
+    new Timer(1000, taskPerformer).start();
     }
+        private void jamrealtime (){
+        new Thread(){
+        @Override
+        public void run(){
+            while(waktumulai == 0) {
+            Calendar kalender = new GregorianCalendar();
+            int jam = kalender.get(Calendar.HOUR);
+            //int menit = kalender.get(Calendar.MINUTE):
+            int detik = kalender.get(Calendar.SECOND);
+            int AMPM = kalender.get(Calendar.AM_PM);
+            String SiangMalam;
+                    if (AMPM == 1) {
+                        SiangMalam = "PM";
+                    } else {
+                        SiangMalam = "AM";
+                    }
+            String jamrealtime = jam + "i"  + "i" + detik + " " + SiangMalam;
+            labeljamrealtime.setText("jam: " + jamrealtime);
+            }
+        }
+        }.start();
+        }
+
+    /**
+     * Creates new form Dashboard
+     */
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,14 +109,14 @@ public class Dashboard extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        labeljamrealtime = new javax.swing.JLabel();
+        jumlah_pengeluaran = new javax.swing.JLabel();
+        jumlah_pemasukan = new javax.swing.JLabel();
+        jumlah_dataUser = new javax.swing.JLabel();
+        jumlah_DataDiskon = new javax.swing.JLabel();
+        jumlah_dataTransaksi = new javax.swing.JLabel();
+        jumlah_dataSupplier = new javax.swing.JLabel();
+        jumlah_dataBarang = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(1366, 768));
@@ -43,29 +124,30 @@ public class Dashboard extends javax.swing.JPanel {
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/00 _ 00 _ 00.png"))); // NOI18N
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(1158, 50, -1, -1));
+        labeljamrealtime.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jPanel1.add(labeljamrealtime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 30, 190, 60));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/100.png"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1154, 671, -1, -1));
+        jumlah_pengeluaran.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jPanel1.add(jumlah_pengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(1154, 671, -1, -1));
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/100.png"))); // NOI18N
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1154, 502, -1, -1));
+        jumlah_pemasukan.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jPanel1.add(jumlah_pemasukan, new org.netbeans.lib.awtextra.AbsoluteConstraints(1154, 502, -1, -1));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/100.png"))); // NOI18N
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1154, 334, -1, -1));
+        jumlah_dataUser.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jPanel1.add(jumlah_dataUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1154, 334, -1, -1));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/100.png"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1154, 170, -1, -1));
+        jumlah_DataDiskon.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jPanel1.add(jumlah_DataDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(1154, 170, 20, 20));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/100.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(859, 170, -1, -1));
+        jumlah_dataTransaksi.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jPanel1.add(jumlah_dataTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(859, 170, -1, 20));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/100.png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(566, 170, -1, -1));
+        jumlah_dataSupplier.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jumlah_dataSupplier.setIconTextGap(18);
+        jPanel1.add(jumlah_dataSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(566, 170, 20, 20));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/100.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 167, -1, -1));
+        jumlah_dataBarang.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jPanel1.add(jumlah_dataBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 167, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Dashboard 3.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -89,14 +171,111 @@ public class Dashboard extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jumlah_DataDiskon;
+    private javax.swing.JLabel jumlah_dataBarang;
+    private javax.swing.JLabel jumlah_dataSupplier;
+    private javax.swing.JLabel jumlah_dataTransaksi;
+    private javax.swing.JLabel jumlah_dataUser;
+    private javax.swing.JLabel jumlah_pemasukan;
+    private javax.swing.JLabel jumlah_pengeluaran;
+    private javax.swing.JLabel labeljamrealtime;
     // End of variables declaration//GEN-END:variables
+public void barangterjual(){
+         try{
+               String sql = "SELECT COUNT(*) FROM tb_data_barang";
+      java.sql.Connection conn = (Connection) Koneksi.configDB();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+           rs = st.executeQuery(sql);
+         while(rs.next()){
+             jumlah_dataBarang.setText(rs.getString(1));
+         }
+        }catch(Exception e){
+                        
+                    }}
+public void supplier(){
+         try{
+               String sql = "SELECT COUNT(*) FROM tb_detail_supplier";
+      java.sql.Connection conn = (Connection) Koneksi.configDB();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+           rs = st.executeQuery(sql);
+         while(rs.next()){
+             jumlah_dataSupplier.setText(rs.getString(1));
+         }
+        }catch(Exception e){
+                        
+                    }}
+public void transaksi(){
+         try{
+               String sql = "SELECT COUNT(*) FROM tb_detail_transaksi";
+      java.sql.Connection conn = (Connection) Koneksi.configDB();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+           rs = st.executeQuery(sql);
+         while(rs.next()){
+             jumlah_dataTransaksi.setText(rs.getString(1));
+         }
+        }catch(Exception e){
+                        
+                    }}
+public void diskon(){
+         try{
+               String sql = "SELECT COUNT(*) FROM tb_diskon";
+      java.sql.Connection conn = (Connection) Koneksi.configDB();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+           rs = st.executeQuery(sql);
+         while(rs.next()){
+            jumlah_DataDiskon.setText(rs.getString(1));
+         }
+        }catch(Exception e){
+                        
+                    }}
+public void user(){
+         try{
+               String sql = "SELECT COUNT(*) FROM tb_akun";
+      java.sql.Connection conn = (Connection) Koneksi.configDB();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+           rs = st.executeQuery(sql);
+         while(rs.next()){
+             jumlah_dataUser.setText(rs.getString(1));
+         }
+        }catch(Exception e){
+                        
+                    }}
+public void pemasukan(){
+         try{
+               String sql = "SELECT COUNT(*) FROM tb_pelanggan";
+      java.sql.Connection conn = (Connection) Koneksi.configDB();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+           rs = st.executeQuery(sql);
+         while(rs.next()){
+             jumlah_pemasukan.setText(rs.getString(1));
+         }
+        }catch(Exception e){
+                        
+                    }}
+public void pengeluaran(){
+         try{
+               String sql = "SELECT COUNT(*) FROM tb_produk";
+      java.sql.Connection conn = (Connection) Koneksi.configDB();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+           rs = st.executeQuery(sql);
+         while(rs.next()){
+             jumlah_pengeluaran.setText(rs.getString(1));
+         }
+        }catch(Exception e){
+                        
+                    }}
+  private static class jLabel3 {
+
+        public jLabel3() {
+        }
+    }
 }
+

@@ -186,6 +186,7 @@ public class Tambah_Produk extends javax.swing.JDialog {
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
+                 tabelProduk();
     }//GEN-LAST:event_btn_tambahActionPerformed
 
     private void txt_namasupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namasupplierActionPerformed

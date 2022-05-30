@@ -43,7 +43,7 @@ public class Data_Supplier extends javax.swing.JPanel {
 			System.out.println(e);
 		}
 	}
-	Tambah_Supplier edit = new Tambah_Supplier(null, true);
+	Tambah_Detail_Supplier edit = new Tambah_Detail_Supplier(null, true);
 
 	public Data_Supplier() {
 		initComponents();
@@ -67,7 +67,6 @@ public class Data_Supplier extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new com.swing.table.Table();
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -84,7 +83,7 @@ public class Data_Supplier extends javax.swing.JPanel {
                 btn_supplierActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_supplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 50, 125, 30));
+        jPanel1.add(btn_supplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(881, 660, 125, 30));
 
         btn_produk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/button produk.png"))); // NOI18N
         btn_produk.setContentAreaFilled(false);
@@ -93,7 +92,7 @@ public class Data_Supplier extends javax.swing.JPanel {
                 btn_produkActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 50, 125, 30));
+        jPanel1.add(btn_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(1033, 660, 125, 30));
 
         table1.setBackground(new java.awt.Color(255, 158, 187));
         table1.setModel(new javax.swing.table.DefaultTableModel(
@@ -116,11 +115,6 @@ public class Data_Supplier extends javax.swing.JPanel {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Background Table.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 83, -1, -1));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Cetak.png"))); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.setContentAreaFilled(false);
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1176, 659, 125, 30));
-
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button tambah.png"))); // NOI18N
         jButton1.setBorder(null);
         jButton1.setContentAreaFilled(false);
@@ -129,9 +123,9 @@ public class Data_Supplier extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1031, 659, 125, 30));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1179, 660, 125, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Desktop - 7.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Tampilan supplier baru.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -153,7 +147,7 @@ public class Data_Supplier extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 		// TODO add your handling code here:
 
-		Tambah_Supplier supplier = new Tambah_Supplier(null, true);
+		Tambah_Detail_Supplier supplier = new Tambah_Detail_Supplier(null, true);
 		edit.select1(0);
 		edit.setVisible(true);
 		tabel();
@@ -168,7 +162,7 @@ public class Data_Supplier extends javax.swing.JPanel {
 		String Alamat = table1.getValueAt(index, 3).toString();
 		String Produk = table1.getValueAt(index, 4).toString();
 
-		Tambah_Supplier edit = new Tambah_Supplier(null, true);
+		Tambah_Detail_Supplier edit = new Tambah_Detail_Supplier(null, true);
 		edit.show1(Kode_Supplier, Nama_Supplier, Nama_Toko, Alamat, Produk);
 		edit.select1(1);
 		edit.setVisible(true);
@@ -184,7 +178,7 @@ public class Data_Supplier extends javax.swing.JPanel {
 
     private void btn_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supplierActionPerformed
 		// TODO add your handling code here:
-		Tambah_Supplier1 b = new Tambah_Supplier1((Frame) SwingUtilities.getWindowAncestor(this), true);
+		Tambah_Supplier b = new Tambah_Supplier((Frame) SwingUtilities.getWindowAncestor(this), true);
 		b.show();
     }//GEN-LAST:event_btn_supplierActionPerformed
 
@@ -192,7 +186,6 @@ public class Data_Supplier extends javax.swing.JPanel {
     private javax.swing.JButton btn_produk;
     private javax.swing.JButton btn_supplier;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

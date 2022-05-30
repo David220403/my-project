@@ -1,6 +1,7 @@
 package com.Main;
 
 import com.Wraplayout.WrapLayout;
+import com.popup.popup_logout;
 import net.miginfocom.swing.MigLayout;
 
 public class MenuLayout extends javax.swing.JFrame {
@@ -38,7 +39,6 @@ public class MenuLayout extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -56,15 +56,12 @@ public class MenuLayout extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Log OUt 2.png"))); // NOI18N
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 344, -1, -1));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Pengaturan 2.png"))); // NOI18N
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
+                jLabel9MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 306, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 306, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Diskon 2.png"))); // NOI18N
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -174,15 +171,11 @@ public class MenuLayout extends javax.swing.JFrame {
         pengaturan.setVisible(false);
     }//GEN-LAST:event_jLabel7MouseClicked
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
-        main.setVisible(false);
-        supplier.setVisible(false);
-        riwayat.setVisible(false);
-        transaksi.setVisible(false);
-        diskon.setVisible(false);
-        pengaturan.setVisible(true);
-    }//GEN-LAST:event_jLabel8MouseClicked
+         popup_logout keluar = new popup_logout(this, true);
+        keluar.setVisible(true);
+    }//GEN-LAST:event_jLabel9MouseClicked
 
     /**
      * @param args the command line arguments
@@ -228,7 +221,6 @@ public class MenuLayout extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
