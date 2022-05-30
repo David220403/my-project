@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 27, 2022 at 07:39 AM
+-- Generation Time: May 30, 2022 at 02:38 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -57,6 +57,13 @@ CREATE TABLE `tb_data_barang` (
   `id_detail_supplier` varchar(11) NOT NULL,
   `id_kategori` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_data_barang`
+--
+
+INSERT INTO `tb_data_barang` (`id`, `nama`, `harga_beli`, `harga_jual`, `stock`, `id_detail_supplier`, `id_kategori`) VALUES
+('2200001', '23423', 22222, 2, 1, 'DS0032', 'K00001');
 
 --
 -- Triggers `tb_data_barang`
@@ -123,6 +130,15 @@ CREATE TABLE `tb_detail_transaksi` (
   `id_barang` varchar(11) NOT NULL,
   `jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_detail_transaksi`
+--
+
+INSERT INTO `tb_detail_transaksi` (`id`, `id_transaksi`, `id_barang`, `jumlah`) VALUES
+(86, 10, '2200001', 1),
+(89, 10, '2200001', 1),
+(90, 10, '2200001', 1);
 
 -- --------------------------------------------------------
 
@@ -231,8 +247,8 @@ CREATE TABLE `tb_supplier` (
 --
 
 INSERT INTO `tb_supplier` (`id`, `nama`, `toko`, `alamat`) VALUES
-('S00001', 'raihan geming', 'awikwokStore', 'toko kontolodon'),
-('S00002', 'DEVI CANTIKKK LUCU', 'love you', '<33333'),
+('', '', '', ''),
+('S00002', 'DEVI CANTIKKK LUCUu', 'love ya', '<33333'),
 ('S00003', 'sdasdasdasdasdasdasd', 'asdas', 'dasdasdasdasda'),
 ('S00004', 'loldek', 'asdasd', 'asdasd');
 
@@ -267,9 +283,16 @@ CREATE TABLE `tb_transaksi` (
   `kembalian` int(11) DEFAULT NULL,
   `tanggal` datetime DEFAULT current_timestamp(),
   `id_pelanggan` int(11) DEFAULT NULL,
-  `id_akun` int(11) NOT NULL,
-  `id_diskon` int(11) NOT NULL
+  `id_akun` int(11) DEFAULT NULL,
+  `id_diskon` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_transaksi`
+--
+
+INSERT INTO `tb_transaksi` (`id`, `total_harga`, `dibayar`, `kembalian`, `tanggal`, `id_pelanggan`, `id_akun`, `id_diskon`) VALUES
+(10, 6, 20000, 19994, '2022-05-28 20:30:22', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -358,7 +381,7 @@ ALTER TABLE `tb_akun`
 -- AUTO_INCREMENT for table `tb_detail_transaksi`
 --
 ALTER TABLE `tb_detail_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `tb_pelanggan`
@@ -376,7 +399,7 @@ ALTER TABLE `tb_produk`
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
