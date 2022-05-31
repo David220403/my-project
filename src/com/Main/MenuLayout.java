@@ -11,7 +11,6 @@ public class MenuLayout extends javax.swing.JFrame {
     Riwayat_Transaksi1 riwayat = new Riwayat_Transaksi1();
     Transaksi1 transaksi = new Transaksi1();
     Diskon diskon = new Diskon();
-    Pengaturan pengaturan = new Pengaturan();
     
     public MenuLayout() {
         initComponents();
@@ -23,14 +22,12 @@ public class MenuLayout extends javax.swing.JFrame {
         jPanel2.add(riwayat);
         jPanel2.add(transaksi);
         jPanel2.add(diskon);
-        jPanel2.add(pengaturan);
         
         main.setVisible(true);
         supplier.setVisible(false);
         riwayat.setVisible(false);
         transaksi.setVisible(false);
         diskon.setVisible(false);
-        pengaturan.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -128,7 +125,6 @@ public class MenuLayout extends javax.swing.JFrame {
         riwayat.setVisible(false);
         transaksi.setVisible(false);
         diskon.setVisible(false);
-        pengaturan.setVisible(false);
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -138,7 +134,6 @@ public class MenuLayout extends javax.swing.JFrame {
         riwayat.setVisible(false);
         transaksi.setVisible(false);
         diskon.setVisible(false);
-        pengaturan.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -148,7 +143,6 @@ public class MenuLayout extends javax.swing.JFrame {
         riwayat.setVisible(true);
         transaksi.setVisible(false);
         diskon.setVisible(false);
-        pengaturan.setVisible(false);
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
@@ -158,7 +152,6 @@ public class MenuLayout extends javax.swing.JFrame {
         riwayat.setVisible(false);
         transaksi.setVisible(true);
         diskon.setVisible(false);
-        pengaturan.setVisible(false);
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
@@ -168,7 +161,6 @@ public class MenuLayout extends javax.swing.JFrame {
         riwayat.setVisible(false);
         transaksi.setVisible(false);
         diskon.setVisible(true);
-        pengaturan.setVisible(false);
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked

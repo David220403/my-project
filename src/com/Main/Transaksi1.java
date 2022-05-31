@@ -549,7 +549,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
 
         private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 		// TODO add your handling code here:
-		checkout();
+                checkout();
                 popup_pembayaran  pembayaran = new popup_pembayaran(null, true);
                 pembayaran.setVisible(true);
         }//GEN-LAST:event_jButton3ActionPerformed
