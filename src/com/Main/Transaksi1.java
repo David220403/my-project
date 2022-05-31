@@ -5,6 +5,7 @@
  */
 package com.Main;
 
+import com.popup.popup_pembayaran;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -549,6 +550,8 @@ public final class Transaksi1 extends javax.swing.JPanel {
         private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 		// TODO add your handling code here:
 		checkout();
+                popup_pembayaran  pembayaran = new popup_pembayaran(null, true);
+                pembayaran.setVisible(true);
         }//GEN-LAST:event_jButton3ActionPerformed
 
         private void bayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bayarKeyReleased
@@ -571,8 +574,8 @@ public final class Transaksi1 extends javax.swing.JPanel {
 
         private void table2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table2MouseClicked
 		// TODO add your handling code here:
-		int index = table1.rowAtPoint(evt.getPoint());
-		idBarang = table1.getValueAt(index, 0).toString();
+		int index = table2.rowAtPoint(evt.getPoint());
+		idBarang = table2.getValueAt(index, 0).toString();
         }//GEN-LAST:event_table2MouseClicked
 
         private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

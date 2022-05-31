@@ -77,16 +77,7 @@ public class popup_pembayaran extends javax.swing.JDialog {
 
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
         // TODO add your handling code here:
-//        try {
-//            String sql1 = "INSERT INTO `tb_data_barang`(`id`, `nama`, `harga_beli`, 'harga_jual', `stock`, `id_detail_supplier`, `id_kategori`) VALUES ('"+txt_kode_barcode.getText()+"','"+getproduk()+"','"+txt_namabarang.getText()+"','"
-//            +txt_harga.getText()+"','"+txt_stock.getText()+"','"+txt_supplier.getText()+"','"+getKategori()+"')";
-//            System.out.println(sql1);
-//            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
-//            java.sql.PreparedStatement pst=conn.prepareStatement(sql1);
-//            pst.execute();
-//        } catch (Exception e){
-//            JOptionPane.showMessageDialog(this, e.getMessage());
-//        }
+        dispose();
     }//GEN-LAST:event_btn_tambahActionPerformed
 
     private void btn_tambah1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah1ActionPerformed
