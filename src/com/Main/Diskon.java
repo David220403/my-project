@@ -5,11 +5,49 @@
  */
 package com.Main;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author david
  */
 public class Diskon extends javax.swing.JPanel {
+    
+    public void tabel(){
+    DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Nilai Diskon");
+        model.addColumn("Nama Diskon");
+        model.addColumn("Tanggal Diskon");
+
+        try {
+            
+            String sql ="SELECT id, nama, tanggal, persen FROM tb_diskon ";
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery(sql);
+            while(rs.next()){
+                model.addRow(new Object[]{
+                    rs.getString(1), rs.getString(4) +"%", rs.getString(2), rs.getString(3)
+                });
+                
+            }
+            
+            table1.setModel(model);
+           
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+     }
 
     /**
      * Creates new form Diskon
@@ -17,10 +55,54 @@ public class Diskon extends javax.swing.JPanel {
     public Diskon() {
         initComponents();
         table1.fixTable(jScrollPane1);
-        for (int i = 1; i < 30 ; i++){
-        table1.addRow(new Object[]{"#100" + i , "100.000" , "500.000" , "400.000", "08123376458"+i});
-        }
+        tabel();
+//        Connect();
     }
+    public void kosong(){
+        txt_id12.setText(null);
+        txt_namaDiskon.setText(null);
+        txt_nilaiDiskon1.setText(null);
+        txt_tanggalDiskon.setText(null);
+    }
+// Connection con;
+//    PreparedStatement pst;
+//    public void Connect(){
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//            try {
+//                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_skincare", "root", "");
+//            } catch (SQLException ex) {
+//                Logger.getLogger(Diskon.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(Diskon.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+    public void show(String id1,  String nilai_diskon, String nama_diskon, String tanggal_diskon) {
+        this.txt_id12.setText(id1);
+//        this.txt_nilaiDiskon1.setText(nilai_diskon);
+//        this.txt_namaDiskon.setText(nama_diskon);
+//        this.txt_tanggalDiskon.setText(tanggal_diskon);
+    }
+    
+    //autoinctrement
+   
+    public void select1(int konfirm) {
+		switch (konfirm) {
+			case 0:
+				btn_tambah.setVisible(true);
+				btn_simpan.setVisible(false);
+				btn_hapus.setVisible(false);
+				break;
+			case 1:
+				btn_tambah.setVisible(false);
+				btn_simpan.setVisible(true);
+				btn_hapus.setVisible(true);
+				break;
+			default:
+				break;
+		}
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,15 +116,15 @@ public class Diskon extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        txt_tanggalDiskon = new javax.swing.JTextField();
+        txt_nilaiDiskon1 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        txt_namaDiskon = new javax.swing.JTextField();
+        txt_id12 = new javax.swing.JTextField();
+        btn_tambah = new javax.swing.JButton();
+        btn_simpan = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btn_hapus = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new com.swing.table.Table();
         jLabel6 = new javax.swing.JLabel();
@@ -61,25 +143,25 @@ public class Diskon extends javax.swing.JPanel {
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/kalender.png"))); // NOI18N
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(663, 611, -1, -1));
 
-        jTextField7.setBackground(new java.awt.Color(255, 224, 233));
-        jTextField7.setBorder(null);
-        jTextField7.setOpaque(false);
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        txt_tanggalDiskon.setBackground(new java.awt.Color(255, 224, 233));
+        txt_tanggalDiskon.setBorder(null);
+        txt_tanggalDiskon.setOpaque(false);
+        txt_tanggalDiskon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                txt_tanggalDiskonActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 614, 130, -1));
+        jPanel1.add(txt_tanggalDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 614, 130, -1));
 
-        jTextField6.setBackground(new java.awt.Color(255, 224, 233));
-        jTextField6.setBorder(null);
-        jTextField6.setOpaque(false);
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        txt_nilaiDiskon1.setBackground(new java.awt.Color(255, 224, 233));
+        txt_nilaiDiskon1.setBorder(null);
+        txt_nilaiDiskon1.setOpaque(false);
+        txt_nilaiDiskon1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                txt_nilaiDiskon1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 566, 150, -1));
+        jPanel1.add(txt_nilaiDiskon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 566, 150, -1));
 
         jTextField5.setBackground(new java.awt.Color(255, 224, 233));
         jTextField5.setBorder(null);
@@ -91,45 +173,60 @@ public class Diskon extends javax.swing.JPanel {
         });
         jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 661, 130, -1));
 
-        jTextField4.setBackground(new java.awt.Color(255, 224, 233));
-        jTextField4.setBorder(null);
-        jTextField4.setOpaque(false);
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txt_namaDiskon.setBackground(new java.awt.Color(255, 224, 233));
+        txt_namaDiskon.setBorder(null);
+        txt_namaDiskon.setOpaque(false);
+        txt_namaDiskon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txt_namaDiskonActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 614, 150, -1));
+        jPanel1.add(txt_namaDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 614, 150, -1));
 
-        jTextField2.setBackground(new java.awt.Color(255, 224, 233));
-        jTextField2.setBorder(null);
-        jTextField2.setOpaque(false);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txt_id12.setBackground(new java.awt.Color(255, 224, 233));
+        txt_id12.setBorder(null);
+        txt_id12.setOpaque(false);
+        txt_id12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txt_id12ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 566, 150, -1));
+        jPanel1.add(txt_id12, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 566, 150, -1));
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button tambah.png"))); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.setContentAreaFilled(false);
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(931, 563, 125, 30));
+        btn_tambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button tambah.png"))); // NOI18N
+        btn_tambah.setBorder(null);
+        btn_tambah.setContentAreaFilled(false);
+        btn_tambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambahActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(931, 563, 125, 30));
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Simpan.png"))); // NOI18N
-        jButton3.setBorder(null);
-        jButton3.setContentAreaFilled(false);
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(766, 563, 125, 30));
+        btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Simpan.png"))); // NOI18N
+        btn_simpan.setBorder(null);
+        btn_simpan.setContentAreaFilled(false);
+        btn_simpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpanActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(766, 563, 125, 30));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Edit.png"))); // NOI18N
         jButton2.setBorder(null);
         jButton2.setContentAreaFilled(false);
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(766, 641, 125, 30));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button hapus.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setContentAreaFilled(false);
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(931, 641, 125, 30));
+        btn_hapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button hapus.png"))); // NOI18N
+        btn_hapus.setBorder(null);
+        btn_hapus.setContentAreaFilled(false);
+        btn_hapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapusActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(931, 641, 125, 30));
 
         table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -145,6 +242,11 @@ public class Diskon extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(table1);
@@ -185,32 +287,88 @@ public class Diskon extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txt_id12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_id12ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txt_id12ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txt_namaDiskonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namaDiskonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txt_namaDiskonActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void txt_nilaiDiskon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nilaiDiskon1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_txt_nilaiDiskon1ActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void txt_tanggalDiskonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tanggalDiskonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_txt_tanggalDiskonActionPerformed
+
+    private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
+        // TODO add your handling code here:
+         try {
+
+            String sql = "INSERT INTO `tb_diskon`(`id`,`nama`,`tanggal`, `persen`) VALUES ('"+txt_id12.getText()+"','"+txt_namaDiskon.getText()+"','"+txt_tanggalDiskon.getText()+"','"+txt_nilaiDiskon1.getText()+"')";
+            System.out.println(sql);
+            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+            pst.execute();
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+         tabel();
+         kosong();
+    }//GEN-LAST:event_btn_tambahActionPerformed
+
+    private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
+        // TODO add your handling code here:
+        try {
+			String sql = "UPDATE `tb_diskon` SET `nama`='"+txt_namaDiskon.getText()+"',persen = '"+txt_nilaiDiskon1.getText()+"',tanggal = '"+txt_tanggalDiskon.getText()+"' where id= '"+txt_id12.getText()+"'";
+			System.out.println(sql);
+			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+			pst.execute();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+        tabel();
+        kosong();
+    }//GEN-LAST:event_btn_simpanActionPerformed
+
+    private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
+        // TODO add your handling code here:
+        try {
+			String sql = "DELETE FROM tb_diskon WHERE id ='" +txt_id12.getText()+ "'";
+                        System.out.println(sql);
+			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
+			java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+			ps.execute();
+			JOptionPane.showMessageDialog(null, "Data berhasil di Hapus");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+         tabel();
+         kosong();
+    }//GEN-LAST:event_btn_hapusActionPerformed
+
+    private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
+        // TODO add your handling code here:
+        int baris=table1.getSelectedRow();
+        txt_namaDiskon.setText(String.valueOf(table1.getValueAt(baris, 2)));
+        txt_id12.setText(String.valueOf(table1.getValueAt(baris, 0)));
+        txt_nilaiDiskon1.setText(String.valueOf(table1.getValueAt(baris, 1)));
+        txt_tanggalDiskon.setText(String.valueOf(table1.getValueAt(baris, 3)));
+    }//GEN-LAST:event_table1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_hapus;
+    private javax.swing.JButton btn_simpan;
+    private javax.swing.JButton btn_tambah;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -221,11 +379,11 @@ public class Diskon extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     private com.swing.table.Table table1;
+    private javax.swing.JTextField txt_id12;
+    private javax.swing.JTextField txt_namaDiskon;
+    private javax.swing.JTextField txt_nilaiDiskon1;
+    private javax.swing.JTextField txt_tanggalDiskon;
     // End of variables declaration//GEN-END:variables
 }

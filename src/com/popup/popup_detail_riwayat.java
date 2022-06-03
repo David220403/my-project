@@ -5,6 +5,12 @@
  */
 package com.popup;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author david
@@ -18,6 +24,38 @@ public class popup_detail_riwayat extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+    private void tabelRiwayat() {
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("ID Barang");
+		model.addColumn("Total Harga");
+		model.addColumn("Dibayar");
+		model.addColumn("Kembalian");
+		model.addColumn("Tanggal");
+		model.addColumn("ID Pelanggan");
+		model.addColumn("ID Akun");
+		model.addColumn("ID Diskon");
+
+		try {
+
+			String sql = "select * from tb_transaksi";
+
+			Connection conn = com.Koneksi.Koneksi.configDB();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery(sql);
+			while (rs.next()) {
+				model.addRow(new Object[]{
+					rs.getString(1), rs.getString(2), rs.getString(3),
+					rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)
+				});
+
+			}
+
+			table1.setModel(model);
+
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,7 +92,7 @@ public class popup_detail_riwayat extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nama Pembeli", "Alamat Pembeli", "No Telp Pembeli", "Nama Pembeli", "Harga Barang", "Jumlah"
+                "Nama Pembeli", "Alamat Pembeli", "No Telp Pembeli", "Nama Barang", "Harga Barang", "Jumlah"
             }
         ));
         jScrollPane1.setViewportView(table1);

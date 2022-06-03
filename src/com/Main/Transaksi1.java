@@ -49,6 +49,8 @@ public final class Transaksi1 extends javax.swing.JPanel {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery(sql);
 			while (rs.next()) {
+//                            int diskon = Integer.parseInt(rs.getString(5));
+//                            int total_diskon =diskon/100;
 				total += rs.getInt(1);
 			}
 		} catch (SQLException ex) {
@@ -550,8 +552,8 @@ public final class Transaksi1 extends javax.swing.JPanel {
         private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 		// TODO add your handling code here:
                 checkout();
-                popup_pembayaran  pembayaran = new popup_pembayaran(null, true);
-                pembayaran.setVisible(true);
+//                popup_pembayaran  pembayaran = new popup_pembayaran(null, true);
+//                pembayaran.setVisible(true);
         }//GEN-LAST:event_jButton3ActionPerformed
 
         private void bayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bayarKeyReleased

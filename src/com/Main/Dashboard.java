@@ -248,7 +248,7 @@ public void user(){
                     }}
 public void pemasukan(){
          try{
-               String sql = "SELECT COUNT(*) FROM tb_pelanggan";
+               String sql = "SELECT SUM(total_harga) FROM tb_transaksi";
       java.sql.Connection conn = (Connection) Koneksi.configDB();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -261,7 +261,8 @@ public void pemasukan(){
                     }}
 public void pengeluaran(){
          try{
-               String sql = "SELECT COUNT(*) FROM tb_produk";
+               String sql = "SELECT SUM(harga_beli) FROM tb_data_barang";
+               System.out.println(sql);
       java.sql.Connection conn = (Connection) Koneksi.configDB();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);

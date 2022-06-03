@@ -5,6 +5,7 @@
  */
 package com.Main;
 
+import com.popup.popup_detail_riwayat;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -85,10 +86,14 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
 
         jTextField4.setBackground(new java.awt.Color(255, 224, 233));
         jTextField4.setBorder(null);
-        jTextField4.setOpaque(false);
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
+            }
+        });
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
             }
         });
         jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 54, 150, -1));
@@ -126,6 +131,11 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
                 "Id Transaksi", "Total Harga", "Dibayar ", "Kembalian", "Tanggal Transaksi"
             }
         ));
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 1020, 495));
@@ -155,6 +165,17 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
 		// TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
+        // TODO add your handling code here:
+        tabelRiwayat();
+    }//GEN-LAST:event_jTextField4KeyReleased
+
+    private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
+        // TODO add your handling code here:
+		popup_detail_riwayat riwayat = new popup_detail_riwayat(null, true);
+		riwayat.setVisible(true);
+    }//GEN-LAST:event_table1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

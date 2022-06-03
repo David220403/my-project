@@ -17,11 +17,9 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         this.setResizable(false);
         initComponents();
-        //this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
     }
     private void login(){
         if ( txt_user.getText().equals("")|| txt_pass.getText().equals("")){
-//            new PopUpMessages(this, true, "Informasi", "Username dan Password wajib diisi", 0).setVisible(true);
         } else {
             try {
                 String sql = "SELECT * FROM tb_akun WHERE username='"+txt_user.getText()
@@ -34,19 +32,8 @@ public class Login extends javax.swing.JFrame {
                         && txt_pass.getText().equals(rs.getString("password"))){
                         this.setVisible(false);
                         new MenuLayout().setVisible(true);
-//                        dataAkun(); 
-                        //this.setVisible(false);
-//                        this.dispose();
-//                        
-//                        Dashboard menu = new Dashboard();
-//                        
-//                        menu.setVisible(true);
-//                        
-                        
-//                        Detail_Users.saveUser = txt_username.getText();
-//                        String usernamenya = txt_username.getText();
-//                        Dashboard.username.setText(usernamenya);
-//                        Pembelian_Barang.username = usernamenya;
+                        String usernamenya = txt_user.getText();
+                        MenuLayout.username.setText(usernamenya);
                     } 
                 } else {
                        popup_login gagal = new popup_login(this, true);
@@ -57,38 +44,6 @@ public class Login extends javax.swing.JFrame {
             }
         }
     }
-
-//	public Login() {
-//		initComponents();
-//		setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - getSize().width) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - getSize().height) / 2);
-//	}
-//
-//	private void loginDek() {
-//		try {
-//			String sql = "SELECT username, password FROM tb_akun WHERE username='" + txt_user.getText()
-//				+ "'AND password ='" + txt_pass.getText() + "'";
-//			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
-//			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-//			java.sql.ResultSet rs = pst.executeQuery(sql);
-//			if (rs.next()) {
-//
-//				if (txt_user.getText().equals("") || txt_pass.getText().equals("")) {
-//					txt_user.setText(null);
-//					txt_pass.setText(null);
-//				} else if (txt_user.getText().equals(rs.getString("username")) && txt_pass.getText().equals(rs.getString("password"))){
-//					this.setVisible(false);
-//					new MenuLayout().setVisible(true);
-//				} else if (txt_user.getText().equals(rs.getString("username")) && txt_pass.getText().equals(rs.getString("password"))){
-//                                        popup_login gagal = new popup_login(this, true);
-//                                        gagal.setVisible(true);
-//					txt_user.setText("");
-//					txt_pass.setText("");
-//				}
-//			}
-//		} catch (Exception e) {
-//			JOptionPane.showMessageDialog(this, e.getMessage());
-//		}
-//	}
 	/**
 	 * This method is called from within the constructor to initialize the
 	 * form. WARNING: Do NOT modify this code. The content of this method is
