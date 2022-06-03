@@ -59,6 +59,22 @@ public final class Transaksi1 extends javax.swing.JPanel {
 		return total;
 	}
 
+	private int getDiscounted() {
+		int total = 0;
+		try {
+			String sql = "select persen from tb_transaksi as t join tb_diskon as d on t.id_diskon = d.id where t.id = (select id from tb_transaksi order by id desc limit 1)";
+			Connection conn = com.Koneksi.Koneksi.configDB();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery(sql);
+			if (rs.next()) {
+				total = getTotalHarga() - (getTotalHarga()*rs.getInt(1)/100);
+			}
+		} catch (SQLException ex) {
+
+		}
+		return total;
+	}
+
 	private void getBayar() {
 		uangBayar = Integer.parseInt(bayar.getText());
 		getKembalian();
@@ -111,7 +127,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
 
 	private void insertNewTransaksi() {
 		try {
-			String sql = "INSERT INTO tb_transaksi VALUES (NULL, NULL, NULL, NULL, current_timestamp(), NULL, '1');";
+			String sql = "INSERT INTO tb_transaksi VALUES (NULL, NULL, NULL, NULL, current_timestamp(), NULL, '1', (select id from tb_diskon where tanggal = current_date order by tanggal desc limit 1));";
 			System.out.println(sql);
 			Connection conn = com.Koneksi.Koneksi.configDB();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -176,6 +192,8 @@ public final class Transaksi1 extends javax.swing.JPanel {
 
 	private void tabelTransaksi() {
 		totalHarga.setText(Integer.toString(getTotalHarga()));
+		totalDiskon.setText(Integer.toString(getDiscounted()));
+		
 
 		DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("ID");
@@ -230,7 +248,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
                 jTextField4 = new javax.swing.JTextField();
                 totalHarga = new javax.swing.JTextField();
                 bayar = new javax.swing.JTextField();
-                jTextField10 = new javax.swing.JTextField();
+                totalDiskon = new javax.swing.JTextField();
                 kategori = new com.swing.Combobox();
                 jButton3 = new javax.swing.JButton();
                 jButton2 = new javax.swing.JButton();
@@ -327,14 +345,14 @@ public final class Transaksi1 extends javax.swing.JPanel {
                 });
                 jPanel1.add(bayar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1075, 621, 150, -1));
 
-                jTextField10.setBackground(new java.awt.Color(255, 194, 212));
-                jTextField10.setBorder(null);
-                jTextField10.addActionListener(new java.awt.event.ActionListener() {
+                totalDiskon.setBackground(new java.awt.Color(255, 194, 212));
+                totalDiskon.setBorder(null);
+                totalDiskon.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                jTextField10ActionPerformed(evt);
+                                totalDiskonActionPerformed(evt);
                         }
                 });
-                jPanel1.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(795, 670, 150, -1));
+                jPanel1.add(totalDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(795, 670, 150, -1));
 
                 kategori.setBackground(new java.awt.Color(255, 122, 162));
                 kategori.setLabeText("Kategori");
@@ -477,49 +495,49 @@ public final class Transaksi1 extends javax.swing.JPanel {
         }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-		// TODO add your handling code here:
+	    // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-		// TODO add your handling code here:
+	    // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void kembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembalianActionPerformed
-		// TODO add your handling code here:
+	    // TODO add your handling code here:
     }//GEN-LAST:event_kembalianActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-		// TODO add your handling code here:
+	    // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-		// TODO add your handling code here:
+	    // TODO add your handling code here:
     }//GEN-LAST:event_searchActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-		// TODO add your handling code here:
-		Tambah_Barang edit = new Tambah_Barang(null, true);
-		edit.select(0);
-		edit.setVisible(true);
-		tabelBarang();
+	    // TODO add your handling code here:
+	    Tambah_Barang edit = new Tambah_Barang(null, true);
+	    edit.select(0);
+	    edit.setVisible(true);
+	    tabelBarang();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
-		int index = table1.rowAtPoint(evt.getPoint());
-		String ID = table1.getValueAt(index, 0).toString();
-		String Nama_Barang = table1.getValueAt(index, 1).toString();
-		String Harga_Beli = table1.getValueAt(index, 2).toString();
-		String Harga_Jual = table1.getValueAt(index, 3).toString();
-		String Stock = table1.getValueAt(index, 4).toString();
-		String Nama_Supplier = table1.getValueAt(index, 5).toString();
-		String Kategori = table1.getValueAt(index, 6).toString();
+	    int index = table1.rowAtPoint(evt.getPoint());
+	    String ID = table1.getValueAt(index, 0).toString();
+	    String Nama_Barang = table1.getValueAt(index, 1).toString();
+	    String Harga_Beli = table1.getValueAt(index, 2).toString();
+	    String Harga_Jual = table1.getValueAt(index, 3).toString();
+	    String Stock = table1.getValueAt(index, 4).toString();
+	    String Nama_Supplier = table1.getValueAt(index, 5).toString();
+	    String Kategori = table1.getValueAt(index, 6).toString();
 
-		Tambah_Barang edit = new Tambah_Barang(null, true);
-		edit.show(ID, Nama_Barang, Harga_Beli, Harga_Jual, Stock, Nama_Supplier, Kategori);
-		edit.select(1);
-		edit.setVisible(true);
+	    Tambah_Barang edit = new Tambah_Barang(null, true);
+	    edit.show(ID, Nama_Barang, Harga_Beli, Harga_Jual, Stock, Nama_Supplier, Kategori);
+	    edit.select(1);
+	    edit.setVisible(true);
 
-		tabelBarang();
+	    tabelBarang();
     }//GEN-LAST:event_table1MouseClicked
 
         private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
@@ -534,24 +552,24 @@ public final class Transaksi1 extends javax.swing.JPanel {
         }//GEN-LAST:event_searchKeyReleased
 
     private void bayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bayarActionPerformed
-		// TODO add your handling code here:
+	    // TODO add your handling code here:
     }//GEN-LAST:event_bayarActionPerformed
 
     private void totalHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalHargaActionPerformed
-		// TODO add your handling code here:
+	    // TODO add your handling code here:
     }//GEN-LAST:event_totalHargaActionPerformed
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-		// TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
+    private void totalDiskonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalDiskonActionPerformed
+	    // TODO add your handling code here:
+    }//GEN-LAST:event_totalDiskonActionPerformed
 
     private void kategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kategoriActionPerformed
-		// TODO add your handling code here:
+	    // TODO add your handling code here:
     }//GEN-LAST:event_kategoriActionPerformed
 
         private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 		// TODO add your handling code here:
-                checkout();
+		checkout();
 //                popup_pembayaran  pembayaran = new popup_pembayaran(null, true);
 //                pembayaran.setVisible(true);
         }//GEN-LAST:event_jButton3ActionPerformed
@@ -612,7 +630,6 @@ public final class Transaksi1 extends javax.swing.JPanel {
         private javax.swing.JPanel jPanel1;
         private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JScrollPane jScrollPane2;
-        private javax.swing.JTextField jTextField10;
         private javax.swing.JTextField jTextField4;
         private javax.swing.JTextField jTextField5;
         private javax.swing.JTextField jTextField7;
@@ -621,6 +638,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
         private javax.swing.JTextField search;
         private com.swing.table.Table table1;
         private com.swing.table.Table table2;
+        private javax.swing.JTextField totalDiskon;
         private javax.swing.JTextField totalHarga;
         // End of variables declaration//GEN-END:variables
 }

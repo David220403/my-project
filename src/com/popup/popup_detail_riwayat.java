@@ -17,27 +17,28 @@ import javax.swing.table.DefaultTableModel;
  */
 public class popup_detail_riwayat extends javax.swing.JDialog {
 
+	String id = null;
     /**
      * Creates new form popup_detail_riwayat
      */
-    public popup_detail_riwayat(java.awt.Frame parent, boolean modal) {
+    public popup_detail_riwayat(java.awt.Frame parent, boolean modal, String id) {
         super(parent, modal);
-        initComponents();
+        initComponents(); 
+	this.id = id;
+	tabelRiwayat();
     }
     private void tabelRiwayat() {
 		DefaultTableModel model = new DefaultTableModel();
-		model.addColumn("ID Barang");
-		model.addColumn("Total Harga");
-		model.addColumn("Dibayar");
-		model.addColumn("Kembalian");
-		model.addColumn("Tanggal");
-		model.addColumn("ID Pelanggan");
-		model.addColumn("ID Akun");
-		model.addColumn("ID Diskon");
+		model.addColumn("Nama");
+		model.addColumn("Alamat");
+		model.addColumn("No HP");
+		model.addColumn("Nama Barang");
+		model.addColumn("Harga Beli");
+		model.addColumn("Total");
 
 		try {
 
-			String sql = "select * from tb_transaksi";
+			String sql = "select p.nama, p.alamat, p.no_telp, db.nama, db.harga_beli, sum(stock) from tb_detail_transaksi as dt join tb_data_barang as db on dt.id_barang = db.id join tb_transaksi as t on dt.id_transaksi = t.id left join tb_pelanggan as p on t.id_pelanggan = p.id where t.id = " + id ;
 
 			Connection conn = com.Koneksi.Koneksi.configDB();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -45,7 +46,7 @@ public class popup_detail_riwayat extends javax.swing.JDialog {
 			while (rs.next()) {
 				model.addRow(new Object[]{
 					rs.getString(1), rs.getString(2), rs.getString(3),
-					rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)
+					rs.getString(4), rs.getString(5), rs.getString(6)
 				});
 
 			}
@@ -130,45 +131,6 @@ public class popup_detail_riwayat extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(popup_detail_riwayat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(popup_detail_riwayat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(popup_detail_riwayat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(popup_detail_riwayat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                popup_detail_riwayat dialog = new popup_detail_riwayat(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_tambah1;
     private javax.swing.JLabel jLabel1;
