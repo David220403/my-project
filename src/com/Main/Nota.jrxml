@@ -1,29 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-
-<jasperReport name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="148" pageHeight="210" columnWidth="108" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7586113a-9f6a-49d2-9d10-b7b1f022892b">
+	<property name="ireport.zoom" value="3.1384283767210035"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dibayar" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="kembalian" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="total" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select t.id, a.nama as nama_akun, dt.id_barang, db.nama as nama_barang, db.harga_jual, t.tanggal, count(dt.jumlah) as "Jumlah", count(dt.jumlah)*db.harga_jual as subtotal, p.nama as nama_pelanggan, p.alamat, p.no_telp from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.id join tb_data_barang as db on dt.id_barang = db.id left join tb_akun as a on t.id_akun = t.id left join tb_pelanggan as p on t.id_pelanggan = p.id where t.id = (select id from tb_transaksi order by id desc limit 1) group by db.id]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_akun" class="java.lang.String"/>
+	<field name="id_barang" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_barang" class="java.lang.String"/>
+	<field name="harga_jual" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Jumlah" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.lang.Long"/>
+	<field name="nama_pelanggan" class="java.lang.String"/>
+	<field name="alamat" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_telp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
-		<band/>
+		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79"/>
+		<band height="8" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="35"/>
+		<band height="23" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61"/>
+		<band height="17" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="125"/>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="44" height="11" uuid="a7da5540-ca00-4b4b-9bf3-8ba289f31229"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama_barang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="0" width="26" height="11" uuid="6563c390-4800-44fa-bfea-7e0b619917d2"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="28" height="11" uuid="4bc585fa-404f-4b8f-91e4-14435dae50cf"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
-		<band height="45"/>
+		<band height="44" splitType="Stretch">
+			<textField>
+				<reportElement x="70" y="0" width="38" height="11" uuid="c494efe5-96b1-4cdf-8d3c-564ebe5c5d1b"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="11" width="38" height="11" uuid="ec4bbd5c-0c19-4e5c-bfee-6f8844f9b77b"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dibayar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="22" width="38" height="11" uuid="8961b032-a085-4056-8fa4-3bcb23fd534e"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{kembalian}]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="54"/>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

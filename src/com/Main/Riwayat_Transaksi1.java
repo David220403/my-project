@@ -164,7 +164,6 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
                 date1 = new javax.swing.JTextField();
                 date2 = new javax.swing.JTextField();
                 search = new javax.swing.JTextField();
-                jButton2 = new javax.swing.JButton();
                 jButton1 = new javax.swing.JButton();
                 jLabel7 = new javax.swing.JLabel();
                 jLabel6 = new javax.swing.JLabel();
@@ -207,11 +206,6 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
                 });
                 jPanel1.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 54, 150, -1));
 
-                jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Cetak.png"))); // NOI18N
-                jButton2.setBorder(null);
-                jButton2.setContentAreaFilled(false);
-                jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1177, 659, 125, -1));
-
                 jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Export.png"))); // NOI18N
                 jButton1.setBorder(null);
                 jButton1.setContentAreaFilled(false);
@@ -220,7 +214,7 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
                                 jButton1ActionPerformed(evt);
                         }
                 });
-                jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1034, 659, 125, -1));
+                jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 660, 125, -1));
 
                 jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Tanggal.png"))); // NOI18N
                 jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1142, 50, -1, -1));
@@ -328,7 +322,6 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
         private com.swing.datechooser.DateChooser dateChooser1;
         private com.swing.datechooser.DateChooser dateChooser2;
         private javax.swing.JButton jButton1;
-        private javax.swing.JButton jButton2;
         private javax.swing.JLabel jLabel1;
         private javax.swing.JLabel jLabel2;
         private javax.swing.JLabel jLabel3;

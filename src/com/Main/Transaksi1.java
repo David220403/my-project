@@ -7,14 +7,20 @@ package com.Main;
 
 import com.popup.popup_pembayaran;
 import java.awt.event.KeyEvent;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -22,221 +28,240 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class Transaksi1 extends javax.swing.JPanel {
 
-	String barcode = "";
-	String idBarang = null;
-	int uangBayar = 0;
-	int uangKembalian = 0;
+    String barcode = "";
+    String idBarang = null;
+    int uangBayar = 0;
+    int uangKembalian = 0;
 
-	private String setBarcode(String barcode) {
-		return this.barcode = barcode;
-	}
+    private String setBarcode(String barcode) {
+        return this.barcode = barcode;
+    }
 
-	private String getBarcode() {
-		return this.barcode;
-	}
+    private String getBarcode() {
+        return this.barcode;
+    }
 
-	private void afterEnter() {
-		insertBarang(this.barcode);
-		setBarcode("");
-		search.setText("");
-	}
+    private void afterEnter() {
+        insertBarang(this.barcode);
+        setBarcode("");
+        search.setText("");
+    }
 
-	private int getTotalHarga() {
-		int total = 0;
-		try {
-			String sql = "select db.harga_jual * count(dt.jumlah) as \"Jumlah\" from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.id join tb_data_barang as db on dt.id_barang = db.id where t.id = (select id from tb_transaksi order by id desc limit 1) group by db.id;";
-			Connection conn = com.Koneksi.Koneksi.configDB();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery(sql);
-			while (rs.next()) {
+    private int getTotalHarga() {
+        int total = 0;
+        try {
+            String sql = "select db.harga_jual * count(dt.jumlah) as \"Jumlah\" from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.id join tb_data_barang as db on dt.id_barang = db.id where t.id = (select id from tb_transaksi order by id desc limit 1) group by db.id;";
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
 //                            int diskon = Integer.parseInt(rs.getString(5));
 //                            int total_diskon =diskon/100;
-				total += rs.getInt(1);
-			}
-		} catch (SQLException ex) {
+                total += rs.getInt(1);
+            }
+        } catch (SQLException ex) {
 
-		}
-		return total;
-	}
+        }
+        return total;
+    }
 
-	private int getDiscounted() {
-		int total = 0;
-		try {
-			String sql = "select persen from tb_transaksi as t join tb_diskon as d on t.id_diskon = d.id where t.id = (select id from tb_transaksi order by id desc limit 1)";
-			Connection conn = com.Koneksi.Koneksi.configDB();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery(sql);
-			if (rs.next()) {
-				total = getTotalHarga() - (getTotalHarga()*rs.getInt(1)/100);
-			}
-		} catch (SQLException ex) {
+    private int getDiscounted() {
+        int total = 0;
+        int discounted = 0;
+        try {
+            String sql = "select persen from tb_transaksi as t join tb_diskon as d on t.id_diskon = d.id where t.id = (select id from tb_transaksi order by id desc limit 1)";
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery(sql);
+            if (rs.next()) {
+                total = getTotalHarga() - (getTotalHarga() * rs.getInt(1) / 100);
+                discounted = getTotalHarga() * rs.getInt(1) / 100;
+            }
+        } catch (SQLException ex) {
 
-		}
-		return total;
-	}
+        }
+        return total;
+    }
 
-	private void getBayar() {
-		uangBayar = Integer.parseInt(bayar.getText());
-		getKembalian();
-	}
+    private void getBayar() {
+        uangBayar = Integer.parseInt(bayar.getText());
+        getKembalian();
+    }
 
-	private int getKembalian() {
-		uangKembalian = uangBayar - getTotalHarga();
-		if (uangKembalian <= 0) {
-			JOptionPane.showMessageDialog(this, "uang yang anda masukan tidak cukup");
-			clear();
-		} else {
-			kembalian.setText(Integer.toString(uangKembalian));
-		}
-		return uangKembalian;
-	}
+    private int getKembalian() {
+        uangKembalian = uangBayar - getTotalHarga();
+        if (uangKembalian <= 0) {
+            JOptionPane.showMessageDialog(this, "uang yang anda masukan tidak cukup");
+            clear();
+        } else {
+            kembalian.setText(Integer.toString(uangKembalian));
+        }
+        return uangKembalian;
+    }
 
-	private void clear() {
-		bayar.setText(null);
-		kembalian.setText(null);
-		tabelTransaksi();
-	}
+    private void clear() {
+        bayar.setText(null);
+        kembalian.setText(null);
+        tabelTransaksi();
+    }
 
-	public void insertBarang(String barcode) {
-		try {
-			String sql = "INSERT INTO tb_detail_transaksi VALUES (NULL, (select id from tb_transaksi order by id desc limit 1) , '" + barcode + "', '1');";
-			System.out.println(sql);
-			Connection conn = com.Koneksi.Koneksi.configDB();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.executeUpdate(sql);
-			tabelTransaksi();
-		} catch (SQLException ex) {
-			System.out.println("lol dek: " + ex.getMessage());
-		}
-	}
+    public void insertBarang(String barcode) {
+        try {
+            String sql = "INSERT INTO tb_detail_transaksi VALUES (NULL, (select id from tb_transaksi order by id desc limit 1) , '" + barcode + "', '1');";
+            System.out.println(sql);
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.executeUpdate(sql);
+            tabelTransaksi();
+        } catch (SQLException ex) {
+            System.out.println("lol dek: " + ex.getMessage());
+        }
+    }
 
-	private void checkout() {
-		try {
-			String sql = "UPDATE tb_transaksi SET total_harga = " + getTotalHarga() + ", dibayar = " + uangBayar + ", kembalian = " + getKembalian() + " where id = (select id from tb_transaksi order by id desc limit 1);";
-			System.out.println(sql);
-			Connection conn = com.Koneksi.Koneksi.configDB();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.executeUpdate(sql);
-			tabelTransaksi();
-		} catch (SQLException ex) {
-			System.out.println("lol dek: " + ex.getMessage());
-		}
-		insertNewTransaksi();
-		clear();
-	}
+    private void checkout() {
+        try {
+            String sql = "UPDATE tb_transaksi SET total_harga = " + getTotalHarga() + ", dibayar = " + uangBayar + ", kembalian = " + getKembalian() + " where id = (select id from tb_transaksi order by id desc limit 1);";
+            System.out.println(sql);
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.executeUpdate(sql);
+            tabelTransaksi();
+        } catch (SQLException ex) {
+            System.out.println("lol dek: " + ex.getMessage());
+        }
+        insertNewTransaksi();
+        clear();
+    }
 
-	private void insertNewTransaksi() {
-		try {
-			String sql = "INSERT INTO tb_transaksi VALUES (NULL, NULL, NULL, NULL, current_timestamp(), NULL, '1', (select id from tb_diskon where tanggal = current_date order by tanggal desc limit 1));";
-			System.out.println(sql);
-			Connection conn = com.Koneksi.Koneksi.configDB();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.executeUpdate(sql);
-			tabelTransaksi();
-		} catch (SQLException ex) {
-			System.out.println("lol dek: " + ex.getMessage());
-		}
-	}
+    private void insertNewTransaksi() {
+        try {
+            String sql = "INSERT INTO tb_transaksi VALUES (NULL, NULL, NULL, NULL, current_timestamp(), NULL, '1', (select id from tb_diskon where tanggal = current_date order by tanggal desc limit 1));";
+            System.out.println(sql);
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.executeUpdate(sql);
+            tabelTransaksi();
+        } catch (SQLException ex) {
+            System.out.println("lol dek: " + ex.getMessage());
+        }
+    }
 
-	private void tabelBarang() {
-		DefaultTableModel model = new DefaultTableModel();
-		model.addColumn("ID Barang");
-		model.addColumn("Nama Barang");
-		model.addColumn("Beli");
-		model.addColumn("Jual");
-		model.addColumn("Stock");
-		model.addColumn("Kategori");
-		model.addColumn("Supplier");
-		model.addColumn("Produk");
+    private void tabelBarang() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID Barang");
+        model.addColumn("Nama Barang");
+        model.addColumn("Beli");
+        model.addColumn("Jual");
+        model.addColumn("Stock");
+        model.addColumn("Kategori");
+        model.addColumn("Supplier");
+        model.addColumn("Produk");
 
-		try {
+        try {
 
-			String sql = "select db.id, db.nama, db.harga_beli, db.harga_jual, db.stock, k.kategori, s.nama, p.nama from tb_data_barang as db join tb_detail_supplier as ds on db.id_detail_supplier = ds.id join tb_kategori as k on db.id_kategori = k.id join tb_supplier as s on ds.id_supplier = s.id join tb_produk as p on ds.id_produk = p.id ";
-			if (kategori.getSelectedIndex() != -1) {
-				sql = sql + "where db.id_kategori = ( select id from tb_kategori where kategori = '" + kategori.getSelectedItem() + "')";
-			}
-			Connection conn = com.Koneksi.Koneksi.configDB();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery(sql);
-			while (rs.next()) {
-				model.addRow(new Object[]{
-					rs.getString(1), rs.getString(2), rs.getString(3),
-					rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)
-				});
+            String sql = "select db.id, db.nama, db.harga_beli, db.harga_jual, db.stock, k.kategori, s.nama, p.nama from tb_data_barang as db join tb_detail_supplier as ds on db.id_detail_supplier = ds.id join tb_kategori as k on db.id_kategori = k.id join tb_supplier as s on ds.id_supplier = s.id join tb_produk as p on ds.id_produk = p.id ";
+            if (kategori.getSelectedIndex() != -1) {
+                sql = sql + "where db.id_kategori = ( select id from tb_kategori where kategori = '" + kategori.getSelectedItem() + "')";
+            }
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString(1), rs.getString(2), rs.getString(3),
+                    rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)
+                });
 
-			}
-			table1.setModel(model);
+            }
+            table1.setModel(model);
 
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
-	private void getKategori() {
-		kategori.removeAllItems();
+    private void getKategori() {
+        kategori.removeAllItems();
 
-		String sql = "select kategori from tb_kategori";
+        String sql = "select kategori from tb_kategori";
 
-		try {
-			Connection conn = com.Koneksi.Koneksi.configDB();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery(sql);
-			while (rs.next()) {
-				kategori.addItem(rs.getString(1));
-			}
-		} catch (SQLException ex) {
+        try {
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                kategori.addItem(rs.getString(1));
+            }
+        } catch (SQLException ex) {
 
-		}
-		kategori.setSelectedIndex(-1);
-	}
+        }
+        kategori.setSelectedIndex(-1);
+    }
 
-	private void tabelTransaksi() {
-		totalHarga.setText(Integer.toString(getTotalHarga()));
-		totalDiskon.setText(Integer.toString(getDiscounted()));
-		
+    private void tabelTransaksi() {
+        totalHarga.setText(Integer.toString(getTotalHarga()));
+        totalDiskon.setText(Integer.toString(getDiscounted()));
 
-		DefaultTableModel model = new DefaultTableModel();
-		model.addColumn("ID");
-		model.addColumn("Nama Barang");
-		model.addColumn("Harga Jual");
-		model.addColumn("Jumlah");
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Nama Barang");
+        model.addColumn("Harga Jual");
+        model.addColumn("Jumlah");
 
-		try {
-			String sql = "select dt.id_barang, dt.id_transaksi, db.nama, db.harga_jual, count(dt.jumlah) as \"Jumlah\" from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.id join tb_data_barang as db on dt.id_barang = db.id where t.id = (select id from tb_transaksi order by id desc limit 1) group by db.id";
+        try {
+            String sql = "select dt.id_barang, dt.id_transaksi, db.nama, db.harga_jual, count(dt.jumlah) as \"Jumlah\" from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.id join tb_data_barang as db on dt.id_barang = db.id where t.id = (select id from tb_transaksi order by id desc limit 1) group by db.id";
 
-			Connection conn = com.Koneksi.Koneksi.configDB();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery(sql);
-			while (rs.next()) {
-				model.addRow(new Object[]{
-					rs.getString(1), rs.getString(3), rs.getString(4),
-					rs.getString(5)
-				});
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString(1), rs.getString(3), rs.getString(4),
+                    rs.getString(5)
+                });
 
-			}
-			table2.setModel(model);
+            }
 
-		} catch (SQLException e) {
-			System.out.println(e);
-		}
-	}
-	Tambah_Barang edit = new Tambah_Barang(null, true);
+            table2.setModel(model);
 
-	public Transaksi1() {
-		initComponents();
-		table1.fixTable(jScrollPane1);
-		tabelBarang();
-		table2.fixTable(jScrollPane2);
-		tabelTransaksi();
-		getKategori();
-	}
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    Tambah_Barang edit = new Tambah_Barang(null, true);
 
-	/**
-	 * This method is called from within the constructor to initialize the
-	 * form. WARNING: Do NOT modify this code. The content of this method is
-	 * always regenerated by the Form Editor.
-	 */
-	@SuppressWarnings("unchecked")
+    public Transaksi1() {
+        initComponents();
+        table1.fixTable(jScrollPane1);
+        tabelBarang();
+        table2.fixTable(jScrollPane2);
+        tabelTransaksi();
+        getKategori();
+    }
+
+    public void getApasih() {
+        try {
+            String namaFile = "/com/Main/Nota.jasper";
+            InputStream Report;
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            Report = getClass().getResourceAsStream(namaFile);
+            HashMap param = new HashMap();
+            param.put("dibayar", uangBayar);
+            param.put("kembalian", getKembalian());
+            param.put("total", getDiscounted());
+            JasperPrint JPrint = JasperFillManager.fillReport(Report, param, conn);
+            JasperViewer.viewReport(JPrint, false);
+        } catch (SQLException | JRException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
         // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
         private void initComponents() {
 
@@ -495,120 +520,122 @@ public final class Transaksi1 extends javax.swing.JPanel {
         }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-	    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-	    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void kembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembalianActionPerformed
-	    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_kembalianActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-	    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-	    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_searchActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-	    // TODO add your handling code here:
-	    Tambah_Barang edit = new Tambah_Barang(null, true);
-	    edit.select(0);
-	    edit.setVisible(true);
-	    tabelBarang();
+        // TODO add your handling code here:
+        Tambah_Barang edit = new Tambah_Barang(null, true);
+        edit.select(0);
+        edit.setVisible(true);
+        tabelBarang();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
-	    int index = table1.rowAtPoint(evt.getPoint());
-	    String ID = table1.getValueAt(index, 0).toString();
-	    String Nama_Barang = table1.getValueAt(index, 1).toString();
-	    String Harga_Beli = table1.getValueAt(index, 2).toString();
-	    String Harga_Jual = table1.getValueAt(index, 3).toString();
-	    String Stock = table1.getValueAt(index, 4).toString();
-	    String Nama_Supplier = table1.getValueAt(index, 5).toString();
-	    String Kategori = table1.getValueAt(index, 6).toString();
+        int index = table1.rowAtPoint(evt.getPoint());
+        String ID = table1.getValueAt(index, 0).toString();
+        String Nama_Barang = table1.getValueAt(index, 1).toString();
+        String Harga_Beli = table1.getValueAt(index, 2).toString();
+        String Harga_Jual = table1.getValueAt(index, 3).toString();
+        String Stock = table1.getValueAt(index, 4).toString();
+        String Nama_Supplier = table1.getValueAt(index, 5).toString();
+        String Kategori = table1.getValueAt(index, 6).toString();
 
-	    Tambah_Barang edit = new Tambah_Barang(null, true);
-	    edit.show(ID, Nama_Barang, Harga_Beli, Harga_Jual, Stock, Nama_Supplier, Kategori);
-	    edit.select(1);
-	    edit.setVisible(true);
+        Tambah_Barang edit = new Tambah_Barang(null, true);
+        edit.show(ID, Nama_Barang, Harga_Beli, Harga_Jual, Stock, Nama_Supplier, Kategori);
+        edit.select(1);
+        edit.setVisible(true);
 
-	    tabelBarang();
+        tabelBarang();
     }//GEN-LAST:event_table1MouseClicked
 
         private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
-		// TODO add your handling code here:
-		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-			setBarcode(getBarcode());
-			afterEnter();
-		} else {
-			// some character has been read, append it to your "barcode cache"
-			setBarcode(getBarcode() + evt.getKeyChar());
-		}
+            // TODO add your handling code here:
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                setBarcode(getBarcode());
+                afterEnter();
+            } else {
+                // some character has been read, append it to your "barcode cache"
+                setBarcode(getBarcode() + evt.getKeyChar());
+            }
         }//GEN-LAST:event_searchKeyReleased
 
     private void bayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bayarActionPerformed
-	    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_bayarActionPerformed
 
     private void totalHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalHargaActionPerformed
-	    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_totalHargaActionPerformed
 
     private void totalDiskonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalDiskonActionPerformed
-	    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_totalDiskonActionPerformed
 
     private void kategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kategoriActionPerformed
-	    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_kategoriActionPerformed
 
         private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-		// TODO add your handling code here:
-		checkout();
+            // TODO add your handling code here:
+            getApasih();
+            checkout();
+
 //                popup_pembayaran  pembayaran = new popup_pembayaran(null, true);
 //                pembayaran.setVisible(true);
         }//GEN-LAST:event_jButton3ActionPerformed
 
         private void bayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bayarKeyReleased
-		// TODO add your handling code here:
-		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-			try {
-				Integer.parseInt(bayar.getText());
-				getBayar();
-			} catch (NumberFormatException ex) {
-				bayar.setText("");
-				kembalian.setText("");
-			}
-		}
+            // TODO add your handling code here:
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                try {
+                    Integer.parseInt(bayar.getText());
+                    getBayar();
+                } catch (NumberFormatException ex) {
+                    bayar.setText("");
+                    kembalian.setText("");
+                }
+            }
         }//GEN-LAST:event_bayarKeyReleased
 
         private void kategoriPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_kategoriPopupMenuWillBecomeInvisible
-		// TODO add your handling code here:
-		tabelBarang();
+            // TODO add your handling code here:
+            tabelBarang();
         }//GEN-LAST:event_kategoriPopupMenuWillBecomeInvisible
 
         private void table2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table2MouseClicked
-		// TODO add your handling code here:
-		int index = table2.rowAtPoint(evt.getPoint());
-		idBarang = table2.getValueAt(index, 0).toString();
+            // TODO add your handling code here:
+            int index = table2.rowAtPoint(evt.getPoint());
+            idBarang = table2.getValueAt(index, 0).toString();
         }//GEN-LAST:event_table2MouseClicked
 
         private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-		// TODO add your handling code here:
-		try {
-			String sql = "delete from tb_detail_transaksi where id = (select id from tb_detail_transaksi where id_transaksi = (select id from tb_transaksi order by id desc limit 1) && id_barang = " + idBarang + " limit 1)";
-			Connection conn = com.Koneksi.Koneksi.configDB();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.executeUpdate(sql);
-		} catch (SQLException ex) {
-			System.out.println("wkwkwkwk");
-		}
-		tabelTransaksi();
+            // TODO add your handling code here:
+            try {
+                String sql = "delete from tb_detail_transaksi where id = (select id from tb_detail_transaksi where id_transaksi = (select id from tb_transaksi order by id desc limit 1) && id_barang = " + idBarang + " limit 1)";
+                Connection conn = com.Koneksi.Koneksi.configDB();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.executeUpdate(sql);
+            } catch (SQLException ex) {
+                System.out.println("wkwkwkwk");
+            }
+            tabelTransaksi();
         }//GEN-LAST:event_jButton2ActionPerformed
 
         // Variables declaration - do not modify//GEN-BEGIN:variables

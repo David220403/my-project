@@ -1,9 +1,15 @@
 package com.Main;
 
 import java.awt.Color;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class Tambah_Barang extends javax.swing.JDialog {
 
@@ -22,6 +28,21 @@ public class Tambah_Barang extends javax.swing.JDialog {
 		}
 		return idKategori;
 	}
+        
+        public void getBarcode(){
+            try {
+			String namaFile = "/com/Main/Barcode.jasper";
+			             InputStream Report;
+			Report = getClass().getResourceAsStream(namaFile);
+                        Connection con = com.Koneksi.Koneksi.configDB();
+			             HashMap param = new HashMap();
+			param.put("id_barang", txt_id.getText());
+			             JasperPrint JPrint = JasperFillManager.fillReport(Report, param, con);
+			             JasperViewer.viewReport(JPrint, false);
+		} catch (SQLException | JRException ex) {
+                    System.out.println(ex.getMessage());
+		}
+        }
 
 	private void tampilCombo() {
 		try {
@@ -346,7 +367,8 @@ public class Tambah_Barang extends javax.swing.JDialog {
     }//GEN-LAST:event_txt_supplierPopupMenuWillBecomeInvisible
 
     private void btn_barcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_barcodeActionPerformed
-		// TODO add your handling code here:
+    // TODO add your handling code here:
+    getBarcode();
     }//GEN-LAST:event_btn_barcodeActionPerformed
 
 //     public void id_barang(){

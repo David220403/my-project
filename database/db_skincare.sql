@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 30, 2022 at 02:38 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.1
+-- Host: 127.0.0.1
+-- Generation Time: Jun 04, 2022 at 11:20 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -63,7 +63,8 @@ CREATE TABLE `tb_data_barang` (
 --
 
 INSERT INTO `tb_data_barang` (`id`, `nama`, `harga_beli`, `harga_jual`, `stock`, `id_detail_supplier`, `id_kategori`) VALUES
-('2200001', '23423', 22222, 2, 1, 'DS0032', 'K00001');
+('2200001', '23423', 22222, 2, 1, 'DS0032', 'K00001'),
+('2200002', 'loldek', 90000, 3000, 5, 'DS0032', 'K00001');
 
 --
 -- Triggers `tb_data_barang`
@@ -136,9 +137,16 @@ CREATE TABLE `tb_detail_transaksi` (
 --
 
 INSERT INTO `tb_detail_transaksi` (`id`, `id_transaksi`, `id_barang`, `jumlah`) VALUES
-(86, 10, '2200001', 1),
-(89, 10, '2200001', 1),
-(90, 10, '2200001', 1);
+(92, 11, '2200001', 1),
+(93, 12, '2200001', 1),
+(96, 12, '2200001', 1),
+(97, 12, '2200001', 1),
+(98, 13, '2200001', 1),
+(101, 14, '2200001', 1),
+(102, 14, '2200001', 1),
+(103, 14, '2200001', 1),
+(104, 14, '2200002', 1),
+(105, 15, '2200002', 1);
 
 -- --------------------------------------------------------
 
@@ -152,6 +160,14 @@ CREATE TABLE `tb_diskon` (
   `tanggal` date NOT NULL,
   `persen` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_diskon`
+--
+
+INSERT INTO `tb_diskon` (`id`, `nama`, `tanggal`, `persen`) VALUES
+(1, 'kontol', '2022-06-03', 50),
+(2, 'memek', '2022-06-02', 75);
 
 -- --------------------------------------------------------
 
@@ -292,7 +308,12 @@ CREATE TABLE `tb_transaksi` (
 --
 
 INSERT INTO `tb_transaksi` (`id`, `total_harga`, `dibayar`, `kembalian`, `tanggal`, `id_pelanggan`, `id_akun`, `id_diskon`) VALUES
-(10, 6, 20000, 19994, '2022-05-28 20:30:22', NULL, NULL, NULL);
+(11, 2, 4, 2, '2022-06-03 22:03:24', NULL, NULL, 2),
+(12, 6, 4, -2, '2022-06-03 22:06:02', NULL, 1, 1),
+(13, 2, 0, -2, '2022-06-03 22:30:19', NULL, 1, NULL),
+(14, 3006, 234234234, 234231228, '2022-06-03 22:34:07', NULL, 1, 1),
+(15, 3000, 6000, 3000, '2022-06-04 16:18:39', NULL, 1, NULL),
+(16, NULL, NULL, NULL, '2022-06-04 16:19:14', NULL, 1, NULL);
 
 --
 -- Indexes for dumped tables
@@ -381,7 +402,13 @@ ALTER TABLE `tb_akun`
 -- AUTO_INCREMENT for table `tb_detail_transaksi`
 --
 ALTER TABLE `tb_detail_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+
+--
+-- AUTO_INCREMENT for table `tb_diskon`
+--
+ALTER TABLE `tb_diskon`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_pelanggan`
@@ -399,7 +426,7 @@ ALTER TABLE `tb_produk`
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
