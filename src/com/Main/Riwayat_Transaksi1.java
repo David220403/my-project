@@ -6,6 +6,7 @@
 package com.Main;
 
 import com.popup.popup_detail_riwayat;
+import java.awt.event.KeyEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -27,7 +28,7 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
 		initComponents();
 		table1.fixTable(jScrollPane1);
 
-		tabelRiwayat("", "");
+		tabelRiwayat(null, null);
 	}
 
 	private void tabelRiwayat(String date1, String date2) {
@@ -295,7 +296,11 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
 
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
 	    // TODO add your handling code here:
-	    tabelRiwayat(null, null);
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+	    tabelRiwayat(date1.getText(), date2.getText());
+            } else {
+                // some character has been read, append it to your "barcode cache"
+            }
     }//GEN-LAST:event_txt_searchKeyReleased
 
     private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked

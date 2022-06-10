@@ -63,12 +63,38 @@ public final class Dashboard extends javax.swing.JPanel {
 
 	private void loadChart() {
 		// ini buat yg dibawah minggu 1 minggu 2, yang bawah nyesuaikan sama yang bawah.
-		chart.addLegend("Minggu 1", new Color(245, 189, 135)); // line 1 
-		chart.addLegend("Minggu 2", new Color(135, 189, 245)); // line 2
+		chart.addLegend("Transaksi", new Color(245, 189, 135)); // line 1 
 
 		// valuenya sesuaikan sama yang atas, kalo ada 2 line
-		chart.addData(new ModelChart("Jan", new double[]{1, 3}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("Jan", new double[]{5, 3}));
+		chart.addData(new ModelChart("Januari", new double[]{perMonth(1)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("Februari", new double[]{perMonth(2)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("Maret", new double[]{perMonth(3)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("April", new double[]{perMonth(4)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("Mei", new double[]{perMonth(5)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("Juni", new double[]{perMonth(6)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("Juli", new double[]{perMonth(7)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("Agustus", new double[]{perMonth(8)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("September", new double[]{perMonth(9)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("Oktober", new double[]{perMonth(10)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("November", new double[]{perMonth(11)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		chart.addData(new ModelChart("Desember", new double[]{perMonth(12)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+	}
+
+	private double perMonth(int bulan){
+		double day = 0;
+		try {
+			String sql = "select count(*) from tb_transaksi where month(tanggal) = " + bulan;
+			java.sql.Connection conn = (Connection) Koneksi.configDB();
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				day = rs.getDouble(1);
+			}
+		} catch (Exception e) {
+
+		}
+		return day;
 	}
 
 	public void Tampil_Jam() {

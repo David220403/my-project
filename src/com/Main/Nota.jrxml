@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="148" pageHeight="210" columnWidth="108" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7586113a-9f6a-49d2-9d10-b7b1f022892b">
 	<property name="ireport.zoom" value="8.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="808"/>
 	<parameter name="dibayar" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -13,6 +13,15 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Kode Transaksi" class="java.lang.String"/>
+	<parameter name="namaPelanggan" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alamatPelanggan" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="noHp" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select t.id, a.nama as nama_akun, dt.id_barang, db.nama as nama_barang, db.harga_jual, t.tanggal, count(dt.jumlah) as "Jumlah", count(dt.jumlah)*db.harga_jual as subtotal, p.nama as nama_pelanggan, p.alamat, p.no_telp from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.id join tb_data_barang as db on dt.id_barang = db.id left join tb_akun as a on t.id_akun = t.id left join tb_pelanggan as p on t.id_pelanggan = p.id where t.id = (select id from tb_transaksi order by id desc limit 1) group by db.id]]>
 	</queryString>
@@ -105,6 +114,27 @@
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{kembalian}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="70" height="11" uuid="aa370180-6aeb-44fc-a58c-387903b005d2"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{namaPelanggan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="11" width="70" height="11" uuid="bcd9517c-98e9-4deb-aca0-c8fc73a301bc"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{alamatPelanggan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="22" width="38" height="11" uuid="2969be33-1ff1-49e9-82f4-df3338b304df"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{noHp}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>

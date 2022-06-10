@@ -6,6 +6,7 @@
 package com.Main;
 
 import com.popup.popup_pembayaran;
+import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -148,8 +149,8 @@ public final class Transaksi1 extends javax.swing.JPanel {
     }
 
     private void checkout() {
+            String sql = "UPDATE tb_transaksi SET total_harga = " + getTotalHarga() + ", dibayar = " + uangBayar + ", kembalian = " + getKembalian() +" where id = (select id from tb_transaksi order by id desc limit 1);";
         try {
-            String sql = "UPDATE tb_transaksi SET total_harga = " + getTotalHarga() + ", dibayar = " + uangBayar + ", kembalian = " + getKembalian() + " where id = (select id from tb_transaksi order by id desc limit 1);";
             System.out.println(sql);
             Connection conn = com.Koneksi.Koneksi.configDB();
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -278,11 +279,28 @@ public final class Transaksi1 extends javax.swing.JPanel {
             param.put("dibayar", uangBayar);
             param.put("kembalian", getKembalian());
             param.put("total", getDiscounted());
+            param.put("namaPelanggan", txt_namapembeli.getText());
+            param.put("alamatPelanggan", txt_alamatpembali.getText());
+            param.put("noHp", txt_nopembeli.getText());
             JasperPrint JPrint = JasperFillManager.fillReport(Report, param, conn);
             JasperViewer.viewReport(JPrint, false);
         } catch (SQLException | JRException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    private boolean bayar(){
+	    boolean benar = false;
+                try {
+                    Integer.parseInt(bayar.getText());
+                    getBayar();
+		    benar = true;
+                } catch (NumberFormatException ex) {
+                    bayar.setText("");
+                    kembalian.setText("");
+		    benar = false;
+                }
+		return benar;
     }
 
     /**
@@ -643,8 +661,14 @@ public final class Transaksi1 extends javax.swing.JPanel {
 
         private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
             // TODO add your handling code here:
-            getApasih();
-            checkout();
+	    if(bayar()){
+		    getApasih();
+		    checkout();
+		    popup_pembayaran p = new popup_pembayaran(null, true);
+		    p.setVisible(true);
+	    }else{
+
+	    }
 
 //                popup_pembayaran  pembayaran = new popup_pembayaran(null, true);
 //                pembayaran.setVisible(true);
@@ -653,13 +677,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
         private void bayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bayarKeyReleased
             // TODO add your handling code here:
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                try {
-                    Integer.parseInt(bayar.getText());
-                    getBayar();
-                } catch (NumberFormatException ex) {
-                    bayar.setText("");
-                    kembalian.setText("");
-                }
+		    bayar();
             }
         }//GEN-LAST:event_bayarKeyReleased
 
