@@ -5,11 +5,14 @@
  */
 package com.popup;
 
+import com.Main.Transaksi1;
+
 /**
  *
  * @author david
  */
 public class popup_pembayaran extends javax.swing.JDialog {
+	boolean value = false;
 
     /**
      * Creates new form popup_pembayaran
@@ -17,6 +20,16 @@ public class popup_pembayaran extends javax.swing.JDialog {
     public popup_pembayaran(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    public void close(){
+	    setVisible(false);
+		dispose();
+    }
+
+    public boolean showDialog(){
+	    setVisible(true);
+	    return value;
     }
 
     /**
@@ -77,11 +90,14 @@ public class popup_pembayaran extends javax.swing.JDialog {
 
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
         // TODO add your handling code here:
-        dispose();
+	value = false;
+	close();
     }//GEN-LAST:event_btn_tambahActionPerformed
 
     private void btn_tambah1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah1ActionPerformed
         // TODO add your handling code here:
+	value = true;
+	close();
     }//GEN-LAST:event_btn_tambah1ActionPerformed
 
     /**

@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 import net.sf.jasperreports.engine.JRException;
@@ -662,10 +663,14 @@ public final class Transaksi1 extends javax.swing.JPanel {
         private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
             // TODO add your handling code here:
 	    if(bayar()){
-		    getApasih();
-		    checkout();
-		    popup_pembayaran p = new popup_pembayaran(null, true);
-		    p.setVisible(true);
+		    popup_pembayaran p = new popup_pembayaran((Frame) SwingUtilities.getWindowAncestor(this), true);
+		    boolean lol = p.showDialog();
+		    if(lol){
+			    getApasih();
+			    checkout();
+		    }else{
+			    System.out.println("hahaha gagal bayar");
+		    }
 	    }else{
 
 	    }
