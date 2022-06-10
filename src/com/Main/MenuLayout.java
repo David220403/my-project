@@ -75,7 +75,7 @@ public class MenuLayout extends javax.swing.JFrame {
         });
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 237, -1, -1));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Transaksi 2 (2).png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button riwayat transaksi.png"))); // NOI18N
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);

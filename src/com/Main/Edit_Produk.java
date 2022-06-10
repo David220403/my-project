@@ -40,6 +40,7 @@ public void show(String ID,  String nama_supplier) {
 
         jPanel1 = new javax.swing.JPanel();
         txt_kodesupplier = new javax.swing.JTextField();
+        btn_hapus1 = new javax.swing.JButton();
         btn_simpan = new javax.swing.JButton();
         btn_hapus = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -58,6 +59,15 @@ public void show(String ID,  String nama_supplier) {
             }
         });
         jPanel1.add(txt_kodesupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 84, 340, -1));
+
+        btn_hapus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Vector.png"))); // NOI18N
+        btn_hapus1.setContentAreaFilled(false);
+        btn_hapus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_hapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 30, 30));
 
         btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Simpan.png"))); // NOI18N
         btn_simpan.setContentAreaFilled(false);
@@ -80,7 +90,7 @@ public void show(String ID,  String nama_supplier) {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 99.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/edit produk baru.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/tampilan tambah produk.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,6 +144,11 @@ public void show(String ID,  String nama_supplier) {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_kodesupplierActionPerformed
 
+    private void btn_hapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_hapus1ActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -176,6 +191,7 @@ public void show(String ID,  String nama_supplier) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_hapus;
+    private javax.swing.JButton btn_hapus1;
     private javax.swing.JButton btn_simpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

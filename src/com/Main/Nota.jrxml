@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="148" pageHeight="210" columnWidth="108" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7586113a-9f6a-49d2-9d10-b7b1f022892b">
-	<property name="ireport.zoom" value="3.1384283767210035"/>
+	<property name="ireport.zoom" value="8.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="dibayar" class="java.lang.Integer">
@@ -12,6 +12,7 @@
 	<parameter name="total" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="Kode Transaksi" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select t.id, a.nama as nama_akun, dt.id_barang, db.nama as nama_barang, db.harga_jual, t.tanggal, count(dt.jumlah) as "Jumlah", count(dt.jumlah)*db.harga_jual as subtotal, p.nama as nama_pelanggan, p.alamat, p.no_telp from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.id join tb_data_barang as db on dt.id_barang = db.id left join tb_akun as a on t.id_akun = t.id left join tb_pelanggan as p on t.id_pelanggan = p.id where t.id = (select id from tb_transaksi order by id desc limit 1) group by db.id]]>
 	</queryString>
@@ -44,16 +45,21 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="8" splitType="Stretch"/>
+		<band height="20" splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band height="23" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="17" splitType="Stretch"/>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="32" height="20" uuid="92a4b5da-ab1f-436a-bad4-05ced6136340"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="12" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="44" height="11" uuid="a7da5540-ca00-4b4b-9bf3-8ba289f31229"/>
 				<textElement>

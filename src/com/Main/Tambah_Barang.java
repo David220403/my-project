@@ -4,14 +4,44 @@ import java.awt.Color;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import javax.swing.JOptionPane;
+import javax.swing.text.NumberFormatter;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class Tambah_Barang extends javax.swing.JDialog {
+    
+    
+     private String formatRupiah(int nilai){
+        DecimalFormat format = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols simbol = format.getDecimalFormatSymbols();
+        simbol.setCurrencySymbol("Rp. ");
+        simbol.setMonetaryDecimalSeparator(',');
+        simbol.setGroupingSeparator('.');
+        format.setDecimalFormatSymbols(simbol);
+        return format.format(nilai);
+    }
+    
+    NumberFormat numformat = NumberFormat.getInstance(new Locale("ca", "CA"));
+    
+    NumberFormatter numformatter;
+        
+    private void setRupiah(){
+        
+        
+        numformat.setMaximumFractionDigits(0);
+        
+        numformatter = new NumberFormatter(numformat);
+        numformatter.setAllowsInvalid(false);
+
+    }
 
 	public int getKategori() {
 		int idKategori = 0;
@@ -74,6 +104,8 @@ public class Tambah_Barang extends javax.swing.JDialog {
 
 	public Tambah_Barang(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
+                setRupiah();
+
 		initComponents();
 		tampilCombo();
 		tampilSupplier();
@@ -129,6 +161,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
         txt_namabarang = new javax.swing.JTextField();
         txt_supplier = new com.swing.Combobox();
         txt_kategori = new com.swing.Combobox();
+        btn_hapus1 = new javax.swing.JButton();
         btn_barcode = new javax.swing.JButton();
         btn_tambah = new javax.swing.JButton();
         btn_simpan = new javax.swing.JButton();
@@ -219,6 +252,15 @@ public class Tambah_Barang extends javax.swing.JDialog {
         });
         jPanel1.add(txt_kategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 154, 170, 40));
 
+        btn_hapus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Vector.png"))); // NOI18N
+        btn_hapus1.setContentAreaFilled(false);
+        btn_hapus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_hapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 30, 30));
+
         btn_barcode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button barcode.png"))); // NOI18N
         btn_barcode.setContentAreaFilled(false);
         btn_barcode.addActionListener(new java.awt.event.ActionListener() {
@@ -308,7 +350,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
 		// TODO add your handling code here:
 		try {
-			String sql = "UPDATE `tb_data_barang` SET `nama`='" + txt_namabarang.getText() + "',`harga_beli`='" + txt_hargabeli.getText() + "',`harga_jual`='" + txt_hargajual.getText() + "',`stock`='" + txt_stock.getText() + "',`id_detail_supplier`='" + txt_supplier.getSelectedItem() + "',`id_kategori`='" + txt_kategori.getSelectedItem() + "' WHERE id = '" + txt_id.getText() + "'";
+			String sql = "UPDATE `tb_data_barang` SET `nama`='" + txt_namabarang.getText() + "',`harga_beli`='" + Integer.parseInt(txt_hargabeli.getText().replaceAll("\\.", "")) + "',`harga_jual`='" + Integer.parseInt(txt_hargajual.getText().replaceAll("\\.", "")) + "',`stock`='" + txt_stock.getText() + "',`id_detail_supplier`='" + txt_supplier.getSelectedItem() + "',`id_kategori`='" + txt_kategori.getSelectedItem() + "' WHERE id = '" + txt_id.getText() + "'";
 			System.out.println(sql);
 			java.sql.Connection conn = (Connection) com.Koneksi.Koneksi.configDB();
 			java.sql.PreparedStatement pst = conn.prepareStatement(sql);
@@ -370,6 +412,11 @@ public class Tambah_Barang extends javax.swing.JDialog {
     // TODO add your handling code here:
     getBarcode();
     }//GEN-LAST:event_btn_barcodeActionPerformed
+
+    private void btn_hapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_hapus1ActionPerformed
 
 //     public void id_barang(){
 //        try {
@@ -433,6 +480,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_barcode;
     private javax.swing.JButton btn_hapus;
+    private javax.swing.JButton btn_hapus1;
     private javax.swing.JButton btn_simpan;
     private javax.swing.JButton btn_tambah;
     private javax.swing.JLabel jLabel1;

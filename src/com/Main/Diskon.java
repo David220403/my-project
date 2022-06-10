@@ -114,20 +114,16 @@ public class Diskon extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txt_tanggalDiskon = new javax.swing.JTextField();
         txt_nilaiDiskon1 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
         txt_namaDiskon = new javax.swing.JTextField();
         txt_id12 = new javax.swing.JTextField();
         btn_tambah = new javax.swing.JButton();
         btn_simpan = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         btn_hapus = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new com.swing.table.Table();
-        jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -137,13 +133,15 @@ public class Diskon extends javax.swing.JPanel {
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/kalender.png"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(663, 658, -1, -1));
-
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/kalender.png"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(663, 611, -1, -1));
 
-        txt_tanggalDiskon.setBackground(new java.awt.Color(255, 224, 233));
+        txt_tanggalDiskon.setBackground(new java.awt.Color(255, 194, 212));
         txt_tanggalDiskon.setBorder(null);
         txt_tanggalDiskon.setOpaque(false);
         txt_tanggalDiskon.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +151,7 @@ public class Diskon extends javax.swing.JPanel {
         });
         jPanel1.add(txt_tanggalDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 614, 130, -1));
 
-        txt_nilaiDiskon1.setBackground(new java.awt.Color(255, 224, 233));
+        txt_nilaiDiskon1.setBackground(new java.awt.Color(255, 194, 212));
         txt_nilaiDiskon1.setBorder(null);
         txt_nilaiDiskon1.setOpaque(false);
         txt_nilaiDiskon1.addActionListener(new java.awt.event.ActionListener() {
@@ -163,17 +161,7 @@ public class Diskon extends javax.swing.JPanel {
         });
         jPanel1.add(txt_nilaiDiskon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 566, 150, -1));
 
-        jTextField5.setBackground(new java.awt.Color(255, 224, 233));
-        jTextField5.setBorder(null);
-        jTextField5.setOpaque(false);
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 661, 130, -1));
-
-        txt_namaDiskon.setBackground(new java.awt.Color(255, 224, 233));
+        txt_namaDiskon.setBackground(new java.awt.Color(255, 194, 212));
         txt_namaDiskon.setBorder(null);
         txt_namaDiskon.setOpaque(false);
         txt_namaDiskon.addActionListener(new java.awt.event.ActionListener() {
@@ -183,7 +171,7 @@ public class Diskon extends javax.swing.JPanel {
         });
         jPanel1.add(txt_namaDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 614, 150, -1));
 
-        txt_id12.setBackground(new java.awt.Color(255, 224, 233));
+        txt_id12.setBackground(new java.awt.Color(255, 194, 212));
         txt_id12.setBorder(null);
         txt_id12.setOpaque(false);
         txt_id12.addActionListener(new java.awt.event.ActionListener() {
@@ -201,7 +189,7 @@ public class Diskon extends javax.swing.JPanel {
                 btn_tambahActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(931, 563, 125, 30));
+        jPanel1.add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 557, 125, 30));
 
         btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Simpan.png"))); // NOI18N
         btn_simpan.setBorder(null);
@@ -211,12 +199,7 @@ public class Diskon extends javax.swing.JPanel {
                 btn_simpanActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(766, 563, 125, 30));
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button Edit.png"))); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.setContentAreaFilled(false);
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(766, 641, 125, 30));
+        jPanel1.add(btn_simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 604, 125, 30));
 
         btn_hapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Button hapus.png"))); // NOI18N
         btn_hapus.setBorder(null);
@@ -226,7 +209,7 @@ public class Diskon extends javax.swing.JPanel {
                 btn_hapusActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(931, 641, 125, 30));
+        jPanel1.add(btn_hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 654, 125, 30));
 
         table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -253,9 +236,6 @@ public class Diskon extends javax.swing.JPanel {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 820, 360));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53.png"))); // NOI18N
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 657, -1, -1));
-
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 562, -1, -1));
 
@@ -268,7 +248,7 @@ public class Diskon extends javax.swing.JPanel {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Rectangle 53.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(291, 562, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Tampilan Diskon Baru.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Tampilan diskon baru2.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -294,10 +274,6 @@ public class Diskon extends javax.swing.JPanel {
     private void txt_namaDiskonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namaDiskonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_namaDiskonActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void txt_nilaiDiskon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nilaiDiskon1ActionPerformed
         // TODO add your handling code here:
@@ -363,23 +339,23 @@ public class Diskon extends javax.swing.JPanel {
         txt_tanggalDiskon.setText(String.valueOf(table1.getValueAt(baris, 3)));
     }//GEN-LAST:event_table1MouseClicked
 
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel7MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_hapus;
     private javax.swing.JButton btn_simpan;
     private javax.swing.JButton btn_tambah;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField5;
     private com.swing.table.Table table1;
     private javax.swing.JTextField txt_id12;
     private javax.swing.JTextField txt_namaDiskon;

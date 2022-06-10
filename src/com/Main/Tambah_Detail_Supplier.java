@@ -106,6 +106,7 @@ public class Tambah_Detail_Supplier extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btn_hapus1 = new javax.swing.JButton();
         txt_kodesupplier = new javax.swing.JTextField();
         nama = new com.swing.Combobox();
         produk = new com.swing.Combobox();
@@ -116,9 +117,23 @@ public class Tambah_Detail_Supplier extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setPreferredSize(new java.awt.Dimension(430, 365));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_hapus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Vector.png"))); // NOI18N
+        btn_hapus1.setContentAreaFilled(false);
+        btn_hapus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_hapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 30, 30));
 
         txt_kodesupplier.setBackground(new java.awt.Color(255, 194, 212));
         txt_kodesupplier.setBorder(null);
@@ -253,23 +268,17 @@ public class Tambah_Detail_Supplier extends javax.swing.JDialog {
     private void namaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaActionPerformed
 		// TODO add your handling code here:
     }//GEN-LAST:event_namaActionPerformed
-// public void id_barang(){
-//        try {
-//            String sql = "SELECT id FROM tb_detail_supplier ORDER BY id DESC";
-//            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
-//            java.sql.PreparedStatement ps=conn.prepareStatement(sql);
-//            java.sql.ResultSet rs = ps.executeQuery(sql);
-//            if ( rs.next()){
-//                String idBarang = rs.getString("id").substring(2);
-//                String br = "BR" +(Integer.parseInt(idBarang)+1);
-//                txt_kodesupplier.setText(br);
-//            } else {
-//                txt_kodesupplier.setText("BR100");
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Koneksi gagal");
-//        }
-//    }
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        getNama();
+        getProduk();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void btn_hapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_hapus1ActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -316,6 +325,7 @@ public class Tambah_Detail_Supplier extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_hapus;
+    private javax.swing.JButton btn_hapus1;
     private javax.swing.JButton btn_simpan;
     private javax.swing.JButton btn_tambah;
     private javax.swing.JLabel jLabel1;
