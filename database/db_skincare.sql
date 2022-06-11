@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2022 at 11:20 AM
+-- Generation Time: Jun 11, 2022 at 02:35 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -63,8 +63,8 @@ CREATE TABLE `tb_data_barang` (
 --
 
 INSERT INTO `tb_data_barang` (`id`, `nama`, `harga_beli`, `harga_jual`, `stock`, `id_detail_supplier`, `id_kategori`) VALUES
-('2200001', '23423', 22222, 2, 1, 'DS0032', 'K00001'),
-('2200002', 'loldek', 90000, 3000, 5, 'DS0032', 'K00001');
+('2200001', '23423', 22222, 2, -7, 'DS0032', 'K00001'),
+('2200002', 'loldek', 90000, 3000, 0, 'DS0032', 'K00001');
 
 --
 -- Triggers `tb_data_barang`
@@ -137,7 +137,6 @@ CREATE TABLE `tb_detail_transaksi` (
 --
 
 INSERT INTO `tb_detail_transaksi` (`id`, `id_transaksi`, `id_barang`, `jumlah`) VALUES
-(92, 11, '2200001', 1),
 (93, 12, '2200001', 1),
 (96, 12, '2200001', 1),
 (97, 12, '2200001', 1),
@@ -146,7 +145,37 @@ INSERT INTO `tb_detail_transaksi` (`id`, `id_transaksi`, `id_barang`, `jumlah`) 
 (102, 14, '2200001', 1),
 (103, 14, '2200001', 1),
 (104, 14, '2200002', 1),
-(105, 15, '2200002', 1);
+(105, 15, '2200002', 1),
+(106, 16, '2200001', 1),
+(107, 16, '2200001', 1),
+(108, 16, '2200001', 1),
+(109, 17, '2200002', 1),
+(110, 17, '2200002', 1),
+(111, 17, '2200001', 1),
+(112, 18, '2200001', 1),
+(113, 19, '2200001', 1),
+(114, 20, '2200002', 1),
+(115, 21, '2200001', 1),
+(116, 22, '2200002', 1),
+(117, 23, '2200001', 1),
+(118, 24, '2200001', 1),
+(120, 25, '2200002', 1);
+
+--
+-- Triggers `tb_detail_transaksi`
+--
+DELIMITER $$
+CREATE TRIGGER `onDelete_stok` AFTER DELETE ON `tb_detail_transaksi` FOR EACH ROW BEGIN
+		update tb_data_barang set stock = stock + 1 where id = old.id_barang;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `onInsert_stok` AFTER INSERT ON `tb_detail_transaksi` FOR EACH ROW BEGIN
+		update tb_data_barang set stock = stock - 1 where id = new.id_barang;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -167,7 +196,8 @@ CREATE TABLE `tb_diskon` (
 
 INSERT INTO `tb_diskon` (`id`, `nama`, `tanggal`, `persen`) VALUES
 (1, 'kontol', '2022-06-03', 50),
-(2, 'memek', '2022-06-02', 75);
+(2, 'memek', '2022-06-02', 75),
+(3, 'david kontol', '2022-06-16', 2);
 
 -- --------------------------------------------------------
 
@@ -313,7 +343,17 @@ INSERT INTO `tb_transaksi` (`id`, `total_harga`, `dibayar`, `kembalian`, `tangga
 (13, 2, 0, -2, '2022-06-03 22:30:19', NULL, 1, NULL),
 (14, 3006, 234234234, 234231228, '2022-06-03 22:34:07', NULL, 1, 1),
 (15, 3000, 6000, 3000, '2022-06-04 16:18:39', NULL, 1, NULL),
-(16, NULL, NULL, NULL, '2022-06-04 16:19:14', NULL, 1, NULL);
+(16, 6, 0, -6, '2022-06-04 16:19:14', NULL, 1, NULL),
+(17, 6002, 90000, 83998, '2022-06-10 21:44:17', NULL, 1, NULL),
+(18, 2, 3, 1, '2022-06-10 22:01:21', NULL, 1, NULL),
+(19, 2, 3, 1, '2022-06-10 22:06:03', NULL, 1, NULL),
+(20, 3000, 90000, 87000, '2022-06-10 23:00:11', NULL, 1, NULL),
+(21, 2, 3, 1, '2022-06-10 23:04:43', NULL, 1, NULL),
+(22, 3000, 9000, 6000, '2022-06-10 23:06:12', NULL, 1, NULL),
+(23, 2, 3, 1, '2022-06-10 23:23:38', NULL, 1, NULL),
+(24, 2, 3, 1, '2022-06-10 23:24:01', NULL, 1, NULL),
+(25, 3000, 90000, 87000, '2022-06-10 23:29:43', NULL, 1, NULL),
+(26, NULL, NULL, NULL, '2022-06-10 23:30:22', NULL, 1, NULL);
 
 --
 -- Indexes for dumped tables
@@ -402,13 +442,13 @@ ALTER TABLE `tb_akun`
 -- AUTO_INCREMENT for table `tb_detail_transaksi`
 --
 ALTER TABLE `tb_detail_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `tb_diskon`
 --
 ALTER TABLE `tb_diskon`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_pelanggan`
@@ -426,7 +466,7 @@ ALTER TABLE `tb_produk`
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables
