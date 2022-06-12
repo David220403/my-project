@@ -149,10 +149,10 @@ public class Tambah_Barang extends javax.swing.JDialog {
 		String sql = null;
 		switch(type){
 			case "supplier":
-				sql = "select nama from tb_supplier as s join tb_detail_supplier as ds on s.id = ds.id_supplier where ds.id = '"+value+"'";
+				sql = "select s.nama,p.nama from tb_supplier as s join tb_detail_supplier as ds on s.id = ds.id_supplier join tb_produk as p on ds.id_produk = p.id where ds.id = '"+value+"'";
 				break;
 			case "kategori":
-				sql = "select kategori from tb_kategori where id = '"+value+"'";
+				sql = "select id, kategori from tb_kategori where id = '"+value+"'";
 				break;
 			default:
 				break;
@@ -162,7 +162,7 @@ public class Tambah_Barang extends javax.swing.JDialog {
             java.sql.PreparedStatement pst=conn.prepareStatement(sql);
 	    java.sql.ResultSet rs = pst.executeQuery();
 	    if(rs.next()){
-            JOptionPane.showMessageDialog(this, rs.getString(1));
+            JOptionPane.showMessageDialog(this, rs.getString(1) + ": " + rs.getString(2));
 	    }
 		}catch(SQLException ex){
             JOptionPane.showMessageDialog(this, ex.getMessage());

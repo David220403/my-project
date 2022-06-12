@@ -14,15 +14,41 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import javax.swing.Timer;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
  * @author david
  */
 public final class Dashboard extends javax.swing.JPanel {
+     private String formatRupiah(int nilai){
+        DecimalFormat format = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols simbol = format.getDecimalFormatSymbols();
+        simbol.setCurrencySymbol("Rp. ");
+        simbol.setMonetaryDecimalSeparator(',');
+        simbol.setGroupingSeparator('.');
+        format.setDecimalFormatSymbols(simbol);
+        return format.format(nilai);
+    }
+    
+    NumberFormat numformat = NumberFormat.getInstance(new Locale("ca", "CA"));
+    
+    NumberFormatter numformatter;
+        
+    private void setRupiah(){
+        
+        
+        numformat.setMaximumFractionDigits(0);
+        
+        numformatter = new NumberFormatter(numformat);
+        numformatter.setAllowsInvalid(false);
+
+    }
 
 	private int waktumulai = 0;
 	private Component jLabel7;
@@ -306,7 +332,7 @@ public void barangterjual() {
 			ResultSet rs = st.executeQuery(sql);
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				jumlah_pemasukan.setText(rs.getString(1));
+				jumlah_pemasukan.setText (this.formatRupiah(Integer.parseInt(rs.getString(1))).replace(",00", ""));
 			}
 		} catch (Exception e) {
 
@@ -322,7 +348,7 @@ public void barangterjual() {
 			ResultSet rs = st.executeQuery(sql);
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				jumlah_pengeluaran.setText(rs.getString(1));
+				jumlah_pengeluaran.setText (this.formatRupiah(Integer.parseInt(rs.getString(1))).replace(",00", ""));
 			}
 		} catch (Exception e) {
 

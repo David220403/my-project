@@ -28,26 +28,25 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
 		initComponents();
 		table1.fixTable(jScrollPane1);
 
-		tabelRiwayat(null, null);
+		tabelRiwayat(null, null, "");
 	}
 
-	private void tabelRiwayat(String date1, String date2) {
+	private void tabelRiwayat(String date1, String date2, String devicantik) {
 		DefaultTableModel model = new DefaultTableModel();
-		model.addColumn("ID Barang");
+		model.addColumn("ID");
 		model.addColumn("Total Harga");
 		model.addColumn("Dibayar");
 		model.addColumn("Kembalian");
 		model.addColumn("Tanggal");
-		model.addColumn("ID Pelanggan");
-		model.addColumn("ID Akun");
 		model.addColumn("ID Diskon");
                 
                 String search = txt_search.getText();
+                
 		try {
 
-			String sql = "select * from tb_transaksi";
+			String sql = "select id, total_harga, dibayar, kembalian, tanggal, id_diskon from tb_transaksi where id like '%"+devicantik+"%'";
 			if (date1 != null || date2 != null) {
-				sql = sql + " where tanggal between '" + date1 + "' and '" + date2 + "'";
+				sql = sql + " && tanggal between '" + date1 + "' and '" + date2 + "'";
 			}
 			System.out.println(sql);
 
@@ -57,7 +56,7 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
 			while (rs.next()) {
 				model.addRow(new Object[]{
 					rs.getString(1), rs.getString(2), rs.getString(3),
-					rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)
+					rs.getString(4), rs.getString(5), rs.getString(6)
 				});
 
 			}
@@ -92,7 +91,7 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
 		} else if (compareDate()) {
 			System.out.println("Tanggal lebih atau sama");
 		} else {
-			tabelRiwayat(date1.getText(), date2.getText());
+			tabelRiwayat(date1.getText(), date2.getText(), txt_search.getText());
 		}
 
 	}
@@ -297,7 +296,7 @@ public class Riwayat_Transaksi1 extends javax.swing.JPanel {
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
 	    // TODO add your handling code here:
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-	    tabelRiwayat(date1.getText(), date2.getText());
+                verifyFields();
             } else {
                 // some character has been read, append it to your "barcode cache"
             }

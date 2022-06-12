@@ -95,6 +95,7 @@
             <Property name="labeText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
+            <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="namaPopupMenuWillBecomeInvisible"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="namaActionPerformed"/>
           </Events>
           <Constraints>
@@ -111,6 +112,7 @@
             <Property name="labeText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
+            <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="produkPopupMenuWillBecomeInvisible"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="produkActionPerformed"/>
           </Events>
           <Constraints>

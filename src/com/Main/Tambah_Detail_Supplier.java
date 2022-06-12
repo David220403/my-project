@@ -88,6 +88,30 @@ public class Tambah_Detail_Supplier extends javax.swing.JDialog {
 				break;
 		}
 	}
+        private void getInfo(String value, String type){
+		try{
+		String sql = null;
+		switch(type){
+			case "supplier":
+				sql = "select nama from tb_supplier where id = '"+value+"'";
+				break;
+			case "produk":
+				sql = "select nama from tb_produk where id = '"+value+"'";
+				break;
+			default:
+				break;
+		}
+			System.out.println(sql);
+            java.sql.Connection conn=(Connection)com.Koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+	    java.sql.ResultSet rs = pst.executeQuery();
+	    if(rs.next()){
+            JOptionPane.showMessageDialog(this, rs.getString(1));
+	    }
+		}catch(SQLException ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+		}
+	}
 
 	public void show1(String Kode_Supplier, String Nama_Supplier, String Nama_Toko, String Alamat, String Produk) {
 		this.txt_kodesupplier.setText(Kode_Supplier);
@@ -146,6 +170,15 @@ public class Tambah_Detail_Supplier extends javax.swing.JDialog {
 
         nama.setBackground(new java.awt.Color(255, 194, 212));
         nama.setLabeText("");
+        nama.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                namaPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
         nama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 namaActionPerformed(evt);
@@ -155,6 +188,15 @@ public class Tambah_Detail_Supplier extends javax.swing.JDialog {
 
         produk.setBackground(new java.awt.Color(255, 194, 212));
         produk.setLabeText("");
+        produk.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                produkPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
         produk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 produkActionPerformed(evt);
@@ -271,7 +313,6 @@ public class Tambah_Detail_Supplier extends javax.swing.JDialog {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        getNama();
         getProduk();
     }//GEN-LAST:event_formWindowActivated
 
@@ -279,6 +320,15 @@ public class Tambah_Detail_Supplier extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_btn_hapus1ActionPerformed
+
+    private void namaPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_namaPopupMenuWillBecomeInvisible
+        // TODO add your handling code here
+        getInfo((String) nama.getSelectedItem(), "supplier");
+    }//GEN-LAST:event_namaPopupMenuWillBecomeInvisible
+
+    private void produkPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_produkPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+    }//GEN-LAST:event_produkPopupMenuWillBecomeInvisible
 
 	/**
 	 * @param args the command line arguments

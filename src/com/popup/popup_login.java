@@ -10,6 +10,8 @@ package com.popup;
  * @author david
  */
 public class popup_login extends javax.swing.JDialog {
+    int mouseX;
+    int mouseY;
 
     /**
      * Creates new form popup_login
@@ -47,6 +49,16 @@ public class popup_login extends javax.swing.JDialog {
         jPanel1.add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 229, 125, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/popup login.png"))); // NOI18N
+        jLabel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jLabel1MouseDragged(evt);
+            }
+        });
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel1MousePressed(evt);
+            }
+        });
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -71,6 +83,20 @@ public class popup_login extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btn_tambahActionPerformed
+
+    private void jLabel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseDragged
+        // TODO add your handling code here:
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        
+        this.setLocation(x - mouseX, y - mouseY);
+    }//GEN-LAST:event_jLabel1MouseDragged
+
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+        // TODO add your handling code here:
+         mouseX = evt.getX();
+        mouseY = evt.getY();
+    }//GEN-LAST:event_jLabel1MousePressed
 
     /**
      * @param args the command line arguments

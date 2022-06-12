@@ -17,46 +17,45 @@ import javax.swing.table.DefaultTableModel;
  */
 public class popup_detail_riwayat extends javax.swing.JDialog {
 
-	String id = null;
-    /**
-     * Creates new form popup_detail_riwayat
-     */
+    String id = null;
+
     public popup_detail_riwayat(java.awt.Frame parent, boolean modal, String id) {
         super(parent, modal);
-        initComponents(); 
-	this.id = id;
-	tabelRiwayat();
+        initComponents();
+        this.id = id;
+        tabelRiwayat();
     }
+
     private void tabelRiwayat() {
-		DefaultTableModel model = new DefaultTableModel();
-		model.addColumn("Nama");
-		model.addColumn("Alamat");
-		model.addColumn("No HP");
-		model.addColumn("Nama Barang");
-		model.addColumn("Harga Beli");
-		model.addColumn("Total");
 
-		try {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID Barang");
+        model.addColumn("ID Transaksi");
+        model.addColumn("Nama Barang");
+        model.addColumn("Harga Jual");
+        model.addColumn("Jumlah");
 
-			String sql = "select p.nama, p.alamat, p.no_telp, db.nama, db.harga_beli, sum(stock) from tb_detail_transaksi as dt join tb_data_barang as db on dt.id_barang = db.id join tb_transaksi as t on dt.id_transaksi = t.id left join tb_pelanggan as p on t.id_pelanggan = p.id where t.id = " + id ;
+        try {
 
-			Connection conn = com.Koneksi.Koneksi.configDB();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery(sql);
-			while (rs.next()) {
-				model.addRow(new Object[]{
-					rs.getString(1), rs.getString(2), rs.getString(3),
-					rs.getString(4), rs.getString(5), rs.getString(6)
-				});
+            String sql = "select dt.id_barang, dt.id_transaksi, db.nama, db.harga_jual, count(dt.jumlah) as \"Jumlah\" from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.id join tb_data_barang as db on dt.id_barang = db.id where t.id = " + id + " group by db.id;";
+            Connection conn = com.Koneksi.Koneksi.configDB();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery(sql);
 
-			}
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString(1), rs.getString(2), rs.getString(3),
+                    rs.getString(4), rs.getString(5)
+                });
 
-			table1.setModel(model);
+            }
 
-		} catch (SQLException e) {
-			System.out.println(e);
-		}
-	}
+            table1.setModel(model);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,6 +125,7 @@ public class popup_detail_riwayat extends javax.swing.JDialog {
 
     private void btn_tambah1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah1ActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_btn_tambah1ActionPerformed
 
     /**

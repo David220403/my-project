@@ -18,8 +18,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -39,8 +37,8 @@ public final class Transaksi1 extends javax.swing.JPanel {
     String idBarang = null;
     int uangBayar = 0;
     int uangKembalian = 0;
-    
-    private String formatRupiah(int nilai){
+
+    private String formatRupiah(int nilai) {
         DecimalFormat format = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols simbol = format.getDecimalFormatSymbols();
         simbol.setCurrencySymbol("Rp. ");
@@ -49,16 +47,15 @@ public final class Transaksi1 extends javax.swing.JPanel {
         format.setDecimalFormatSymbols(simbol);
         return format.format(nilai);
     }
-    
+
     NumberFormat numformat = NumberFormat.getInstance(new Locale("ca", "CA"));
-    
+
     NumberFormatter numformatter;
-        
-    private void setRupiah(){
-        
-        
+
+    private void setRupiah() {
+
         numformat.setMaximumFractionDigits(0);
-        
+
         numformatter = new NumberFormatter(numformat);
         numformatter.setAllowsInvalid(false);
 
@@ -86,8 +83,6 @@ public final class Transaksi1 extends javax.swing.JPanel {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery(sql);
             while (rs.next()) {
-//                            int diskon = Integer.parseInt(rs.getString(5));
-//                            int total_diskon =diskon/100;
                 total += rs.getInt(1);
             }
         } catch (SQLException ex) {
@@ -120,12 +115,17 @@ public final class Transaksi1 extends javax.swing.JPanel {
     }
 
     private int getKembalian() {
-        uangKembalian = uangBayar - getTotalHarga();
-        if (uangKembalian <= 0) {
+        if (totalDiskon.getText() != null) {
+            uangKembalian = uangBayar - getDiscounted();
+        } else {
+            uangKembalian = uangBayar - getTotalHarga();
+        }
+        if (uangKembalian >= 0) {
+            kembalian.setText(Integer.toString(uangKembalian));
+        } else {
+
             JOptionPane.showMessageDialog(this, "uang yang anda masukan tidak cukup");
             clear();
-        } else {
-            kembalian.setText(Integer.toString(uangKembalian));
         }
         return uangKembalian;
     }
@@ -150,7 +150,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
     }
 
     private void checkout() {
-            String sql = "UPDATE tb_transaksi SET total_harga = " + getTotalHarga() + ", dibayar = " + uangBayar + ", kembalian = " + getKembalian() +" where id = (select id from tb_transaksi order by id desc limit 1);";
+        String sql = "UPDATE tb_transaksi SET total_harga = " + getTotalHarga() + ", dibayar = " + uangBayar + ", kembalian = " + getKembalian() + " where id = (select id from tb_transaksi order by id desc limit 1);";
         try {
             System.out.println(sql);
             Connection conn = com.Koneksi.Koneksi.configDB();
@@ -267,7 +267,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
         tabelBarang();
         table2.fixTable(jScrollPane2);
         tabelTransaksi();
-        getKategori();      
+        getKategori();
     }
 
     public void getApasih() {
@@ -290,18 +290,18 @@ public final class Transaksi1 extends javax.swing.JPanel {
         }
     }
 
-    private boolean bayar(){
-	    boolean benar = false;
-                try {
-                    Integer.parseInt(bayar.getText());
-                    getBayar();
-		    benar = true;
-                } catch (NumberFormatException ex) {
-                    bayar.setText("");
-                    kembalian.setText("");
-		    benar = false;
-                }
-		return benar;
+    private boolean bayar() {
+        boolean benar = false;
+        try {
+            Integer.parseInt(bayar.getText());
+            getBayar();
+            benar = true;
+        } catch (NumberFormatException ex) {
+            bayar.setText("");
+            kembalian.setText("");
+            benar = false;
+        }
+        return benar;
     }
 
     /**
@@ -314,7 +314,6 @@ public final class Transaksi1 extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        search1 = new javax.swing.JTextField();
         search = new javax.swing.JTextField();
         txt_nopembeli = new javax.swing.JTextField();
         kembalian = new javax.swing.JTextField();
@@ -341,25 +340,10 @@ public final class Transaksi1 extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new com.swing.table.Table();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        search1.setBackground(new java.awt.Color(255, 194, 212));
-        search1.setBorder(null);
-        search1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search1ActionPerformed(evt);
-            }
-        });
-        search1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                search1KeyReleased(evt);
-            }
-        });
-        jPanel1.add(search1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 122, 210, -1));
 
         search.setBackground(new java.awt.Color(255, 194, 212));
         search.setBorder(null);
@@ -564,9 +548,6 @@ public final class Transaksi1 extends javax.swing.JPanel {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/border data barang.png"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(282, 153, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Search.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 118, -1, -1));
-
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Transaksi.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -641,6 +622,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
                 // some character has been read, append it to your "barcode cache"
                 setBarcode(getBarcode() + evt.getKeyChar());
             }
+            tabelBarang();
         }//GEN-LAST:event_searchKeyReleased
 
     private void bayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bayarActionPerformed
@@ -662,18 +644,18 @@ public final class Transaksi1 extends javax.swing.JPanel {
 
         private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
             // TODO add your handling code here:
-	    if(bayar()){
-		    popup_pembayaran p = new popup_pembayaran((Frame) SwingUtilities.getWindowAncestor(this), true);
-		    boolean lol = p.showDialog();
-		    if(lol){
-			    getApasih();
-			    checkout();
-		    }else{
-			    System.out.println("hahaha gagal bayar");
-		    }
-	    }else{
+            if (bayar()) {
+                popup_pembayaran p = new popup_pembayaran((Frame) SwingUtilities.getWindowAncestor(this), true);
+                boolean lol = p.showDialog();
+                if (lol) {
+                    getApasih();
+                    checkout();
+                } else {
+                    System.out.println("hahaha gagal bayar");
+                }
+            } else {
 
-	    }
+            }
 
 //                popup_pembayaran  pembayaran = new popup_pembayaran(null, true);
 //                pembayaran.setVisible(true);
@@ -682,7 +664,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
         private void bayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bayarKeyReleased
             // TODO add your handling code here:
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-		    bayar();
+                bayar();
             }
         }//GEN-LAST:event_bayarKeyReleased
 
@@ -708,15 +690,8 @@ public final class Transaksi1 extends javax.swing.JPanel {
                 System.out.println("wkwkwkwk");
             }
             tabelTransaksi();
+            tabelBarang();
         }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search1ActionPerformed
-
-    private void search1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search1KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search1KeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bayar;
@@ -728,7 +703,6 @@ public final class Transaksi1 extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -741,7 +715,6 @@ public final class Transaksi1 extends javax.swing.JPanel {
     private com.swing.Combobox kategori;
     private javax.swing.JTextField kembalian;
     private javax.swing.JTextField search;
-    private javax.swing.JTextField search1;
     private com.swing.table.Table table1;
     private com.swing.table.Table table2;
     private javax.swing.JTextField totalDiskon;
