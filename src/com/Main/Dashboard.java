@@ -85,7 +85,89 @@ public final class Dashboard extends javax.swing.JPanel {
                 formatrupiah.setMonetaryDecimalSeparator(',');
                 formatrupiah.setGroupingSeparator('.');
                 kursindonesia.setDecimalFormatSymbols(formatrupiah);
+                
 	}
+//        yg ini untuk stock barang
+//        public ChartCekStokBarang() {
+//        initComponents();
+//        buatChart();
+//    }
+//    
+//    public void buatChart(){
+//        try {
+//            Connection conn = auth.Koneksi.configDB();
+//            String sql = "SELECT * FROM barang WHERE stok <= 10 ORDER BY stok ASC LIMIT 7";
+//            PreparedStatement pst = conn.prepareStatement(sql);
+//            ResultSet rs = pst.executeQuery(sql);
+//            DefaultCategoryDataset obj = new DefaultCategoryDataset();
+//            
+//            while(rs.next()){
+//                
+//                obj.setValue(Integer.parseInt(rs.getString("stok")), rs.getString("nama"), rs.getString("id_barang"));
+//                JFreeChart chart = ChartFactory.createBarChart3D("Stok Barang yang Menipis", "Nama Barang", "Stok", obj);
+//                CategoryPlot plot = chart.getCategoryPlot();
+//                plot.setRangeGridlinePaint(Color.black);
+//                ChartPanel hadeh = new ChartPanel(chart);
+//                hadeh.setSize(400, 300);
+//                this.add(hadeh);
+//            }
+//            
+//        } catch (Exception e) {
+//                DefaultCategoryDataset obj = new DefaultCategoryDataset();
+//                obj.setValue(10, "kosong", "kosong");
+//                JFreeChart chart = ChartFactory.createBarChart3D("Stok Barang yang Menipis", "Nama Barang", "Stok", obj);
+//                CategoryPlot plot = chart.getCategoryPlot();
+//                plot.setRangeGridlinePaint(Color.black);
+//                ChartPanel hadeh = new ChartPanel(chart);
+//                hadeh.setSize(400, 300);
+//                this.add(hadeh);
+//        }
+//        
+//        
+//        
+//    }
+//        ini kodingan untuk chart barawng terlaris han
+//        public ChartCekBarangTerlaris() {
+//        initComponents();
+//        buatChart();
+//    }
+//    
+//    public void buatChart(){
+//        try {
+//            Connection conn = auth.Koneksi.configDB();
+//            String sql = "SELECT SUM(detail_barang.jumlah), barang.id_barang, "
+//                    + "barang.nama FROM detail_barang "
+//                    + "JOIN barang ON detail_barang.id_barang = barang.id_barang "
+//                    + "GROUP BY id_barang ORDER BY SUM(detail_barang.jumlah) DESC "
+//                    + "LIMIT 7";
+//            PreparedStatement pst = conn.prepareStatement(sql);
+//            ResultSet rs = pst.executeQuery(sql);
+//            DefaultCategoryDataset obj = new DefaultCategoryDataset();
+//            while(rs.next()){
+//                
+//                obj.setValue(Integer.parseInt(rs.getString(1)), rs.getString(3), rs.getString(2));
+//                JFreeChart chart = ChartFactory.createBarChart3D("Barang Terlaris", "Nama Barang", "Jumlah terjual", obj);
+//                CategoryPlot plot = chart.getCategoryPlot();
+//                plot.setRangeGridlinePaint(Color.black);
+//                ChartPanel hadeh = new ChartPanel(chart);
+//                hadeh.setSize(400, 300);
+//                this.add(hadeh);
+//            }
+//            
+//        } catch (Exception e) {
+//            DefaultCategoryDataset obj = new DefaultCategoryDataset();
+//            obj.setValue(10, "kosong", "kosong");
+//                JFreeChart chart = ChartFactory.createBarChart3D("Stok Barang Terlaris", "Nama Barang", "Jumlah Terjual", obj);
+//                CategoryPlot plot = chart.getCategoryPlot();
+//                plot.setRangeGridlinePaint(Color.black);
+//                ChartPanel hadeh = new ChartPanel(chart);
+//                hadeh.setSize(400, 300);
+//                this.add(hadeh);
+//        }
+//        
+//        
+//        
+//    }
 
 	private void loadChart() {
 		// ini buat yg dibawah minggu 1 minggu 2, yang bawah nyesuaikan sama yang bawah.
@@ -192,6 +274,7 @@ public final class Dashboard extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        chart1 = new com.swing.chart.Chart();
         chart = new com.swing.chart.Chart();
         labeljamrealtime = new javax.swing.JLabel();
         jumlah_pengeluaran = new javax.swing.JLabel();
@@ -207,8 +290,11 @@ public final class Dashboard extends javax.swing.JPanel {
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        chart1.setBackground(new java.awt.Color(255, 158, 187));
+        jPanel1.add(chart1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 270, 370, 290));
+
         chart.setBackground(new java.awt.Color(255, 158, 187));
-        jPanel1.add(chart, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 270, 770, 410));
+        jPanel1.add(chart, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 270, 370, 290));
 
         labeljamrealtime.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jPanel1.add(labeljamrealtime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 30, 190, 60));
@@ -232,7 +318,7 @@ public final class Dashboard extends javax.swing.JPanel {
         jumlah_dataBarang.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jPanel1.add(jumlah_dataBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 167, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/tampilan dashboard baru.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Tampilan dashboard.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -254,6 +340,7 @@ public final class Dashboard extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swing.chart.Chart chart;
+    private com.swing.chart.Chart chart1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel jumlah_DataDiskon;

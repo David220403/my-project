@@ -44,6 +44,7 @@ public class Tambah_Produk extends javax.swing.JDialog {
 			Logger.getLogger(Tambah_Produk.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		initComponents();
+                this.setLocationRelativeTo(null);
 		tabelProduk();
 	}
 
@@ -87,6 +88,7 @@ public class Tambah_Produk extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);

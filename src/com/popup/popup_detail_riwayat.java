@@ -24,6 +24,7 @@ public class popup_detail_riwayat extends javax.swing.JDialog {
         initComponents();
         this.id = id;
         tabelRiwayat();
+        this.setLocationRelativeTo(null);
     }
 
     private void tabelRiwayat() {
@@ -75,6 +76,7 @@ public class popup_detail_riwayat extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setOpaque(false);
         jPanel1.setPreferredSize(new java.awt.Dimension(1064, 533));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

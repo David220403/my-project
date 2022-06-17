@@ -10,8 +10,6 @@ package com.popup;
  * @author david
  */
 public class popup_login extends javax.swing.JDialog {
-    int mouseX;
-    int mouseY;
 
     /**
      * Creates new form popup_login
@@ -19,6 +17,7 @@ public class popup_login extends javax.swing.JDialog {
     public popup_login(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -35,7 +34,9 @@ public class popup_login extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
 
+        jPanel1.setOpaque(false);
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 300));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -86,16 +87,10 @@ public class popup_login extends javax.swing.JDialog {
 
     private void jLabel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseDragged
         // TODO add your handling code here:
-        int x = evt.getXOnScreen();
-        int y = evt.getYOnScreen();
-        
-        this.setLocation(x - mouseX, y - mouseY);
     }//GEN-LAST:event_jLabel1MouseDragged
 
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
         // TODO add your handling code here:
-         mouseX = evt.getX();
-        mouseY = evt.getY();
     }//GEN-LAST:event_jLabel1MousePressed
 
     /**

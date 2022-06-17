@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="17cd3c4c-311d-453d-83d1-c7b394aa1edf">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="223" pageHeight="432" columnWidth="183" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="17cd3c4c-311d-453d-83d1-c7b394aa1edf">
+	<property name="ireport.zoom" value="5.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_barang" class="java.lang.String">
@@ -27,7 +27,7 @@
 	<detail>
 		<band height="94" splitType="Stretch">
 			<componentElement>
-				<reportElement x="99" y="18" width="378" height="54" uuid="89f774dc-6eec-4c86-9ef6-8f829c45a67e"/>
+				<reportElement x="19" y="11" width="144" height="20" uuid="89f774dc-6eec-4c86-9ef6-8f829c45a67e"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="true" checksumRequired="false" barWidth="3" barHeight="50">
 					<jr:codeExpression><![CDATA[$F{id}]]></jr:codeExpression>
 				</jr:barbecue>

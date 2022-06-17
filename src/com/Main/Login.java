@@ -17,6 +17,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         this.setResizable(false);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     private void login(){
         if ( txt_user.getText().equals("")|| txt_pass.getText().equals("")){
@@ -62,6 +63,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

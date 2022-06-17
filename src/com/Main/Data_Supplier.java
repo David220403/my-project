@@ -47,7 +47,6 @@ public class Data_Supplier extends javax.swing.JPanel {
 
 	public Data_Supplier() {
 		initComponents();
-
 		table1.fixTable(jScrollPane1);
 		tabel();
 	}

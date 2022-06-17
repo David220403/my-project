@@ -115,7 +115,7 @@ public final class Transaksi1 extends javax.swing.JPanel {
     }
 
     private int getKembalian() {
-        if (totalDiskon.getText() != null) {
+        if (Integer.parseInt(totalDiskon.getText()) > 0) {
             uangKembalian = uangBayar - getDiscounted();
         } else {
             uangKembalian = uangBayar - getTotalHarga();

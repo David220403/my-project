@@ -97,6 +97,7 @@ public class Tambah_Supplier extends javax.swing.JDialog {
         txt_id = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -245,6 +246,7 @@ public class Tambah_Supplier extends javax.swing.JDialog {
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
+                tabelProduk();
     }//GEN-LAST:event_btn_tambahActionPerformed
 
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
