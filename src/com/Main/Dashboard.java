@@ -76,7 +76,8 @@ public final class Dashboard extends javax.swing.JPanel {
 		pengeluaran();
 		Tampil_Jam();
 
-		loadChart();
+		loadChartOne();
+		loadChartTwo();
                 
                 kursindonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
                 formatrupiah = new DecimalFormatSymbols();
@@ -87,105 +88,41 @@ public final class Dashboard extends javax.swing.JPanel {
                 kursindonesia.setDecimalFormatSymbols(formatrupiah);
                 
 	}
-//        yg ini untuk stock barang
-//        public ChartCekStokBarang() {
-//        initComponents();
-//        buatChart();
-//    }
-//    
-//    public void buatChart(){
-//        try {
-//            Connection conn = auth.Koneksi.configDB();
-//            String sql = "SELECT * FROM barang WHERE stok <= 10 ORDER BY stok ASC LIMIT 7";
-//            PreparedStatement pst = conn.prepareStatement(sql);
-//            ResultSet rs = pst.executeQuery(sql);
-//            DefaultCategoryDataset obj = new DefaultCategoryDataset();
-//            
-//            while(rs.next()){
-//                
-//                obj.setValue(Integer.parseInt(rs.getString("stok")), rs.getString("nama"), rs.getString("id_barang"));
-//                JFreeChart chart = ChartFactory.createBarChart3D("Stok Barang yang Menipis", "Nama Barang", "Stok", obj);
-//                CategoryPlot plot = chart.getCategoryPlot();
-//                plot.setRangeGridlinePaint(Color.black);
-//                ChartPanel hadeh = new ChartPanel(chart);
-//                hadeh.setSize(400, 300);
-//                this.add(hadeh);
-//            }
-//            
-//        } catch (Exception e) {
-//                DefaultCategoryDataset obj = new DefaultCategoryDataset();
-//                obj.setValue(10, "kosong", "kosong");
-//                JFreeChart chart = ChartFactory.createBarChart3D("Stok Barang yang Menipis", "Nama Barang", "Stok", obj);
-//                CategoryPlot plot = chart.getCategoryPlot();
-//                plot.setRangeGridlinePaint(Color.black);
-//                ChartPanel hadeh = new ChartPanel(chart);
-//                hadeh.setSize(400, 300);
-//                this.add(hadeh);
-//        }
-//        
-//        
-//        
-//    }
-//        ini kodingan untuk chart barawng terlaris han
-//        public ChartCekBarangTerlaris() {
-//        initComponents();
-//        buatChart();
-//    }
-//    
-//    public void buatChart(){
-//        try {
-//            Connection conn = auth.Koneksi.configDB();
-//            String sql = "SELECT SUM(detail_barang.jumlah), barang.id_barang, "
-//                    + "barang.nama FROM detail_barang "
-//                    + "JOIN barang ON detail_barang.id_barang = barang.id_barang "
-//                    + "GROUP BY id_barang ORDER BY SUM(detail_barang.jumlah) DESC "
-//                    + "LIMIT 7";
-//            PreparedStatement pst = conn.prepareStatement(sql);
-//            ResultSet rs = pst.executeQuery(sql);
-//            DefaultCategoryDataset obj = new DefaultCategoryDataset();
-//            while(rs.next()){
-//                
-//                obj.setValue(Integer.parseInt(rs.getString(1)), rs.getString(3), rs.getString(2));
-//                JFreeChart chart = ChartFactory.createBarChart3D("Barang Terlaris", "Nama Barang", "Jumlah terjual", obj);
-//                CategoryPlot plot = chart.getCategoryPlot();
-//                plot.setRangeGridlinePaint(Color.black);
-//                ChartPanel hadeh = new ChartPanel(chart);
-//                hadeh.setSize(400, 300);
-//                this.add(hadeh);
-//            }
-//            
-//        } catch (Exception e) {
-//            DefaultCategoryDataset obj = new DefaultCategoryDataset();
-//            obj.setValue(10, "kosong", "kosong");
-//                JFreeChart chart = ChartFactory.createBarChart3D("Stok Barang Terlaris", "Nama Barang", "Jumlah Terjual", obj);
-//                CategoryPlot plot = chart.getCategoryPlot();
-//                plot.setRangeGridlinePaint(Color.black);
-//                ChartPanel hadeh = new ChartPanel(chart);
-//                hadeh.setSize(400, 300);
-//                this.add(hadeh);
-//        }
-//        
-//        
-//        
-//    }
 
-	private void loadChart() {
+	private void loadChartOne() {
 		// ini buat yg dibawah minggu 1 minggu 2, yang bawah nyesuaikan sama yang bawah.
 		chart.addLegend("Transaksi", new Color(245, 189, 135)); // line 1 
 
-		// valuenya sesuaikan sama yang atas, kalo ada 2 line
-		chart.addData(new ModelChart("Januari", new double[]{perMonth(1)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("Februari", new double[]{perMonth(2)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("Maret", new double[]{perMonth(3)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("April", new double[]{perMonth(4)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("Mei", new double[]{perMonth(5)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("Juni", new double[]{perMonth(6)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("Juli", new double[]{perMonth(7)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("Agustus", new double[]{perMonth(8)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("September", new double[]{perMonth(9)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("Oktober", new double[]{perMonth(10)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("November", new double[]{perMonth(11)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
-		chart.addData(new ModelChart("Desember", new double[]{perMonth(12)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+		try {
+			String sql = "select db.nama, count(jumlah) from tb_detail_transaksi dt join tb_data_barang db on dt.id_barang = db.id group by id_barang order by count(jumlah) desc limit 5";
+			java.sql.Connection conn = (Connection) Koneksi.configDB();
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+		chart.addData(new ModelChart(rs.getString(1), new double[]{rs.getDouble(2)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+			}
+		} catch (Exception e) {
+
+		}
+	}
+
+	private void loadChartTwo() {
+		// ini buat yg dibawah minggu 1 minggu 2, yang bawah nyesuaikan sama yang bawah.
+		chart1.addLegend("Transaksi", new Color(245, 189, 135)); // line 1 
+
+		try {
+			String sql = "select nama, stock from tb_data_barang db where stock <= 10 limit 5";
+			java.sql.Connection conn = (Connection) Koneksi.configDB();
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+		chart1.addData(new ModelChart(rs.getString(1), new double[]{rs.getDouble(2)}));  // 1, 3 itu 1nya line 1. kalo 3nya buat line 2
+			}
+		} catch (Exception e) {
+
+		}
 	}
 
 	private double perMonth(int bulan){
